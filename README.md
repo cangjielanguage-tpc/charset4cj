@@ -147,13 +147,8 @@ if(第二个字节 < 0x7F){
 ```
 cpm build
 
-```
-
-```
-// 单元测试
-cjc test/UT/charset_test.cj --test --import-path ./build  -L ./build/charset/ -l charsetcharset -l charsetcharset.encoding -l charsetcharset.traditionchinese -l charsetcharset.simplechinese -l charsetcharset.korean -l charsetcharset.singlebyte -l charsetcharset.unicode
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/work/charset/build/charset
-./main
+# 单元测试
+cpm test test/UT/
 ```
 
 
