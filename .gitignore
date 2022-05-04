@@ -1,0 +1,6 @@
+.vscode
+*.cjo
+*.so
+build/
+bin/
+

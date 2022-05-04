@@ -1,0 +1,12 @@
+{
+  "cjc_version": "0.28.4",
+  "organization": "zft",
+  "name": "charset",
+  "description": "nothing here",
+  "version": "1.0.0",
+  "requires": {},
+  "package_requires": {},
+  "foreign_requires": {},
+  "output_type": "dynamic",
+  "command_option": ""
+}
