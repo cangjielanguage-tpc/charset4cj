@@ -1,4 +1,8 @@
-# encoding
+<p align="center">
+<img src="./doc/assets/charset_logo.png" width="100%" >
+</p>
+
+# charset
 
 #### 介绍
 仓颉语言编解码库。基于 [WHATWG 字符编码标准](http://encoding.spec.whatwg.org/) 
