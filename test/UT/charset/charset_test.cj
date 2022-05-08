@@ -1,8 +1,4 @@
-from std import unittest.*
-from std import unittest.testmacro.*
-
-
-from charset import charset.*
+package charset
 
 @Test
 public class CharsetsTest {
