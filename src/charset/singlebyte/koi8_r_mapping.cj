@@ -1,9 +1,15 @@
-// 基于 https://encoding.spec.whatwg.org/index-koi8-r.txt 文档自动生成
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * https://encoding.spec.whatwg.org/index-koi8-r.txt Automatic document generation
+ */
+
 package charset.singlebyte
 
 from std import collection.*
-
-
 
 let koi8_rDecodeMapping: Array<UInt32> = [
 	0x2500,

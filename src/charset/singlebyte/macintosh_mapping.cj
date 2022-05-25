@@ -1,9 +1,15 @@
-// 基于 https://encoding.spec.whatwg.org/index-macintosh.txt 文档自动生成
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * https://encoding.spec.whatwg.org/index-macintosh.txt Automatic document generation
+ */
+
 package charset.singlebyte
 
 from std import collection.*
-
-
 
 let macintoshDecodeMapping: Array<UInt32> = [
 	0x00C4,

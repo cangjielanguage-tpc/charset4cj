@@ -1,11 +1,22 @@
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * Single byte character set decoder
+ */
+
 package charset.singlebyte
 
 from std import collection.*
 import charset.encoding.*
 
 /**
-* 单字节字符集解码器
-*/
+ * Single byte character set decoder
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 class SingleByteDecoder <: Decoder{
     let replacement = '\u{FFFD}'
     var decodeMapping:Array<UInt32> = []
@@ -45,22 +56,25 @@ class SingleByteDecoder <: Decoder{
         decodeMapping = decodeDic[name]
     }
     
-
     /**
-    * 将字节数组src解码成字符数组 dest
-    * 字节数组src的可用范围 [srcOffset, srcLimit]
-    *   srcOffset 表示当前没有处理的 src 下标
-    * 字符数组dest的可用范围 [destUnusedOffset, dest.size()) ,不包含dest.size();
-    *   destUnusedOffset 表示当前没有使用的 dest 下标
-    * 返回值 (srcIndex, destIndex)； 
-    *   srcIndex 下一个没有处理的src下标
-    *   destIndex 下一个没有处理的dest下标
-    */
+     * Decode byte array SRC into character array dest
+     *
+     * @param src Range: [srcOffset, srcLimit]
+     * @param srcOffset of Int64
+     * @param srcLimit of Int64
+     * @param dest Range: [destUnusedOffset, dest.size()) not include dest.size()
+     * @param destUnusedOffset Indicates a dest subscript that is not currently in use
+     *
+     * @return Type of Int64 * Int64: (srcIndex, destIndex)
+     *         srcIndex Next unprocessed SRC subscript
+     *         destIndex Next unhandled dest subscript
+     * @since 0.28.4
+     */
     public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
             dest:Array<Char>, destUnusedOffset:Int64): Int64 * Int64 {
-        // src正在处理的index
+        // src processing index
         var srcIndex = srcOffset   
-        // dest 正在处理的 index
+        // dest processing index
         var destIndex = destUnusedOffset
         while(true){
             if(srcIndex > srcLimit){

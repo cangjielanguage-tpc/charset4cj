@@ -1,29 +1,70 @@
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * This file is about Big5 encoding
+ */
 package charset.traditionchinese
 
 import charset.encoding.*
 
 /**
-* Big5 encoding
-*/
+ * Big5 encoding
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 public class BIG5Charset <: Charset{
+
+    /**
+     * The Function is init constructor
+     *
+     * @since 0.28.4
+     */
     public init(){
         this.name = "Big5"
         this.labels = ["big5", "big5-hkscs", "cn-big5", "csbig5", "x-x-big5"]
     }
+
+    /**
+     * The Function is newEncoder
+     *
+     * @return Type of Encoder
+     * @since 0.28.4
+     */
     public func newEncoder():Encoder{
         let encoder = BIG5Encoder()
         return encoder
     }
+
+    /**
+     * The Function is newDecoder
+     *
+     * @return Type of Decoder
+     * @since 0.28.4
+     */
     public func newDecoder():Decoder{
         let decoder = BIG5Decoder()
         return decoder
     }
 }
 
+/*
+ * The class is BIG5Encoder inherited from Encoder
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 class BIG5Encoder <: Encoder {
+
     /**
-    * 将字符串编码成字节数组
-    */
+     * Encodes a string into a byte array
+     *
+     * @param str of String
+     *
+     * @return Type of Array<UInt8>
+     * @since 0.28.4
+     */
     public func encode(str:String): Array<UInt8>{
         let ref = Array<UInt8>()
         // TODO
@@ -31,36 +72,43 @@ class BIG5Encoder <: Encoder {
     }
 }
 
-/**
-* gb18030 字符集解码器
-* gb18030   单字节部分与ascii相同
-*           双字节部分是普通汉字
-*           四字节部分与unicode通过一个表做映射
-*/
+/*
+ * gb18030 Character set decoder
+ * gb18030 The single byte part is the same as ASCII
+ *         The double byte part is ordinary Chinese characters
+ *         The four byte part is mapped with Unicode through a table
+ * 
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 class BIG5Decoder <: Decoder{
-    // 解码出错时的替换字符
+    // Replace character when decoding error
     let replacement = '\u{FFFD}' 
     let table = Big5DecodeMapping
 
     /**
-    * 将字节数组src解码成字符数组 dest
-    * 字节数组src的可用范围 [srcOffset, srcLimit]
-    *   srcOffset 表示当前没有处理的 src 下标
-    * 字符数组dest的可用范围 [destUnusedOffset, dest.size()) ,不包含dest.size();
-    *   destUnusedOffset 表示当前没有使用的 dest 下标
-    * 返回值 (srcIndex, destIndex)； 
-    *   srcIndex 下一个没有处理的src下标
-    *   destIndex 下一个没有处理的dest下标
-    */
+     * Decode byte array SRC into character array dest
+     *
+     * @param src Range: [srcOffset, srcLimit]
+     * @param srcOffset of Int64
+     * @param srcLimit of Int64
+     * @param dest Range: [destUnusedOffset, dest.size()) not include dest.size()
+     * @param destUnusedOffset Indicates a dest subscript that is not currently in use
+     *
+     * @return Type of Int64 * Int64: (srcIndex, destIndex)
+     *         srcIndex Next unprocessed SRC subscript
+     *         destIndex Next unhandled dest subscript
+     * @since 0.28.4
+     */
     public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
             dest:Array<Char>, destUnusedOffset:Int64): Int64 * Int64 {
-        // src正在处理的index
+        // Index being processed by SRC
         var srcIndex = srcOffset   
-        // dest 正在处理的 index
+        // Dest index being processed
         var destIndex = destUnusedOffset
         while(srcIndex <= srcLimit){
             var u0 = src[srcIndex];
-            // 单字节
+            // Single byte
             if(u0 <= 0x7F){
                 var c = chr(UInt32(u0))
                 dest[destIndex] = c
@@ -69,7 +117,7 @@ class BIG5Decoder <: Decoder{
                 continue           
             }else if(u0 >= 0x81 && u0 <= 0xFE){
                 if(srcIndex + 1 > srcLimit){
-                    // 如果双字节只有 一半在 src里面，则返回，等待后面的数据进入src后重新处理
+                    // If only half of the double bytes are in SRC, return and wait for the subsequent data to enter SRC for reprocessing
                     return (srcIndex, destIndex)                    
                 }
                 
@@ -80,7 +128,7 @@ class BIG5Decoder <: Decoder{
                 }else if(0xa1 <= u1 && u1 < 0xff){
                     u1 -= 0x62
                 }else {
-                    // 出错后，使用 FFFD 替换
+                    // Replace with fffd after error
                     dest[destIndex] = replacement     
                     destIndex += 1
                     srcIndex += 1
@@ -111,7 +159,7 @@ class BIG5Decoder <: Decoder{
                     srcIndex += 2
                     continue
                 }else{
-                    // 出错后，使用 FFFD 替换
+                    // Replace with fffd after error
                     dest[destIndex] = replacement     
                     destIndex += 1
                     srcIndex += 1

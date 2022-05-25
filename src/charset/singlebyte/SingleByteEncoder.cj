@@ -1,13 +1,24 @@
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * Single byte character set encoder
+ */
+
 package charset.singlebyte
 
 from std import collection.*
 import charset.encoding.*
 
 /**
-* 单字节字符集编码器
-*/
+ * Single byte character set encoder
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 class SingleByteEncoder <: Encoder {
-    // todo 当前统一用了 0x1a, 每种单字节字符集都有不同的 replacement
+    // Todo currently uses 0x1a uniformly, and each single byte character set has a different replacement
     var replacement:UInt8 = 0x1a
     var encodeMapping:HashMap<UInt32, UInt8>
     let encodeDic = HashMap<String, HashMap<UInt32, UInt8>>([
@@ -46,8 +57,13 @@ class SingleByteEncoder <: Encoder {
     }
 
     /**
-    * 将字符串编码成字节数组
-    */
+     * Encodes a string into a byte array
+     *
+     * @param str of String
+     *
+     * @return Type of Array<UInt8>
+     * @since 0.28.4
+     */
     public func encode(str:String): Array<UInt8>{
         var buf:Array<Char> = str.toCharArray()
         let ref = Array<UInt8>(buf.size(), {i => 0})

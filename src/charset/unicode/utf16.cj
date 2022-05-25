@@ -1,13 +1,31 @@
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * UTF16 character set
+ */
 package charset.unicode
 
 import charset.encoding.*
 
 /**
-* UTF8 字符集
-*/
+ * UTF16 character set
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 public class UTF16Charset <: Charset{
-    // 是否大端， be = true 大端模式； be = false 小端模式
+    // Whether it is big end mode, be = true big end mode; Be = false small end mode
     var be:Bool
+    
+    /**
+     * The Function is init constructor
+     *
+     * @param be of Bool
+     *
+     * @since 0.28.4
+     */
     public init(be:Bool){
         this.be = be
         if(be){
@@ -18,41 +36,71 @@ public class UTF16Charset <: Charset{
             this.labels = ["csunicode", "iso-10646-ucs-2", "ucs-2", "unicode", "unicodefeff", "utf-16", "utf-16le"]
         }
     }
+    
+    /**
+     * The Function is newEncoder
+     *
+     * @return Type of Encoder
+     * @since 0.28.4
+     */
     public func newEncoder():Encoder{
         let encoder = UTF16Encoder(be)
         return encoder
     }
+    
+    /**
+     * The Function is newDecoder
+     *
+     * @return Type of Decoder
+     * @since 0.28.4
+     */
     public func newDecoder():Decoder{
         let decoder = UTF16Decoder(be)
         return decoder
     }
 }
 
-/**
-* UTF-16编码器 
-* 功能： 将unicode codepoint 编码成 utf16 字节序列
-*/
+/*
+ * UTF-16 encoder
+ * function: Encode Unicode codepoint into utf16 byte sequence
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 class UTF16Encoder <: Encoder {
-    // 是否大端， be = true 大端模式； be = false 小端模式
+    // Whether it is big end mode, be = true big end mode; Be = false small end mode
     var be:Bool
+    
+    /*
+     * The Function is init constructor
+     *
+     * @param be of Bool
+     *
+     * @since 0.28.4
+     */
     init(be:Bool){
         this.be = be
     }
+  
     /**
-    * 将字符串编码成字节数组
-    */
+     * Encodes a string into a byte array
+     *
+     * @param str of String
+     *
+     * @return Type of Array<UInt8>
+     * @since 0.28.4
+     */
     public func encode(str:String): Array<UInt8>{
         if(str.size() == 0){
             return Array<UInt8>()
         }
-        // 创建返回值数组，数组最长是str.size()的4倍
+        // Create an array of return values. The maximum length of the array is 4 times that of str.size()
         var Array = Array<UInt8>(str.size()*4,{i => 0})
-        // Array 的 第一个未被处理的下标
+        // First unprocessed subscript of array
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){
             var codePoint:UInt32 = ord(ch)
-            // 双字节
+            // Double byte
             if(codePoint <= 0xFFFF){
                 var high = UInt8((codePoint >> 8) & 0xFF)
                 var low = UInt8(codePoint & 0xFF)
@@ -63,7 +111,7 @@ class UTF16Encoder <: Encoder {
                     position += 1
                 }
             }else{
-                // 四字节
+                // Four bytes
                 codePoint -= 0x10000;
                 var surrogateHigh:UInt16 = 0xD800 + UInt16((codePoint >> 10) & 0x3FF)
                 var surrogateLow:UInt16 = 0xDC00 + UInt16(codePoint & 0x3FF)
@@ -96,53 +144,60 @@ class UTF16Encoder <: Encoder {
     }
 }
 
-/**
-* UTF8 解码器
-* 功能：将utf8字节序列解码成 unicode codepoint 数组
-*/
+
+/*
+ * UTF16 decoder
+ * function: Decode the utf16 byte sequence into a Unicode codepoint array
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 class UTF16Decoder <: Decoder{
     let replacement = '\u{FFFD}'
-    // 是否大端， be = true 大端模式； be = false 小端模式
+    // Whether it is big end mode, be = true big end mode; Be = false small end mode
     var be:Bool
+    
     init(be:Bool){
         this.be = be
     }
 
-
     /**
-    * 将字节数组src解码成字符数组 dest
-    * 字节数组src的可用范围 [srcOffset, srcLimit]
-    *   srcOffset 表示当前没有处理的 src 下标
-    * 字符数组dest的可用范围 [destUnusedOffset, dest.size()) ,不包含dest.size();
-    *   destUnusedOffset 表示当前没有使用的 dest 下标
-    * 返回值 (srcIndex, destIndex)； 
-    *   srcIndex 下一个没有处理的src下标
-    *   destIndex 下一个没有处理的dest下标
-    */
+     * Decode byte array SRC into character array dest
+     *
+     * @param src Range: [srcOffset, srcLimit]
+     * @param srcOffset of Int64
+     * @param srcLimit of Int64
+     * @param dest Range: [destUnusedOffset, dest.size()) not include dest.size()
+     * @param destUnusedOffset Indicates a dest subscript that is not currently in use
+     *
+     * @return Type of Int64 * Int64: (srcIndex, destIndex)
+     *         srcIndex Next unprocessed SRC subscript
+     *         destIndex Next unhandled dest subscript
+     * @since 0.28.4
+     */
     public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
             dest:Array<Char>, destUnusedOffset:Int64): Int64 * Int64 {
         var srcIndex = srcOffset    
         var destIndex = destUnusedOffset
         while(srcIndex <= srcLimit){
             var u0 = src[srcIndex];
-            // 位数不够
+            // Not enough digits
             if(srcIndex+1 > srcLimit){
                 return (srcIndex, destIndex)
             }
             var u1 = src[srcIndex + 1]
             // print("u0:${u0}      u1:${u1}")
-            // [0xd800, 0xdc00) 高
-            // [0xdc00, 0xe000) 低          
+            // [0xd800, 0xdc00) high
+            // [0xdc00, 0xe000) low          
             var codeUnit:UInt32 = 0
             if(be){
                 codeUnit = (UInt32(u0) << 8) + UInt32(u1)
             }else{
                 codeUnit = (UInt32(u1) << 8) + UInt32(u0)
             }
-            // 4字节
+            // 4 bytes
             if(codeUnit >=0xd800 && codeUnit < 0xe000){
                 if(srcIndex+3 > srcLimit){
-                    //位数不够
+                    // Not enough digits
                     return (srcIndex, destIndex)
                 }
                 var u2 = src[srcIndex + 2]
@@ -159,7 +214,7 @@ class UTF16Decoder <: Decoder{
                 destIndex += 1
                 continue
             }else{
-                // 双字节
+                // Double byte
                 dest[destIndex] = chr(codeUnit)
                 print("${dest[destIndex]}")
                 srcIndex += 2
