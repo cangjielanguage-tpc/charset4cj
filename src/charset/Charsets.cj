@@ -1,6 +1,13 @@
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * Constant definitions for all the supported Charsets.
+ */
+
 package charset
-
-
 
 import charset.unicode.UTF8Charset
 import charset.unicode.UTF16Charset
@@ -13,8 +20,10 @@ import charset.korean.*
 import charset.encoding.*
 
 /**
-* Constant definitions for all the supported Charsets. 
-*/
+ * Constant definitions for all the supported Charsets. 
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 public class Charsets {
 
     // UTF-8
@@ -34,7 +43,6 @@ public class Charsets {
     // Big5
     public static let big5:Charset = BIG5Charset()
 
-    
     // IBM866
     public static let ibm866:Charset = SingleByteCharset("IBM866")
     // ISO-8859-2
@@ -129,8 +137,13 @@ public class Charsets {
     ]
 
     /**
-    * 根据字符集名称获取字符编码类型
-    */
+     * Gets the character encoding type based on the character set name
+     *
+     * @param name of String
+     *
+     * @return Type of Option<Charset>
+     * @since 0.28.4
+     */
     public static func forName(name:String):Option<Charset>{
         for(charset in cache){
             if(charset.nameEquals(name)){

@@ -1,9 +1,15 @@
-// 基于 https://encoding.spec.whatwg.org/index-iso-8859-10.txt 文档自动生成
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * https://encoding.spec.whatwg.org/index-iso-8859-10.txt Automatic document generation
+ */
+
 package charset.singlebyte
 
 from std import collection.*
-
-
 
 let iso_8859_10DecodeMapping: Array<UInt32> = [
 	0x0080,

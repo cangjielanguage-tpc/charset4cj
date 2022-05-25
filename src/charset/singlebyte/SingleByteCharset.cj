@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * Single byte character set
+ */
+
 package charset.singlebyte
 
 from std import collection.*
@@ -5,8 +14,10 @@ from std import collection.*
 import charset.encoding.*
 
 /**
-* 单字节字符集
-*/
+ * Single byte character set
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 public class SingleByteCharset <: Charset{
     let nameMap = HashMap<String, Array<String>>([
         ("IBM866", [

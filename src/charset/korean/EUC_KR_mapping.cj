@@ -1,4 +1,12 @@
-// 基于 https://encoding.spec.whatwg.org/index-euc-kr.txt 文档自动生成
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * https://encoding.spec.whatwg.org/index-euc-kr.txt Automatic document generation
+ */
+
 package charset.korean
 
 from std import collection.*

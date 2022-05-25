@@ -1,9 +1,15 @@
-// 基于 https://encoding.spec.whatwg.org/index-ibm866.txt 文档自动生成
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * https://encoding.spec.whatwg.org/index-ibm866.txt Automatic document generation
+ */
+
 package charset.singlebyte
 
 from std import collection.*
-
-
 
 let ibm866DecodeMapping: Array<UInt32> = [
 	0x0410,

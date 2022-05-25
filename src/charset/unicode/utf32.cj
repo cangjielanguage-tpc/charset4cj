@@ -1,13 +1,31 @@
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * UTF32 char set
+ */
 package charset.unicode
 
 import charset.encoding.*
 
 /**
-* UTF32 字符集
-*/
+ * UTF32 char set
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 public class UTF32Charset <: Charset{
-    // 是否大端， be = true 大端模式； be = false 小端模式
+    // Whether it is big end mode, be = true big end mode; Be = false small end mode
     var be:Bool
+
+    /**
+     * The Function is init constructor
+     *
+     * @param be of Bool
+     *
+     * @since 0.28.4
+     */
     public init(be:Bool){
         this.be = be
         if(be){
@@ -18,10 +36,24 @@ public class UTF32Charset <: Charset{
             this.labels = ["utf-32le"]
         }
     }
+
+    /**
+     * The Function is newEncoder
+     *
+     * @return Type of Encoder
+     * @since 0.28.4
+     */
     public func newEncoder():Encoder{
         let encoder = UTF32Encoder(be)
         return encoder
     }
+
+    /**
+     * The Function is newDecoder
+     *
+     * @return Type of Decoder
+     * @since 0.28.4
+     */
     public func newDecoder():Decoder{
         let decoder = UTF32Decoder(be)
         return decoder
@@ -32,22 +64,43 @@ public class UTF32Charset <: Charset{
 * UTF-32编码器 
 * 功能： 将unicode codepoint 编码成 utf32 字节序列
 */
+
+/*
+ * UTF-32 encoder
+ * function: Encode Unicode codepoint into utf32 byte sequence
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 class UTF32Encoder <: Encoder {
-    // 是否大端， be = true 大端模式； be = false 小端模式
+    // Whether it is big end mode, be = true big end mode; Be = false small end mode
     var be:Bool
+
+    /*
+     * The Function is init constructor
+     *
+     * @param be of Bool
+     *
+     * @since 0.28.4
+     */
     init(be:Bool){
         this.be = be
     }
+
     /**
-    * 将字符串编码成字节数组
-    */
+     * Encodes a string into a byte array
+     *
+     * @param str of String
+     *
+     * @return Type of Array<UInt8>
+     * @since 0.28.4
+     */
     public func encode(str:String): Array<UInt8>{
         if(str.size() == 0){
             return Array<UInt8>()
         }
-        // 创建返回值数组，数组最长是str.size()的4倍
+        // Create an array of return values. The maximum length of the array is 4 times that of str.size()
         var Array = Array<UInt8>(str.size()*4,{i => 0})
-        // Array 的 第一个未被处理的下标
+        // First unprocessed subscript of array
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){
@@ -81,35 +134,41 @@ class UTF32Encoder <: Encoder {
     }
 }
 
-/**
-* UTF8 编码器
-* 功能：将utf32字节序列解码成 unicode codepoint 数组
-*/
+
+/*
+ * UTF32 Decoder
+ * function: Decode the utf32 byte sequence into a Unicode codepoint array
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 class UTF32Decoder <: Decoder{
     let replacement = '\u{FFFD}'
-    // 是否大端， be = true 大端模式； be = false 小端模式
+    // Whether it is big end mode, be = true big end mode; Be = false small end mode
     var be:Bool
     init(be:Bool){
         this.be = be
     }
 
-
     /**
-    * 将字节数组src解码成字符数组 dest
-    * 字节数组src的可用范围 [srcOffset, srcLimit]
-    *   srcOffset 表示当前没有处理的 src 下标
-    * 字符数组dest的可用范围 [destUnusedOffset, dest.size()) ,不包含dest.size();
-    *   destUnusedOffset 表示当前没有使用的 dest 下标
-    * 返回值 (srcIndex, destIndex)； 
-    *   srcIndex 下一个没有处理的src下标
-    *   destIndex 下一个没有处理的dest下标
-    */
+     * Decode byte array SRC into character array dest
+     *
+     * @param src Range: [srcOffset, srcLimit]
+     * @param srcOffset of Int64
+     * @param srcLimit of Int64
+     * @param dest Range: [destUnusedOffset, dest.size()) not include dest.size()
+     * @param destUnusedOffset Indicates a dest subscript that is not currently in use
+     *
+     * @return Type of Int64 * Int64: (srcIndex, destIndex)
+     *         srcIndex Next unprocessed SRC subscript
+     *         destIndex Next unhandled dest subscript
+     * @since 0.28.4
+     */
     public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
             dest:Array<Char>, destUnusedOffset:Int64): Int64 * Int64 {
         var srcIndex = srcOffset    
         var destIndex = destUnusedOffset
         while(srcIndex <= srcLimit){
-            // 位数不够
+            // Not enough digits
             if(srcIndex+3 > srcLimit){
                 return (srcIndex, destIndex)
             }

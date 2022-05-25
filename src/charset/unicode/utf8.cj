@@ -1,52 +1,90 @@
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * UTF8 character set
+ */
 package charset.unicode
 
 import charset.encoding.*
 
 /**
-* UTF8 字符集
-*/
+ * UTF8 character set
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 public class UTF8Charset <: Charset{
+
+    /**
+     * The Function is init constructor
+     *
+     * @since 0.28.4
+     */
     public init(){
         this.name = "UTF-8"
         this.labels = ["unicode-1-1-utf-8", "unicode11utf8", "unicode20utf8", "utf-8", "utf8", "x-unicode20utf8"]
     }
+
+    /**
+     * The Function is newEncoder
+     *
+     * @return Type of Encoder
+     * @since 0.28.4
+     */
     public func newEncoder():Encoder{
         let encoder = UTF8Encoder()
         return encoder
     }
+
+    /**
+     * The Function is newDecoder
+     *
+     * @return Type of Decoder
+     * @since 0.28.4
+     */
     public func newDecoder():Decoder{
         let decoder = UTF8Decoder()
         return decoder
     }
 }
 
-/**
-* UTF-8编码器 
-* 功能： 将unicode codepoint 编码成 utf8 字节序列
-* utf8 代码点（codepoint）与编码映射关系：
-* 0x00000000 - 0x0000007F:
-*     0xxxxxxx
-* 
-* 0x00000080 - 0x000007FF:
-*     110xxxxx 10xxxxxx
-* 
-* 0x00000800 - 0x0000FFFF:
-*     1110xxxx 10xxxxxx 10xxxxxx
-* 
-* 0x00010000 - 0x001FFFFF:
-*     11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-*/
+/*
+ * UTF-8 encoder 
+ * function: 将unicode codepoint encode utf8 byte sequence
+ * utf8 code point（codepoint）Mapping relationship with code:
+ * 0x00000000 - 0x0000007F:
+ *     0xxxxxxx
+ * 
+ * 0x00000080 - 0x000007FF:
+ *     110xxxxx 10xxxxxx
+ * 
+ * 0x00000800 - 0x0000FFFF:
+ *     1110xxxx 10xxxxxx 10xxxxxx
+ * 
+ * 0x00010000 - 0x001FFFFF:
+ *     11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 class UTF8Encoder <: Encoder {
+
     /**
-    * 将字符串编码成字节数组
-    */
+     * Encodes a string into a byte array
+     *
+     * @param str of String
+     *
+     * @return Type of Array<UInt8>
+     * @since 0.28.4
+     */
     public func encode(str:String): Array<UInt8>{
         if(str.size() == 0){
             return Array<UInt8>()
         }
-        // 创建返回值数组，数组最长是str.size()的4倍
+        // Create an array of return values. The maximum length of the array is 4 times that of str.size()
         var Array = Array<UInt8>(str.size()*4,{i => 0})
-        // Array 的 第一个未被处理的下标
+        // First unprocessed subscript of array
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){
@@ -81,31 +119,36 @@ class UTF8Encoder <: Encoder {
     }
 }
 
-/**
-* UTF8 解码器
-* 功能：将utf8字节序列解码成 unicode codepoint 数组
-*/
+/*
+ * UTF8 decoder
+ * function: Decode the utf8 byte sequence into a Unicode codepoint array
+ * @author @freeonsky
+ * @since 0.28.4
+ */
 class UTF8Decoder <: Decoder{
     let replacement = '\u{FFFD}'
-
-
+  
     /**
-    * 将字节数组src解码成字符数组 dest
-    * 字节数组src的可用范围 [srcOffset, srcLimit]
-    *   srcOffset 表示当前没有处理的 src 下标
-    * 字符数组dest的可用范围 [destUnusedOffset, dest.size()) ,不包含dest.size();
-    *   destUnusedOffset 表示当前没有使用的 dest 下标
-    * 返回值 (srcIndex, destIndex)； 
-    *   srcIndex 下一个没有处理的src下标
-    *   destIndex 下一个没有处理的dest下标
-    */
+     * Decode byte array SRC into character array dest
+     *
+     * @param src Range: [srcOffset, srcLimit]
+     * @param srcOffset of Int64
+     * @param srcLimit of Int64
+     * @param dest Range: [destUnusedOffset, dest.size()) not include dest.size()
+     * @param destUnusedOffset Indicates a dest subscript that is not currently in use
+     *
+     * @return Type of Int64 * Int64: (srcIndex, destIndex)
+     *         srcIndex Next unprocessed SRC subscript
+     *         destIndex Next unhandled dest subscript
+     * @since 0.28.4
+     */
     public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
             dest:Array<Char>, destUnusedOffset:Int64): Int64 * Int64 {
         var srcIndex = srcOffset    
         var destIndex = destUnusedOffset
         while(srcIndex <= srcLimit){
             var u0 = src[srcIndex];
-            // 单字节
+            // Single byte
             if(u0 <= 0x7F){
                 var c = chr(UInt32(u0))
                 dest[destIndex] = c
@@ -113,25 +156,25 @@ class UTF8Decoder <: Decoder{
                 srcIndex += 1     
                 continue           
             }else if(u0 > 0x7F && u0 <= 0b11011111){
-                // 双字节
+                // Double byte
                 if(srcIndex+1 <= srcLimit){
                     var u1 = src[srcIndex+1]
                     if(u1 <= 0b10111111){
                         var codePoint = UInt32(UInt32(u0 & 0b00011111) << 6) + UInt32(u1 & 0b00111111)
                         dest[destIndex] = chr(codePoint)
                     }else{
-                        // 出错后，使用 FFFD 替换
+                        // Replace with fffd after error
                         dest[destIndex] = replacement
                     }
                     destIndex += 1
                     srcIndex += 2
                     continue
                 }else{
-                    // 如果双字节只有 一半在 src里面，则返回，等待后面的数据进入src后重新处理
+                    // If only half of the double bytes are in SRC, return and wait for the subsequent data to enter SRC for reprocessing
                     return (srcIndex, destIndex)
                 }
             }else if(u0 > 0b11011111 && u0 <= 0b11101111){
-                // 三字节
+                // Three bytes
                 if(srcIndex + 2 <= srcLimit){
                     var u1 = src[srcIndex+1]
                     var u2 = src[srcIndex + 2]
@@ -140,18 +183,18 @@ class UTF8Decoder <: Decoder{
                                             UInt32(u2 & 0b00111111)
                         dest[destIndex] = chr(codePoint)
                     }else{
-                        // 出错后，使用 FFFD 替换
+                        // Replace with fffd after error
                         dest[destIndex] = replacement
                     }
                     srcIndex += 3
                     destIndex += 1
                     continue
                 }else{
-                    // 如果三字节只有 一部分在 src里面，则返回，等待后面的数据进入src后重新处理
+                    // If only part of the three bytes is in SRC, return and wait for the subsequent data to enter SRC for reprocessing
                     return (srcIndex, destIndex)
                 }
             }else if(u0 > 0b11101111 && u0 <= 0b11110111){
-                // 四字节
+                // Four bytes
                 if(srcIndex + 3 <= srcLimit){
                     var u1 = src[srcIndex+1]
                     var u2 = src[srcIndex + 2]                
@@ -161,18 +204,18 @@ class UTF8Decoder <: Decoder{
                                             UInt32(UInt32(u2 & 0b00111111) << 6) + UInt32(u2 & 0b00111111)
                         dest[destIndex] = chr(codePoint)
                     }else{
-                        // 出错后，使用 FFFD 替换
+                        // Replace with fffd after error
                         dest[destIndex] = replacement
                     }         
                     srcIndex += 4
                     destIndex += 1
                     continue
                 }else{
-                    // 如果四字节只有 一部分在 src里面，则返回，等待后面的数据进入src后重新处理
+                    // If only a part of the four bytes is in SRC, return and wait for the subsequent data to enter SRC for reprocessing
                     return (srcIndex, destIndex)
                 }
             }else{
-                // 出错后，使用 FFFD 替换
+                // Replace with fffd after error
                 dest[destIndex] = replacement
                 srcIndex += 1
                 destIndex += 1
