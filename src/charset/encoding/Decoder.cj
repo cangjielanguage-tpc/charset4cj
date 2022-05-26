@@ -10,7 +10,7 @@ package charset.encoding
 
 /**
  * The interface is interface Decoder
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 public interface Decoder{

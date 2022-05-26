@@ -13,7 +13,7 @@ import charset.encoding.*
 
 /**
  * EUC-KR korean encoding
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 public class EUCKRCharset <: Charset{
@@ -54,7 +54,7 @@ public class EUCKRCharset <: Charset{
 
 /*
  * The class is EUCKREncoder inherited from Encoder
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 class EUCKREncoder <: Encoder {
@@ -83,7 +83,7 @@ class EUCKREncoder <: Encoder {
 
 /*
  * The class is EUCKRDecoder inherited from Decoder
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 class EUCKRDecoder <: Decoder{

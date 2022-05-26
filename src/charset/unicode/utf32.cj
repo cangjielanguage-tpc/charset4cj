@@ -12,7 +12,7 @@ import charset.encoding.*
 
 /**
  * UTF32 char set
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 public class UTF32Charset <: Charset{
@@ -68,7 +68,7 @@ public class UTF32Charset <: Charset{
 /*
  * UTF-32 encoder
  * function: Encode Unicode codepoint into utf32 byte sequence
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 class UTF32Encoder <: Encoder {
@@ -138,7 +138,7 @@ class UTF32Encoder <: Encoder {
 /*
  * UTF32 Decoder
  * function: Decode the utf32 byte sequence into a Unicode codepoint array
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 class UTF32Decoder <: Decoder{

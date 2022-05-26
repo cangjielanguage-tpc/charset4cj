@@ -11,7 +11,7 @@ package charset.encoding
 
 /**
  * The class is Charset
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 public abstract class Charset{

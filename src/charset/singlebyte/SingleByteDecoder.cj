@@ -14,7 +14,7 @@ import charset.encoding.*
 
 /**
  * Single byte character set decoder
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 class SingleByteDecoder <: Decoder{

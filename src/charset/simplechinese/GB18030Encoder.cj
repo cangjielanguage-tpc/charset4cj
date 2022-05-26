@@ -13,7 +13,7 @@ import charset.encoding.*
 
 /**
  * The class is GB18030Encoder inherited from Encoder
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 public class GB18030Encoder <: Encoder {

@@ -21,7 +21,7 @@ import charset.encoding.*
 
 /**
  * Constant definitions for all the supported Charsets. 
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 public class Charsets {
