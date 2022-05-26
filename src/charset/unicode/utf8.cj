@@ -12,7 +12,7 @@ import charset.encoding.*
 
 /**
  * UTF8 character set
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 public class UTF8Charset <: Charset{
@@ -65,7 +65,7 @@ public class UTF8Charset <: Charset{
  * 
  * 0x00010000 - 0x001FFFFF:
  *     11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 class UTF8Encoder <: Encoder {
@@ -122,7 +122,7 @@ class UTF8Encoder <: Encoder {
 /*
  * UTF8 decoder
  * function: Decode the utf8 byte sequence into a Unicode codepoint array
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 class UTF8Decoder <: Decoder{

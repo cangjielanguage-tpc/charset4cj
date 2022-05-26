@@ -15,7 +15,7 @@ import charset.encoding.*
 
 /**
  * Single byte character set
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 public class SingleByteCharset <: Charset{

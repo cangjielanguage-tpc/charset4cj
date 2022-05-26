@@ -12,7 +12,7 @@ import charset.encoding.*
 
 /**
  * Big5 encoding
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 public class BIG5Charset <: Charset{
@@ -52,7 +52,7 @@ public class BIG5Charset <: Charset{
 
 /*
  * The class is BIG5Encoder inherited from Encoder
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 class BIG5Encoder <: Encoder {
@@ -78,7 +78,7 @@ class BIG5Encoder <: Encoder {
  *         The double byte part is ordinary Chinese characters
  *         The four byte part is mapped with Unicode through a table
  * 
- * @author @freeonsky
+ * @author freeonsky
  * @since 0.28.4
  */
 class BIG5Decoder <: Decoder{
