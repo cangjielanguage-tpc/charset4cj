@@ -33,13 +33,13 @@ public class GB18030Decoder <: Decoder{
      * @param dest Character array,range: [destUnusedOffset, dest.size()) ,not include dest.size()
      * @param destUnusedOffset Indicates a dest subscript that is not currently in use
      *
-     * @return Type of Int64 * Int64:(srcIndex, destIndex)
+     * @return Type of (Int64, Int64):(srcIndex, destIndex)
      *         srcIndex: Next unprocessed SRC subscript
      *         destIndex: Next unhandled dest subscript
      * @since 0.28.4
      */
     public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
-            dest:Array<Char>, destUnusedOffset:Int64): Int64 * Int64 {
+            dest:Array<Char>, destUnusedOffset:Int64): (Int64, Int64) {
         // src Processing index
         var srcIndex = srcOffset   
         // dest Processing index

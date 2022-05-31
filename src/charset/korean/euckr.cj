@@ -100,13 +100,13 @@ class EUCKRDecoder <: Decoder{
      * @param dest Range: [destUnusedOffset, dest.size()) not include dest.size()
      * @param destUnusedOffset Indicates a dest subscript that is not currently in use
      *
-     * @return Type of Int64 * Int64: (srcIndex, destIndex)
+     * @return Type of (Int64, Int64): (srcIndex, destIndex)
      *         srcIndex Next unprocessed SRC subscript
      *         destIndex Next unhandled dest subscript
      * @since 0.28.4
      */
     public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
-            dest:Array<Char>, destUnusedOffset:Int64): Int64 * Int64 {
+            dest:Array<Char>, destUnusedOffset:Int64): (Int64, Int64) {
         // Index being processed by SRC
         var srcIndex = srcOffset   
         // Dest index being processed

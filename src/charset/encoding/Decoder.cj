@@ -39,11 +39,11 @@ public interface Decoder{
      * @param dest Range: [destUnusedOffset, dest.size()), not include dest.size()
      * @param destUnusedOffset 
      *
-     * @return Int64 * Int64, return (srcIndex, destIndex)
+     * @return (Int64, Int64), return (srcIndex, destIndex)
      *          srcIndex: Next unprocessed src subscript
      *          destIndex: Next unhandled dest subscript
      * @since 0.28.4
      */
     func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
-            dest:Array<Char>, destUnusedOffset:Int64): Int64 * Int64
+            dest:Array<Char>, destUnusedOffset:Int64): (Int64, Int64)
 }
