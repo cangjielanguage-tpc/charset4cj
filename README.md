@@ -5,7 +5,7 @@
 <p align="center">
 <img alt="" src="https://badg.now.sh/badge/release/v0.0.1?color=green" style="display: inline-block;" />
 <img alt="" src="https://badg.now.sh/badge/build/pass?color=green" style="display: inline-block;" />
-<img alt="" src="https://badg.now.sh/badge/cjc/v0.28.4?color=green" style="display: inline-block;" />
+<img alt="" src="https://badg.now.sh/badge/cjc/v0.29.3?color=green" style="display: inline-block;" />
 <img alt="" src="https://badg.now.sh/badge/cjcov/90%25?color=green" style="display: inline-block;" />
 <img alt="" src="https://badg.now.sh/badge/project/open?color=green" style="display: inline-block;" />
 </p>
@@ -46,7 +46,7 @@
 ```
 func decode(src:Array<UInt8>):String
 func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
-            dest:Array<Char>, destUnusedOffset:Int64): Int64 * Int64
+            dest:Array<Char>, destUnusedOffset:Int64): (Int64, Int64)
 ```
 io流（包含文件流、网络流）读取的都是字节数组，要将字节数组转成String，就需要上面2个方法。每种字符集的解码方法各不相同
 
@@ -145,7 +145,7 @@ public func newDecoder():Decoder
 
 ```
 func decode(src:Array<UInt8>):String
-func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, dest:Array<Char>, destUnusedOffset:Int64): Int64 * Int64
+func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, dest:Array<Char>, destUnusedOffset:Int64): (Int64, Int64)
 ```
 #### interface Encoder
 
@@ -171,7 +171,7 @@ public func newDecoder():Decoder
 #### class GB18030Decoder
 
 ```
-public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64,dest:Array<Char>, destUnusedOffset:Int64): Int64 * Int64
+public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64,dest:Array<Char>, destUnusedOffset:Int64): (Int64, Int64)
 ```
 
 #### class GB18030Encoder
@@ -191,7 +191,7 @@ public func newDecoder():Decoder
 #### class SingleByteDecoder
 
 ```
-public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, dest:Array<Char>, destUnusedOffset:Int64): Int64 * Int64
+public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, dest:Array<Char>, destUnusedOffset:Int64): (Int64, Int64)
 ```
 
 #### class SingleByteEncoder
