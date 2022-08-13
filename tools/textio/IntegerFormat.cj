@@ -21,9 +21,9 @@ public class IntegerFormat{
             var mod = t % radix
             t = t / radix
             var c = if(mod >9){
-                chr(UInt32(mod + 55))
+                Char(UInt32(mod + 55))
             } else{
-                chr(UInt32(mod + 0x30))
+                Char(UInt32(mod + 0x30))
             }
             nstr = nstr + String([c])
         }
@@ -48,7 +48,7 @@ public class IntegerFormat{
         while(t > 0){
             var mod = t % 10
             t = t / 10
-            var c = chr(UInt32(mod + 0x30))
+            var c = Char(UInt32(mod + 0x30))
             nstr = nstr + String([c])
         }
         s = s + nstr.reverse()
@@ -94,7 +94,7 @@ public class IntegerFormat{
         return res
     }    
     private static func charToInt(ch:Char):Int64{
-        return Int64(ord(ch) - 0x30)
+        return Int64(UInt32(ch) - 0x30)
     }
     private static func pow(x:Int64, y:Int64){
         var i = 0

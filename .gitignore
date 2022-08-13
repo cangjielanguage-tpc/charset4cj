@@ -1,7 +1,9 @@
 .vscode
 *.cjo
 *.so
+*.bc
 build/
 bin/
 module-resolve.json
 unittest/
+ci_test/

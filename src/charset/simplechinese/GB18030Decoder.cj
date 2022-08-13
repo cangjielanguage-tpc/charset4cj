@@ -48,13 +48,13 @@ public class GB18030Decoder <: Decoder{
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
-                var c = chr(UInt32(u0))
+                var c = Char(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
                 srcIndex += 1     
                 continue           
             }else if(u0 == 0x80){
-                dest[destIndex] = chr(0x20AC)
+                dest[destIndex] = Char(0x20AC)
                 destIndex += 1      
                 srcIndex += 1
                 continue                 
@@ -74,7 +74,7 @@ public class GB18030Decoder <: Decoder{
                                         }                
                     var pointer = Int64(Int64(u0 - 0x81) * 190) + Int64(u1 - offset)
                     var codePoint = if(pointer < 23940){
-                                        chr(table[pointer])
+                                        Char(table[pointer])
                                     }else{
                                         replacement;
                                     }
@@ -118,7 +118,7 @@ public class GB18030Decoder <: Decoder{
                             }
                             var code:Array<UInt32> = gb18030_rangesMapping[start - 1]   
                             var codePoint = UInt32(UInt32(pointer) + UInt32(code[1]) - UInt32(code[0]))
-                            dest[destIndex] = chr(codePoint)
+                            dest[destIndex] = Char(codePoint)
                             destIndex += 1
                             srcIndex += 4
                             continue                                                                             

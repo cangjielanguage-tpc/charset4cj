@@ -104,7 +104,7 @@ class UTF32Encoder <: Encoder {
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){
-            var codePoint:UInt32 = ord(ch)
+            var codePoint:UInt32 = UInt32(ch)
             var u0 = UInt8((codePoint >> 24) & 0xFF)
             var u1 = UInt8((codePoint >> 16) & 0xFF)
             var u2 = UInt8((codePoint >> 8) & 0xFF)
@@ -181,7 +181,7 @@ class UTF32Decoder <: Decoder{
             }else{
                 (UInt32(u3) << 24) + (UInt32(u2) << 16) + (UInt32(u1) << 8) + UInt32(u0)
             }
-            dest[destIndex] = chr(codeUnit)
+            dest[destIndex] = Char(codeUnit)
             destIndex += 1
             srcIndex += 4
             continue

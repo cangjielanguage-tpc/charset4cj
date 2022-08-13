@@ -110,7 +110,7 @@ class BIG5Decoder <: Decoder{
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
-                var c = chr(UInt32(u0))
+                var c = Char(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
                 srcIndex += 1     
@@ -147,7 +147,7 @@ class BIG5Decoder <: Decoder{
                     }else if(pointer == 1166){
                         s = "\u{00EA}\u{030C}".toCharArray()
                     }else{
-                        dest[destIndex] = chr(table[pointer])
+                        dest[destIndex] = Char(table[pointer])
                         srcIndex += 2
                         destIndex += 1
                         continue                      

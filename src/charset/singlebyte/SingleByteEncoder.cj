@@ -69,7 +69,7 @@ class SingleByteEncoder <: Encoder {
         let ref = Array<UInt8>(buf.size(), {i => 0})
         var i = 0
         for(character in buf){
-            ref[i] = encodeMapping.get(ord(character)) ?? replacement
+            ref[i] = encodeMapping.get(UInt32(character)) ?? replacement
             i += 1
         }
         return ref
