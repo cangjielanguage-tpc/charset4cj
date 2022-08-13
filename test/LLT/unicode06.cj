@@ -9,7 +9,7 @@ main (){
     var encoder = charset.newEncoder()
     var str1: String = "你好我𬌗𬌗𬌗𬌗𬌗"
     var s1 = encoder.encode(str1)
-    var src: Array<UInt8> = Array<UInt8>([0xB0, 0xDA, 0xA7, 0x41, 0xB6])
+    var src: Array<UInt8> = Array<UInt8>([0x00,0x02,0xc3,0x17])
     var srcOffset: Int64 = 2
     var srcLimit: Int64 = 3
     var dest: Array<Char> = Array<Char>(6, {i => '\u{0}'})

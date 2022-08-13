@@ -8,12 +8,17 @@ main (){
     var encoder =charset.newEncoder()
     var decoder = charset.newDecoder()
     var str2: String = "欢迎你的到来"
-    var src: Array<UInt8> = Array<UInt8>([0xB0, 0xDA, 0xA7, 0x41, 0xB6])
-    var srcOffset: Int64 = 1
+    var src: Array<UInt8> = Array<UInt8>([0x00,0x02,0xc3,0x17])
+    var srcOffset: Int64 = 0
     var srcLimit: Int64 = 4
     var dest: Array<Char> = Array<Char>(6, {i => '\u{0}'})
-    var destUnusedOffset: Int64 = 2
+    var destUnusedOffset: Int64 = 0
     var s1 = decoder.decode(src, srcOffset, srcLimit, dest, destUnusedOffset)
-    var s2 = encoder.encode(str2)
+    var destStr:String = String(dest, start:destUnusedOffset, length:(s1[1] - destUnusedOffset))
+    if(destStr == "𬌗"){
+        return 0
+    }else{
+        return 1
+    }
     return 0
 }

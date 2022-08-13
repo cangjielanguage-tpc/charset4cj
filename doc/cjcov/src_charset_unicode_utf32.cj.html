@@ -666,7 +666,7 @@ pre
 <td align="right" class="lineno"><pre>54</pre></td>
 <td align="right" class="linebranch"></td>
 <td align="center" class="linecount coveredLine"><pre>Y</pre></td>
-<td align="left" class="src coveredLine"><pre>            var codePoint:UInt32 = ord(ch)</pre></td>
+<td align="left" class="src coveredLine"><pre>            var codePoint:UInt32 = UInt32(ch)</pre></td>
 </tr>
 <tr>
 <td align="right" class="lineno"><pre>55</pre></td>
@@ -1224,7 +1224,7 @@ pre
 </details>
 </td>
 <td align="center" class="linecount coveredLine"><pre>Y</pre></td>
-<td align="left" class="src coveredLine"><pre>            dest[destIndex] = chr(codeUnit)</pre></td>
+<td align="left" class="src coveredLine"><pre>            dest[destIndex] = Char(codeUnit)</pre></td>
 </tr>
 <tr>
 <td align="right" class="lineno"><pre>126</pre></td>

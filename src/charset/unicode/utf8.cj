@@ -88,7 +88,7 @@ class UTF8Encoder <: Encoder {
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){
-            var codepoint = ord(ch)
+            var codepoint = UInt32(ch)
             if(codepoint <= 0x7F){
                 Array[position] = UInt8(codepoint)
                 position += 1
@@ -150,7 +150,7 @@ class UTF8Decoder <: Decoder{
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
-                var c = chr(UInt32(u0))
+                var c = Char(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
                 srcIndex += 1     
@@ -161,7 +161,7 @@ class UTF8Decoder <: Decoder{
                     var u1 = src[srcIndex+1]
                     if(u1 <= 0b10111111){
                         var codePoint = UInt32(UInt32(u0 & 0b00011111) << 6) + UInt32(u1 & 0b00111111)
-                        dest[destIndex] = chr(codePoint)
+                        dest[destIndex] = Char(codePoint)
                     }else{
                         // Replace with fffd after error
                         dest[destIndex] = replacement
@@ -181,7 +181,7 @@ class UTF8Decoder <: Decoder{
                     if(u1 <= 0b10111111 && u2 <= 0b10111111){
                         var codePoint = UInt32(UInt32(u0 & 0b00001111) << 12) + UInt32(UInt32(u1 & 0b00111111) << 6) + 
                                             UInt32(u2 & 0b00111111)
-                        dest[destIndex] = chr(codePoint)
+                        dest[destIndex] = Char(codePoint)
                     }else{
                         // Replace with fffd after error
                         dest[destIndex] = replacement
@@ -202,7 +202,7 @@ class UTF8Decoder <: Decoder{
                     if(u1 <= 0b10111111 && u2 <= 0b10111111 && u3 <= 0b10111111){
                         var codePoint = UInt32(UInt32(u0 & 0b00000111) << 18) + UInt32(UInt32(u1 & 0b00111111) << 12) + 
                                             UInt32(UInt32(u2 & 0b00111111) << 6) + UInt32(u2 & 0b00111111)
-                        dest[destIndex] = chr(codePoint)
+                        dest[destIndex] = Char(codePoint)
                     }else{
                         // Replace with fffd after error
                         dest[destIndex] = replacement

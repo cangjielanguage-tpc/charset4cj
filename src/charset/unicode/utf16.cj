@@ -99,7 +99,7 @@ class UTF16Encoder <: Encoder {
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){
-            var codePoint:UInt32 = ord(ch)
+            var codePoint:UInt32 = UInt32(ch)
             // Double byte
             if(codePoint <= 0xFFFF){
                 var high = UInt8((codePoint >> 8) & 0xFF)
@@ -209,13 +209,13 @@ class UTF16Decoder <: Decoder{
                     codeUnit2 = (UInt32(u3) << 8) + UInt32(u2)
                 }
                 var codePoint:UInt32 = 0x10000 + (UInt32(codeUnit - 0xD800) << 10) + codeUnit2 - 0xDC00
-                dest[destIndex] = chr(codePoint)
+                dest[destIndex] = Char(codePoint)
                 srcIndex += 4
                 destIndex += 1
                 continue
             }else{
                 // Double byte
-                dest[destIndex] = chr(codeUnit)
+                dest[destIndex] = Char(codeUnit)
                 print("${dest[destIndex]}")
                 srcIndex += 2
                 destIndex += 1

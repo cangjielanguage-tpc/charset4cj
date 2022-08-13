@@ -85,7 +85,7 @@ class SingleByteDecoder <: Decoder{
 
             var byte = src[srcIndex]
             if(byte <= 0x7F){
-                dest[destIndex] = chr(UInt32(byte))
+                dest[destIndex] = Char(UInt32(byte))
                 destIndex += 1
             }else{
                 var pointer = Int64(byte - 0x80)
@@ -93,7 +93,7 @@ class SingleByteDecoder <: Decoder{
                 if(value == 0xFFFF){
                     dest[destIndex] = replacement    
                 }else{
-                    dest[destIndex] = chr(value)
+                    dest[destIndex] = Char(value)
                 }
                 destIndex += 1
             }
