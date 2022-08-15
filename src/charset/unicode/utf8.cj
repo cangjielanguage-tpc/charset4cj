@@ -83,39 +83,39 @@ class UTF8Encoder <: Encoder {
             return Array<UInt8>()
         }
         // Create an array of return values. The maximum length of the array is 4 times that of str.size()
-        var Array = Array<UInt8>(str.size()*4,{i => 0})
+        var res = Array<UInt8>(str.size()*4,{i => 0})
         // First unprocessed subscript of array
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){
             var codepoint = UInt32(ch)
             if(codepoint <= 0x7F){
-                Array[position] = UInt8(codepoint)
+                res[position] = UInt8(codepoint)
                 position += 1
             }else if(codepoint >= 0x80 && codepoint <= 0x7FF){
-                Array[position] = UInt8(0xC0 | ((codepoint >> 6) & 0x1F))
+                res[position] = UInt8(0xC0 | ((codepoint >> 6) & 0x1F))
                 position += 1
-                Array[position] = UInt8(0x80 | (codepoint & 0x3F))
+                res[position] = UInt8(0x80 | (codepoint & 0x3F))
                 position += 1
             }else if(codepoint >= 0x800 && codepoint <= 0xFFFF){
-                Array[position] = UInt8(0xE0 | ((codepoint >> 12) & 0x0F))
+                res[position] = UInt8(0xE0 | ((codepoint >> 12) & 0x0F))
                 position += 1
-                Array[position] = UInt8(0x80 | ((codepoint >> 6) & 0x3F))
+                res[position] = UInt8(0x80 | ((codepoint >> 6) & 0x3F))
                 position += 1  
-                Array[position] = UInt8(0x80 | (codepoint & 0x3F))
+                res[position] = UInt8(0x80 | (codepoint & 0x3F))
                 position += 1                                
             }else{
-                Array[position] = UInt8(0xF0 | ((codepoint >> 18) & 0x07))
+                res[position] = UInt8(0xF0 | ((codepoint >> 18) & 0x07))
                 position += 1
-                Array[position] = UInt8(0x80 | ((codepoint >> 12) & 0x3F))
+                res[position] = UInt8(0x80 | ((codepoint >> 12) & 0x3F))
                 position += 1  
-                Array[position] = UInt8(0x80 | ((codepoint >> 6) & 0x3F))
+                res[position] = UInt8(0x80 | ((codepoint >> 6) & 0x3F))
                 position += 1                     
-                Array[position] = UInt8(0x80 | (codepoint & 0x3F))
+                res[position] = UInt8(0x80 | (codepoint & 0x3F))
                 position += 1                     
             }
         }
-        return Array[0..position]
+        return res[0..position]
     }
 }
 
