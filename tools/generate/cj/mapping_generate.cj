@@ -67,6 +67,53 @@ func maxMapKey(map:Map<UInt32, UInt32>):UInt32{
     return max
 }
 
+func writeRangeMappingFile(encodeName:String, pkg:String){
+    var s = """
+/*
+ * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ */
+
+/**
+ * @file
+ * https://encoding.spec.whatwg.org/index-${encodeName.toAsciiLower()}.txt Automatic document generation
+ */
+
+package charset.${pkg}
+
+
+"""
+    let map = readFileToMap(encodeName)
+    var decodeMappingStr = "let " + encodeName.replace("-", "_")  + "Mapping: Array<Array<UInt32>> = [\n"
+    let keys = map.keys()
+    let list = ArrayList(keys)
+    list.sort()
+    for(v in 0..list.size()){
+        var i = list[v]
+        if(map.contains(UInt32(i))){
+            var codePoint = map[UInt32(i)]
+            decodeMappingStr = decodeMappingStr + "\t\t[${i}, 0x" + codePoint.format("04x") + "]"
+        }else{
+            decodeMappingStr = decodeMappingStr + "\t\t0"
+        }
+        if(v != (list.size() - 1)){
+            decodeMappingStr = decodeMappingStr + ",\n"
+        }else{
+            decodeMappingStr = decodeMappingStr + "\n"
+        }
+    }
+    decodeMappingStr = decodeMappingStr + "]\n\n"
+    s = s + decodeMappingStr
+
+    
+    let fileName = encodeName.toAsciiLower().replace("-", "_") + "_mapping.cj"
+    let path = "../../../src/charset/" + pkg + "/" + fileName
+    let fs = FileStream(path)
+    if(fs.openFile()){
+        fs.write(s)
+        fs.close()
+    }
+}
+
 func writeMappingFile(encodeName:String, pkg:String){
     var s = """
 /*
@@ -89,7 +136,7 @@ from std import collection.*
     for(i in 0..maxPointer+1){
         if(map.contains(UInt32(i))){
             var codePoint = map[UInt32(i)]
-            decodeMappingStr = decodeMappingStr + "\t\t" + codePoint.format("#6x") 
+            decodeMappingStr = decodeMappingStr + "\t\t0x" + codePoint.format("04x") 
         }else{
             decodeMappingStr = decodeMappingStr + "\t\t0"
         }
@@ -106,7 +153,7 @@ from std import collection.*
     for(i in 0..maxPointer+1){
         if(map.contains(UInt32(i))){
             var codePoint = map[UInt32(i)]
-            encodeMappingStr = encodeMappingStr + "\t\t(" + codePoint.format("#6x") + ", ${i})"
+            encodeMappingStr = encodeMappingStr + "\t\t(0x" + codePoint.format("04x") + ", ${i})"
             if(i != maxPointer){
                 encodeMappingStr = encodeMappingStr + ",\n"
             }else{
@@ -128,5 +175,8 @@ from std import collection.*
 main(){
     let encodeName = "EUC-KR"
     writeMappingFile(encodeName, "korean")
+    writeMappingFile("gb18030", "simplechinese")
+    writeRangeMappingFile("gb18030-ranges", "simplechinese")
+
     0
 }
