@@ -94,7 +94,7 @@ class UTF16Encoder <: Encoder {
             return Array<UInt8>()
         }
         // Create an array of return values. The maximum length of the array is 4 times that of str.size()
-        var Array = Array<UInt8>(str.size()*4,{i => 0})
+        var res = Array<UInt8>(str.size()*4,{i => 0})
         // First unprocessed subscript of array
         var position = 0
         var arr = str.toCharArray()
@@ -105,9 +105,9 @@ class UTF16Encoder <: Encoder {
                 var high = UInt8((codePoint >> 8) & 0xFF)
                 var low = UInt8(codePoint & 0xFF)
                 if(be){
-                    Array[position] = high
+                    res[position] = high
                     position += 1
-                    Array[position] = low;
+                    res[position] = low;
                     position += 1
                 }
             }else{
@@ -120,27 +120,27 @@ class UTF16Encoder <: Encoder {
                 var u2 = UInt8((surrogateLow >> 8) & 0xFF)
                 var u3 = UInt8(surrogateLow & 0xFF)
                 if(be){
-                    Array[position] = u0
+                    res[position] = u0
                     position += 1
-                    Array[position] = u1
+                    res[position] = u1
                     position += 1
-                    Array[position] = u2
+                    res[position] = u2
                     position += 1
-                    Array[position] = u3
+                    res[position] = u3
                     position += 1                                                            
                 }else{
-                    Array[position] = u1
+                    res[position] = u1
                     position += 1
-                    Array[position] = u0
+                    res[position] = u0
                     position += 1
-                    Array[position] = u3
+                    res[position] = u3
                     position += 1
-                    Array[position] = u2
+                    res[position] = u2
                     position += 1                    
                 }
             }
         }
-        return Array[0..position]
+        return res[0..position]
     }
 }
 
