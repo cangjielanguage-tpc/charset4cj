@@ -81,7 +81,7 @@ public func ibm866(){
     var decoder = charset.newDecoder()
     var buf1 = Array<UInt8>([0x80, 0x81,0x82,0x83,0x84,0x85])
     var s1 = decoder.decode(buf1)
-    if (!s1.equals("АБВГД")) {
+    if (!s1.equals("АБВГДЕ")) {
         return 1
     }
     print("s1:${s1}\t")

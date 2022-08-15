@@ -76,13 +76,7 @@ class SingleByteDecoder <: Decoder{
         var srcIndex = srcOffset   
         // dest processing index
         var destIndex = destUnusedOffset
-        while(true){
-            if(srcIndex > srcLimit){
-                srcIndex -= 1
-                destIndex -= 1
-                break
-            }
-
+        while(srcIndex <= srcLimit){
             var byte = src[srcIndex]
             if(byte <= 0x7F){
                 dest[destIndex] = Char(UInt32(byte))
