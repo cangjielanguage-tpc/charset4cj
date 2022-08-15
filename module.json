@@ -1,8 +1,8 @@
 {
-  "cjc_version": "0.29.3",
-  "organization": "zft",
+  "cjc_version": "0.31.4",
+  "organization": "pllab",
   "name": "charset",
-  "description": "nothing here",
+  "description": "charset encoder/decoder",
   "version": "1.0.0",
   "requires": {},
   "package_requires": {},

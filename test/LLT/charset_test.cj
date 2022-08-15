@@ -91,10 +91,12 @@ public func euk(){
     var encoder = charset.newEncoder()
     var decoder = charset.newDecoder()
 
-    var buf1 = Array<UInt8>([0xA2, 0xDB, 0xA4, 0xA6])
+    var buf1 = Array<UInt8>([0xB9, 0xD0])
 
     var s1 = decoder.decode(buf1)
-    if (!s1.equals("갂갂")) {
+    println(s1)
+    // b9d0	밀
+    if (s1 != "밀") {
         return 1
     }
     return 0

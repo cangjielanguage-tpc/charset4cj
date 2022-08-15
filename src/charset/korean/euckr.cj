@@ -68,17 +68,44 @@ class EUCKREncoder <: Encoder {
      * @since 0.28.4
      */
     public func encode(str:String): Array<UInt8>{
-        let ref = Array<UInt8>()
-        // TODO
-        return ref
+        var table = EUC_KREncodeMapping
+        // replacement : 0x63 ,0x3F
+        if(str.size() == 0){
+            return Array<UInt8>()
+        }
+        let ref = Array<UInt8>(str.size() * 4, {i => 0})
+        var position = 0
+        var arr = str.toCharArray()
+        for(ch in arr){
+            var codePoint:UInt32 = UInt32(ch)
+            // If code point is an ASCII code point, return a byte whose value is code point.
+            if(codePoint <= 0x7F){
+                ref[position] = UInt8(codePoint)
+                position += 1
+            }else{
+                if(table.contains(codePoint)){
+                    var pointer = table[codePoint]
+                    let lead = pointer / 190 + 0x81
+                    let trail = pointer % 190 + 0x41
+                    ref[position] = UInt8(lead)
+                    ref[position+1] = UInt8(trail)
+                    position += 2                    
+                }else{
+                    // error
+                    ref[position] = 0x63
+                    ref[position+1] = 0x3F
+                    position += 2
+                }
+            }
+        }    
+        return ref[0..position]
     }
 }
 
 /*
- * gb18030 Character set decoder
+ * euc-kr Character set decoder
  * gb18030 The single byte part is the same as ASCII
- *         The double byte part is ordinary Chinese characters
- *         The four byte part is mapped with Unicode through a table
+ *         The double byte part is ordinary cjk characters
  */
 
 /*
@@ -128,33 +155,19 @@ class EUCKRDecoder <: Decoder{
                 
                 var u1 = src[srcIndex+1]
                 var pointer:Int64 = 0
-                if(u0 < 0xc7){
-                    var pointer = 178 * Int64(u0 - 0x81)
-                    if(u1 >= 0x41 && u1 < 0x5b){
-                        pointer += Int64(u1) - 0x41
-                    }else if(0x61 <= u1 && u1 < 0x7b){
-                        pointer += Int64(u1) - (0x61 - 26)
-                    }else if(0x81 <= u1 && u1 < 0xff){
-                        pointer += Int64(u1) - (0x81 - 2*26)
+                var codePoint:Char = '\u{0}'
+                if(u1 >= 0x41 && u1 <= 0xFE){
+                    pointer = Int64(Int64(u0 - 0x81) * 190 + Int64(u1) - 0x41)
+                    let c = table[pointer]
+                    if(c == 0){
+                        codePoint = replacement    
                     }else{
-                        // error
-                        srcIndex += 2
-                        destIndex += 1
-                        dest[destIndex] = replacement
-                        continue                              
+                        codePoint = Char(c)
                     }
-
-                }else if(0xa1 <= u1 && u1 < 0xff){
-                    pointer = 178*(0xc7-0x81) + Int64(u0-0xc7)*94 + Int64(u1-0xa1)
                 }else{
-                    // Replace with fffd after error
-                    dest[destIndex] = replacement     
-                    destIndex += 1
-                    srcIndex += 1
-                    continue                                       
-                }  
-                print("pointer:${pointer}\n")
-                dest[destIndex] = Char(table[pointer])
+                    codePoint = replacement
+                }
+                dest[destIndex] = codePoint
                 srcIndex += 2
                 destIndex += 1
                 continue                

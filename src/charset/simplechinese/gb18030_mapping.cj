@@ -8,6 +8,7 @@
  */
 
 package charset.simplechinese
+
 from std import collection.*
 
 let gb18030DecodeMapping: Array<UInt32> = [
@@ -23952,7 +23953,6 @@ let gb18030DecodeMapping: Array<UInt32> = [
 		0xe4c4,
 		0xe4c5
 ]
-
 
 let gb18030EncodeMapping = HashMap<UInt32, UInt32>([
 		(0x4e02, 0),

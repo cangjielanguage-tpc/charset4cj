@@ -2,6 +2,7 @@
 *.cjo
 *.so
 *.bc
+*.txt
 build/
 bin/
 module-resolve.json
