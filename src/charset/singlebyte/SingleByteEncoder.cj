@@ -20,8 +20,8 @@ import charset.encoding.*
 class SingleByteEncoder <: Encoder {
     // Todo currently uses 0x1a uniformly, and each single byte character set has a different replacement
     var replacement:UInt8 = 0x1a
-    var encodeMapping:HashMap<UInt32, UInt8>
-    let encodeDic = HashMap<String, HashMap<UInt32, UInt8>>([
+    var encodeMapping:Map<UInt32, UInt32>
+    let encodeDic = HashMap<String, Map<UInt32, UInt32>>([
         ("IBM866", ibm866EncodeMapping),
         ("ISO-8859-2", iso_8859_2EncodeMapping),
         ("ISO-8859-3", iso_8859_3EncodeMapping),
@@ -69,7 +69,13 @@ class SingleByteEncoder <: Encoder {
         let ref = Array<UInt8>(buf.size(), {i => 0})
         var i = 0
         for(character in buf){
-            ref[i] = encodeMapping.get(UInt32(character)) ?? replacement
+            if(UInt32(character) <= 0x7F){
+                ref[i] = UInt8(UInt32(character))
+            }else if(encodeMapping.contains(UInt32(character))){
+                ref[i] = UInt8(encodeMapping[UInt32(character)]) + 0x80
+            }else{
+                ref[i] = replacement
+            }
             i += 1
         }
         return ref

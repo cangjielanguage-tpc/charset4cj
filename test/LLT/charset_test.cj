@@ -27,10 +27,16 @@ public func big5(){
     var charset = Charsets.big5
     var encoder = charset.newEncoder()
     var decoder = charset.newDecoder()
-    var buf1 = Array<UInt8>([0xB0, 0xDA, 0xA7, 0x41])
+    var buf1 = Array<UInt8>([0xB8, 0x4D, 0xAE, 0x73])
     var s1 = decoder.decode(buf1)
 //@Assert(s1, "碉峴")
-    if (!s1.equals("碉峴")) {
+    if (s1 != "碉峴") {
+        return 1
+    }
+    var s3 = "離離原上草，壹歲壹枯榮"
+    var arr = encoder.encode(s3)
+    var s4 = decoder.decode(arr)
+    if(s3 != s4){
         return 1
     }
     return 0
@@ -75,7 +81,7 @@ public func ibm866(){
     var decoder = charset.newDecoder()
     var buf1 = Array<UInt8>([0x80, 0x81,0x82,0x83,0x84,0x85])
     var s1 = decoder.decode(buf1)
-    if (!s1.equals("АБВГД")) {
+    if (!s1.equals("АБВГДЕ")) {
         return 1
     }
     print("s1:${s1}\t")

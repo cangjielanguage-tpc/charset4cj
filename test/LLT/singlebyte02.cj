@@ -1,13 +1,17 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from charset import charset.korean.*
-from charset import charset.singlebyte.*
+from charset import charset.*
 
 main (){
 
-    var charset = SingleByteCharset("ISO-8859-6")
-    var charname = charset.newEncoder()
-    var src: String = "ISO-8859-8"
-    var s1 = charname.encode(src)
+    var charset = Charsets.iso_8859_6
+    var decoder = charset.newDecoder()
+    var encoder = charset.newEncoder()
+    var s1 = "ف س ئ ب ز "
+    var arr = encoder.encode(s1)
+    var s2 = decoder.decode(arr)
+    if(s1 != s2){
+        return 1
+    }
     return 0
 }
