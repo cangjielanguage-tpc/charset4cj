@@ -66,9 +66,38 @@ class BIG5Encoder <: Encoder {
      * @since 0.28.4
      */
     public func encode(str:String): Array<UInt8>{
-        let ref = Array<UInt8>()
-        // TODO
-        return ref
+        var table = Big5EncodeMapping
+        // replacement : 0x63 ,0x3F
+        if(str.size() == 0){
+            return Array<UInt8>()
+        }
+        let ref = Array<UInt8>(str.size() * 4, {i => 0})
+        var position = 0
+        var arr = str.toCharArray()
+        for(ch in arr){
+            var codePoint:UInt32 = UInt32(ch)
+            // If code point is an ASCII code point, return a byte whose value is code point.
+            if(codePoint <= 0x7F){
+                ref[position] = UInt8(codePoint)
+                position += 1
+            }else{
+                if(table.contains(codePoint)){
+                    var pointer = table[codePoint]
+                    let lead = pointer / 157 + 0x81
+                    let trail = UInt8(pointer % 157)
+                    let offset:UInt8 = if(trail < 0x3F) {0x40} else {0x62}
+                    ref[position] = UInt8(lead)
+                    ref[position+1] = UInt8(trail + offset)
+                    position += 2                    
+                }else{
+                    // error
+                    ref[position] = 0x63
+                    ref[position+1] = 0x3F
+                    position += 2
+                }
+            }
+        }    
+        return ref[0..position]
     }
 }
 

@@ -173,8 +173,8 @@ from std import collection.*
 }
 
 main(){
-    let encodeName = "EUC-KR"
-    writeMappingFile(encodeName, "korean")
+    writeMappingFile("EUC-KR", "korean")
+    writeMappingFile("Big5", "traditionchinese")
     writeMappingFile("gb18030", "simplechinese")
     writeRangeMappingFile("gb18030-ranges", "simplechinese")
 

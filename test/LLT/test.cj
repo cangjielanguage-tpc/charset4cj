@@ -6,11 +6,11 @@ main (){
     var charset = Charsets.big5
     var encoder = charset.newEncoder()
     var decoder = charset.newDecoder()
-    var buf1 = Array<UInt8>([0xB0, 0xDA, 0xA7, 0x41])
-    var s1 = decoder.decode(buf1)
-    if (!s1.equals("碉峴")) {
+    var s1 = "碉峴"
+    var arr = encoder.encode(s1)
+    var s2 = decoder.decode(arr)
+    if (s1 != s2) {
         return 1
     }
-    println(s1)
     return 0
 }
