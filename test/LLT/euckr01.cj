@@ -1,15 +1,24 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from charset import charset.korean.*
-from charset import charset.encoding.*
+from charset import charset.*
 
 main (){
 
-    var charset = EUCKRCharset()
+    var charset = Charsets.euckr
     var euckrEncoder = charset.newEncoder()
-    var buf1: String = "adafdsa"
-    var s1 = euckrEncoder.encode(buf1)
-    if (!s1.isEmpty()) {
+    var euckrDecoder = charset.newDecoder()
+    // 0xAC34	갴
+    // 0xC989	즉
+    // 0x9438	鐸
+    var s1: String = "갴즉鐸"
+    var arr = euckrEncoder.encode(s1)
+    for(a in arr){
+        print("${a}")
+    }
+    var s2 = euckrDecoder.decode(arr)
+    if(s1 == s2){
+        return 0
+    }else{
         return 1
     }
     return 0
