@@ -16,6 +16,7 @@ import charset.singlebyte.*
 import charset.simplechinese.*
 import charset.traditionchinese.*
 import charset.korean.*
+import charset.japanese.*
 
 import charset.encoding.*
 
@@ -40,6 +41,8 @@ public class Charsets {
     public static let gb18030:Charset = GB18030Charset()
     // EUC-KR
     public static let euckr:Charset = EUCKRCharset()
+    // EUC-JP
+    public static let eucjp:Charset = EUCJPCharset()
     // Big5
     public static let big5:Charset = BIG5Charset()
 
@@ -107,6 +110,7 @@ public class Charsets {
         gb18030,
         euckr,
         big5,
+        eucjp,
         ibm866,
         iso_8859_2,
         iso_8859_3,

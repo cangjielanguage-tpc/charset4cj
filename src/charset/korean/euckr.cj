@@ -73,7 +73,7 @@ class EUCKREncoder <: Encoder {
         if(str.size() == 0){
             return Array<UInt8>()
         }
-        let ref = Array<UInt8>(str.size() * 4, {i => 0})
+        let ref = Array<UInt8>(str.size() * 2, {i => 0})
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){
@@ -83,8 +83,9 @@ class EUCKREncoder <: Encoder {
                 ref[position] = UInt8(codePoint)
                 position += 1
             }else{
-                if(table.contains(codePoint)){
-                    var pointer = table[codePoint]
+                var index = indexPointer(EUC_KREncodeMapping, EUC_KRDecodeMapping, codePoint)
+                if(index >= 0){
+                    var pointer = UInt32(index)
                     let lead = pointer / 190 + 0x81
                     let trail = pointer % 190 + 0x41
                     ref[position] = UInt8(lead)
@@ -104,7 +105,7 @@ class EUCKREncoder <: Encoder {
 
 /*
  * euc-kr Character set decoder
- * gb18030 The single byte part is the same as ASCII
+ * euc-kr The single byte part is the same as ASCII
  *         The double byte part is ordinary cjk characters
  */
 

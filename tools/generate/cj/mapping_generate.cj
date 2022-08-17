@@ -3,7 +3,7 @@ from net import tls.*
 from std import io.*
 from std import collection.*
 
-
+let encodeMapFlag = false
 func downloadFile(encodeName: String){
     let path = encodeName.toAsciiLower() + ".txt"
     if(File.exist(path)){
@@ -15,7 +15,7 @@ func downloadFile(encodeName: String){
     let client = Client(cfg)
     try{
         let res = client.get(url)
-        let s = String.fromUtf8(res.readToEnd())
+        let s = res.readTextToEnd()
         let fs = FileStream(path)
         if(fs.openFile()){
             fs.write(s)
@@ -150,21 +150,25 @@ from std import collection.*
     s = s + decodeMappingStr
 
     var encodeMappingStr = "let " + encodeName.replace("-", "_")  + "EncodeMapping = HashMap<UInt32, UInt32>([\n"
-    for(i in 0..maxPointer+1){
-        if(map.contains(UInt32(i))){
-            var codePoint = map[UInt32(i)]
-            encodeMappingStr = encodeMappingStr + "\t\t(0x" + codePoint.format("04x") + ", ${i})"
-            if(i != maxPointer){
-                encodeMappingStr = encodeMappingStr + ",\n"
-            }else{
-                encodeMappingStr = encodeMappingStr + "\n"
-            }            
+    if(encodeMapFlag){
+        println("hello")
+        for(i in 0..maxPointer+1){
+            if(map.contains(UInt32(i))){
+                var codePoint = map[UInt32(i)]
+                encodeMappingStr = encodeMappingStr + "\t\t(0x" + codePoint.format("04x") + ", ${i})"
+                if(i != maxPointer){
+                    encodeMappingStr = encodeMappingStr + ",\n"
+                }else{
+                    encodeMappingStr = encodeMappingStr + "\n"
+                }            
+            }
         }
     }
     encodeMappingStr = encodeMappingStr + "])\n\n"
     s = s + encodeMappingStr
     let fileName = encodeName.toAsciiLower().replace("-", "_") + "_mapping.cj"
     let path = "../../../src/charset/" + pkg + "/" + fileName
+    File.delete(path)
     let fs = FileStream(path)
     if(fs.openFile()){
         fs.write(s)
@@ -176,6 +180,8 @@ main(){
     writeMappingFile("EUC-KR", "korean")
     writeMappingFile("Big5", "traditionchinese")
     writeMappingFile("gb18030", "simplechinese")
+    writeMappingFile("jis0208", "japanese")
+    writeMappingFile("jis0212", "japanese")
     writeRangeMappingFile("gb18030-ranges", "simplechinese")
 
     let singlebyteencoding = [

@@ -71,7 +71,7 @@ class BIG5Encoder <: Encoder {
         if(str.size() == 0){
             return Array<UInt8>()
         }
-        let ref = Array<UInt8>(str.size() * 4, {i => 0})
+        let ref = Array<UInt8>(str.size() * 2, {i => 0})
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){
@@ -81,8 +81,9 @@ class BIG5Encoder <: Encoder {
                 ref[position] = UInt8(codePoint)
                 position += 1
             }else{
-                if(table.contains(codePoint)){
-                    var pointer = table[codePoint]
+                var index = indexPointer(Big5EncodeMapping, Big5DecodeMapping, codePoint)
+                if(index >= 0){
+                    var pointer = UInt32(index)
                     let lead = pointer / 157 + 0x81
                     let trail = UInt8(pointer % 157)
                     let offset:UInt8 = if(trail < 0x3F) {0x40} else {0x62}
