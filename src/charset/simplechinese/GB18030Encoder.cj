@@ -20,7 +20,6 @@ import charset.encoding.*
  * @since 0.28.4
  */
 public class GB18030Encoder <: Encoder {
-    let table = gb18030EncodeMapping
 
     /**
      * Encodes a string into a byte array
@@ -53,40 +52,29 @@ public class GB18030Encoder <: Encoder {
             }else if(codePoint == 0x20AC){
                 ref[position] = 0x80
                 position += 1         
-            // if double byte part           
-            }else if(table.contains(codePoint)){
-                let pointer = table[codePoint]
-                let lead = pointer / 190 + 0x81
-                let trail = pointer % 190
-                let offset:UInt32 = if(trail < 0x3F){ 0x40 } else { 0x41 }
-                ref[position] = UInt8(lead)
-                position += 1
-                ref[position] = UInt8(trail + offset)
-                position += 1
-            } else{
+            }else{
+                // double byte part           
+                var index = indexPointer(gb18030EncodeMapping, gb18030DecodeMapping, codePoint)
+                if(index >= 0){
+                    let pointer = UInt32(index)
+                    let lead = pointer / 190 + 0x81
+                    let trail = pointer % 190
+                    let offset:UInt32 = if(trail < 0x3F){ 0x40 } else { 0x41 }
+                    ref[position] = UInt8(lead)
+                    position += 1
+                    ref[position] = UInt8(trail + offset)
+                    position += 1                    
+                }
                 //todo If is GBK is true, return error with code point.
                 
+                // four byte part
                 var pointer = indexGB18030RangesPointerFor(codePoint)
-                // 9. Let byte1 be floor(pointer / 10 / 126 / 10).
                 var byte1 = UInt8(pointer / 10 / 126 / 10);
-
-                // 10. Set pointer to pointer - byte1 × 10 × 126 × 10.
                 pointer = pointer - UInt32(byte1 * 10 * 126 * 10);
-
-                // 11. Let byte2 be floor(pointer / 10 / 126).
                 var byte2 = UInt8(pointer / 10 / 126);
-
-                // 12. Set pointer to pointer - byte2 × 10 × 126.
                 pointer = pointer - UInt32(byte2 * 10 * 126);
-
-                // 13. Let byte3 be floor(pointer / 10).
                 var byte3 = UInt8(pointer / 10);
-
-                // 14. Let byte4 be pointer - byte3 × 10.
                 var byte4 = pointer - UInt32(byte3 * 10);
-
-                // 15. Return four bytes whose values are byte1 + 0x81, byte2 +
-                // 0x30, byte3 + 0x81, byte4 + 0x30.
                 ref[position] = UInt8(byte1 + 0x81)
                 ref[position + 1] = UInt8(byte2 + 0x30)
                 ref[position + 2] = UInt8(byte3 + 0x81)

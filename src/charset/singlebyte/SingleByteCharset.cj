@@ -245,7 +245,66 @@ public class SingleByteCharset <: Charset{
             "x-mac-ukrainian"
         ])
     ])
-
+    let decodeDic = HashMap<String, Array<UInt32>>([
+        ("IBM866", ibm866DecodeMapping),
+        ("ISO-8859-2", iso_8859_2DecodeMapping),
+        ("ISO-8859-3", iso_8859_3DecodeMapping),
+        ("ISO-8859-4", iso_8859_4DecodeMapping),
+        ("ISO-8859-5", iso_8859_5DecodeMapping),
+        ("ISO-8859-6", iso_8859_6DecodeMapping),
+        ("ISO-8859-7", iso_8859_7DecodeMapping),
+        ("ISO-8859-8", iso_8859_8DecodeMapping),
+        // "ISO-8859-8-I", iso_8859_8_iDecodeMapping),
+        ("ISO-8859-10", iso_8859_10DecodeMapping),
+        ("ISO-8859-13", iso_8859_13DecodeMapping),
+        ("ISO-8859-14", iso_8859_14DecodeMapping),
+        ("ISO-8859-15", iso_8859_15DecodeMapping),
+        ("ISO-8859-16", iso_8859_16DecodeMapping),
+        ("KOI8-R", koi8_rDecodeMapping),
+        ("KOI8-U", koi8_uDecodeMapping),
+        ("macintosh", macintoshDecodeMapping),
+        ("windows-874", windows_874DecodeMapping),
+        ("windows-1250", windows_1250DecodeMapping),
+        ("windows-1251", windows_1251DecodeMapping),
+        ("windows-1252", windows_1252DecodeMapping),
+        ("windows-1253", windows_1253DecodeMapping),
+        ("windows-1254", windows_1254DecodeMapping),
+        ("windows-1255", windows_1255DecodeMapping),
+        ("windows-1256", windows_1256DecodeMapping),
+        ("windows-1257", windows_1257DecodeMapping),
+        ("windows-1258", windows_1258DecodeMapping),
+        ("x-mac-cyrillic", x_mac_cyrillicDecodeMapping)    
+    ])     
+    let encodeDic = HashMap<String, Map<UInt32, UInt32>>([
+        ("IBM866", ibm866EncodeMapping),
+        ("ISO-8859-2", iso_8859_2EncodeMapping),
+        ("ISO-8859-3", iso_8859_3EncodeMapping),
+        ("ISO-8859-4", iso_8859_4EncodeMapping),
+        ("ISO-8859-5", iso_8859_5EncodeMapping),
+        ("ISO-8859-6", iso_8859_6EncodeMapping),
+        ("ISO-8859-7", iso_8859_7EncodeMapping),
+        ("ISO-8859-8", iso_8859_8EncodeMapping),
+        // "ISO-8859-8-I", iso_8859_8_iEncodeMapping),
+        ("ISO-8859-10", iso_8859_10EncodeMapping),
+        ("ISO-8859-13", iso_8859_13EncodeMapping),
+        ("ISO-8859-14", iso_8859_14EncodeMapping),
+        ("ISO-8859-15", iso_8859_15EncodeMapping),
+        ("ISO-8859-16", iso_8859_16EncodeMapping),
+        ("KOI8-R", koi8_rEncodeMapping),
+        ("KOI8-U", koi8_uEncodeMapping),
+        ("macintosh", macintoshEncodeMapping),
+        ("windows-874", windows_874EncodeMapping),
+        ("windows-1250", windows_1250EncodeMapping),
+        ("windows-1251", windows_1251EncodeMapping),
+        ("windows-1252", windows_1252EncodeMapping),
+        ("windows-1253", windows_1253EncodeMapping),
+        ("windows-1254", windows_1254EncodeMapping),
+        ("windows-1255", windows_1255EncodeMapping),
+        ("windows-1256", windows_1256EncodeMapping),
+        ("windows-1257", windows_1257EncodeMapping),
+        ("windows-1258", windows_1258EncodeMapping),
+        ("x-mac-cyrillic", x_mac_cyrillicEncodeMapping)    
+    ])
     public init(name:String){
         this.name = name
         this.labels = nameMap[name]
