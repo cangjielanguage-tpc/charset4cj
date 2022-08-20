@@ -11,8 +11,8 @@ main (){
     var srcOffset: Int64 = 2
     var srcLimit: Int64 = 4
     var dest: Array<Char> = Array<Char>(6, {i => '\u{0}'})
-    var destUnusedOffset: Int64 = 2
-    var s2 = decoder.decode(src, srcOffset, srcLimit, dest, destUnusedOffset)
+    var destStart: Int64 = 2
+    var s2 = decoder.decode(src, srcOffset, srcLimit, dest, destStart)
     
     return 0
 }

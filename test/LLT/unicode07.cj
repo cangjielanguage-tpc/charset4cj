@@ -12,9 +12,9 @@ main (){
     var srcOffset: Int64 = 0
     var srcLimit: Int64 = 4
     var dest: Array<Char> = Array<Char>(6, {i => '\u{0}'})
-    var destUnusedOffset: Int64 = 0
-    var s1 = decoder.decode(src, srcOffset, srcLimit, dest, destUnusedOffset)
-    var destStr:String = String(dest, start:destUnusedOffset, length:(s1[1] - destUnusedOffset))
+    var destStart: Int64 = 0
+    var s1 = decoder.decode(src, srcOffset, srcLimit, dest, destStart)
+    var destStr:String = String(dest, start:destStart, length:(s1[1] - destStart))
     if(destStr == "𬌗"){
         return 0
     }else{
