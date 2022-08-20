@@ -990,13 +990,13 @@ pre
 <td align="right" class="lineno"><pre>96</pre></td>
 <td align="right" class="linebranch"></td>
 <td align="center" class="linecount "><pre></pre></td>
-<td align="left" class="src "><pre>    * 字符数组dest的可用范围 [destUnusedOffset, dest.size()) ,不包含dest.size();</pre></td>
+<td align="left" class="src "><pre>    * 字符数组dest的可用范围 [destStart, dest.size()) ,不包含dest.size();</pre></td>
 </tr>
 <tr>
 <td align="right" class="lineno"><pre>97</pre></td>
 <td align="right" class="linebranch"></td>
 <td align="center" class="linecount "><pre></pre></td>
-<td align="left" class="src "><pre>    *   destUnusedOffset 表示当前没有使用的 dest 下标</pre></td>
+<td align="left" class="src "><pre>    *   destStart 表示当前没有使用的 dest 下标</pre></td>
 </tr>
 <tr>
 <td align="right" class="lineno"><pre>98</pre></td>
@@ -1032,7 +1032,7 @@ pre
 <td align="right" class="lineno"><pre>103</pre></td>
 <td align="right" class="linebranch"></td>
 <td align="center" class="linecount "><pre></pre></td>
-<td align="left" class="src "><pre>            dest:Array<Char>, destUnusedOffset:Int64): (Int64, Int64) {</pre></td>
+<td align="left" class="src "><pre>            dest:Array<Char>, destStart:Int64): (Int64, Int64) {</pre></td>
 </tr>
 <tr>
 <td align="right" class="lineno"><pre>104</pre></td>
@@ -1044,7 +1044,7 @@ pre
 <td align="right" class="lineno"><pre>105</pre></td>
 <td align="right" class="linebranch"></td>
 <td align="center" class="linecount coveredLine"><pre>Y</pre></td>
-<td align="left" class="src coveredLine"><pre>        var destIndex = destUnusedOffset</pre></td>
+<td align="left" class="src coveredLine"><pre>        var destIndex = destStart</pre></td>
 </tr>
 <tr>
 <td align="right" class="lineno"><pre>106</pre></td>
