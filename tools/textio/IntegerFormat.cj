@@ -27,7 +27,7 @@ public class IntegerFormat{
             }
             nstr = nstr + String([c])
         }
-        if(nstr.size() < pad){
+        if(nstr.size < pad){
             
         }
         s = s + nstr.reverse()
@@ -68,7 +68,7 @@ public class IntegerFormat{
         }
         var numstr = p.reverse()
         var i = 0
-        while(i<numstr.size()){
+        while(i<numstr.size){
             var n = numstr[i]
             var t = charToInt(numstr[i])
             res += t * pow(10, i)
@@ -85,7 +85,7 @@ public class IntegerFormat{
         }
         var numstr = p.reverse()
         var i = 0
-        while(i<numstr.size()){
+        while(i<numstr.size){
             var n = numstr[i]
             var t = charToInt(numstr[i])
             res += t * pow(radix, i)

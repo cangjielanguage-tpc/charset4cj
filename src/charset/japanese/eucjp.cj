@@ -18,10 +18,10 @@ class EUCJPEncoder <: Encoder {
      */
     public func encode(str:String): Array<UInt8> {
         // replacement : 0x63 ,0x3F
-        if(str.size() == 0){
+        if(str.size == 0){
             return Array<UInt8>()
         }
-        let ref = Array<UInt8>(str.size() * 2, {i => 0})
+        let ref = Array<UInt8>(str.size * 2, item:0)
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){
@@ -88,7 +88,7 @@ class EUCJPDecoder <: Decoder{
      * @param src Range: [srcOffset, srcLimit]
      * @param srcOffset of Int64
      * @param srcLimit of Int64
-     * @param dest Range: [destStart, dest.size()) not include dest.size()
+     * @param dest Range: [destStart, dest.size) not include dest.size
      * @param destStart Indicates a dest subscript that is not currently in use
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)

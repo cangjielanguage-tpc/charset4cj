@@ -90,11 +90,11 @@ class UTF16Encoder <: Encoder {
      * @since 0.28.4
      */
     public func encode(str:String): Array<UInt8>{
-        if(str.size() == 0){
+        if(str.size == 0){
             return Array<UInt8>()
         }
-        // Create an array of return values. The maximum length of the array is 4 times that of str.size()
-        var res = Array<UInt8>(str.size()*4,{i => 0})
+        // Create an array of return values. The maximum length of the array is 4 times that of str.size
+        var res = Array<UInt8>(str.size * 4, item:0)
         // First unprocessed subscript of array
         var position = 0
         var arr = str.toCharArray()
@@ -166,7 +166,7 @@ class UTF16Decoder <: Decoder{
      * @param src Range: [srcOffset, srcLimit]
      * @param srcOffset of Int64
      * @param srcLimit of Int64
-     * @param dest Range: [destStart, dest.size()) not include dest.size()
+     * @param dest Range: [destStart, dest.size) not include dest.size
      * @param destStart Indicates a dest subscript that is not currently in use
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)

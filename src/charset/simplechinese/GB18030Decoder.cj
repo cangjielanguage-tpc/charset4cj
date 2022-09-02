@@ -30,7 +30,7 @@ public class GB18030Decoder <: Decoder{
      * @param src Byte array,range: [srcOffset, srcLimit]
      * @param srcOffset of Int64
      * @param srcLimit of Int64
-     * @param dest Character array,range: [destStart, dest.size()) ,not include dest.size()
+     * @param dest Character array,range: [destStart, dest.size) ,not include dest.size
      * @param destStart Indicates a dest subscript that is not currently in use
      *
      * @return Type of (Int64, Int64):(srcIndex, destIndex)
@@ -107,7 +107,7 @@ public class GB18030Decoder <: Decoder{
                             continue          
                         }else{
                             var start = 0
-                            var end = gb18030_rangesMapping.size()
+                            var end = gb18030_rangesMapping.size
                             while(start < end){
                                 var h = start + (end-start) / 2
                                 if(pointer >= Int64(gb18030_rangesMapping[h][0])){

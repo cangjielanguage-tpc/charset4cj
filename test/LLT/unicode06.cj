@@ -15,8 +15,8 @@ main (){
     var dest: Array<Char> = Array<Char>(6, {i => '\u{0}'})
     var destStart: Int64 = 4
     var s2 = decoder.decode(src, srcOffset, srcLimit, dest, destStart)
-    println(s1.size())
-    if (s1.size() != 29) {
+    println(s1.size)
+    if (s1.size != 29) {
         return 1
     }
     return 0

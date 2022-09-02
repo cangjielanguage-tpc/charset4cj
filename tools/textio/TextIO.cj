@@ -41,7 +41,7 @@ public class TextIO{
     */
     private func readSrc(){
         // 如果src已满，直接返回
-        if(srcPosition >= src.size()){
+        if(srcPosition >= src.size){
             return
         }
         // 如果文件已经结束，直接返回
@@ -49,7 +49,7 @@ public class TextIO{
             return
         }
         // func read (b: Array< UInt8 >, off: Int64, cnt: Int64): Int64 	
-        var cnt = fs.read(this.src, srcPosition, src.size() - srcPosition)
+        var cnt = fs.read(this.src, srcPosition, src.size - srcPosition)
         if(cnt <= 0){
             eof = true
         }
@@ -60,7 +60,7 @@ public class TextIO{
     */
     private func decodeSrc(){
         // 如果dest已满，直接返回
-        if(destPosition >= dest.size()){
+        if(destPosition >= dest.size){
             return
         }
         // 1， 在开始解码前，先从文件读取数据到src
@@ -97,7 +97,7 @@ public class TextIO{
     func writeLine(str:String){
         var encoder = charset.newEncoder()
         var arr = encoder.encode(str + "\n")
-        fs.write(arr, 0, arr.size())
+        fs.write(arr, 0, arr.size)
     }
     
     /**
@@ -150,11 +150,11 @@ public class TextIO{
         // 3, 如果没有找到
         if(!find){
             // 3.1 如果文件没有读取完，并且dest未满,再次解码src
-            if(!eof && dest.size() > destPosition){
+            if(!eof && dest.size > destPosition){
                 decodeSrc()
             }
             // 3.2 将所有 dest里面的字符返回，并清空dest
-            var mysize = dest.size()
+            var mysize = dest.size
             str = String(dest[0..destPosition])
             destPosition = 0
         }

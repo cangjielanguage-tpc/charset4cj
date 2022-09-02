@@ -30,10 +30,10 @@ public class GB18030Encoder <: Encoder {
      * @since 0.28.4
      */
     public func encode(str:String): Array<UInt8>{
-        if(str.size() == 0){
+        if(str.size == 0){
             return Array<UInt8>()
         }
-        let ref = Array<UInt8>(str.size() * 4, {i => 0})
+        let ref = Array<UInt8>(str.size * 4, item:0)
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){

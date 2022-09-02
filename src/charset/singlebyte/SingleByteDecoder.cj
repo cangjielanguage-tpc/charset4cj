@@ -33,7 +33,7 @@ class SingleByteDecoder <: Decoder{
      * @param src Range: [srcOffset, srcLimit]
      * @param srcOffset of Int64
      * @param srcLimit of Int64
-     * @param dest Range: [destStart, dest.size()) not include dest.size()
+     * @param dest Range: [destStart, dest.size) not include dest.size
      * @param destStart Indicates a dest subscript that is not currently in use
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)

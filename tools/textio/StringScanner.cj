@@ -18,13 +18,13 @@ public class StringScanner{
         this(s, "\t\r\n ")
     }
     func hasNext():Bool{
-        return position < s.size()
+        return position < s.size
     }
     func nextToken():String{
         var start:Int64 = -1
         var end:Int64 = -1
         // 1. 过滤掉 separator 字符
-        while(position < s.size()){
+        while(position < s.size){
             var ch = s[position..position+1]
             if(separator.contains(ch)){
                 position += 1
@@ -36,7 +36,7 @@ public class StringScanner{
         start = position
         // 2. 找到下一个 separator 字符
         position += 1
-        while(position < s.size()){
+        while(position < s.size){
             var ch = s[position..position+1]
             if(separator.contains(ch)){
                 break
