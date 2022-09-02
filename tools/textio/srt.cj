@@ -1,8 +1,8 @@
 import charset.*
 from std import io.*
 
-main(){
-    var f:File = File("/opt/work/charset/doc/字符集简介.md", AccessMode.Read, OpenMode.Open)
+func testUtf8(){
+    var f:File = File("/home/zft/下载/红楼梦utf8.txt", AccessMode.Read, OpenMode.Open)
     var sr = TextReader(f, charset: Charsets.utf8, bufSize:100)
     while(true){
         var lineOp:Option<String> = sr.readln()
@@ -18,7 +18,20 @@ main(){
         if(end){
             break
         }
-    }
+    }    
+}
 
+func testallline(){
+    var f:File = File("/home/zft/下载/红楼梦utf8.txt", AccessMode.Read, OpenMode.Open)
+    var sr = TextReader(f, charset: Charsets.utf8, bufSize:8192)
+    var list = sr.readAllLine()
+    for(line in list){
+        println("${line}")
+    }    
+}
+
+main(){
+
+    testUtf8()
 
 }

@@ -1,6 +1,8 @@
 package charset
 
 from std import io.*
+from std import collection.*
+
 
 import charset.encoding.*
 
@@ -21,8 +23,32 @@ public class TextReader{
         src = buf
         position = 0
     }
+    public func readAllLine():ArrayList<String>{
+        let list = ArrayList<String>()
+        while(true){
+            var lineOp:Option<String> = readln()
+            var end = match(lineOp){
+                case Some(s) => false
+                case None => true
+            }
+            if(end){
+                break
+            }else{
+                var line = match(lineOp){
+                    case Some(s) => s
+                    case None => ""
+                }
+                list.append(line)
+            }
+        }        
+        return list
+    }
+
+    /**
+    * read a of line String, when eof, return None
+    */
     public func readln(): Option<String>{
-        if(eof){
+        if(eof && this.position == 0){
             return None
         }
         fillBuf()
@@ -50,7 +76,6 @@ public class TextReader{
             rotateLeft(srcIndex)
             return Some(String(dest.slice(0, destIndex)))
         }
-        Some("")
     }
     // 将 src 从 index 位置移动到0，依次左移
     private func rotateLeft(index:Int64){
@@ -61,7 +86,7 @@ public class TextReader{
     }
     private func fillBuf(){
         while(this.position < buf.size - 1){
-            var subArray = buf.slice(this.position, buf.size - this.position)
+            var subArray = buf.slice(0, buf.size - this.position)
             let len = input.read(subArray)
             if(len == 0){ // if end of stream break loop
                 eof = true
