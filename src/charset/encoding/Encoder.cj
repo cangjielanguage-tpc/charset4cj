@@ -37,7 +37,10 @@ public interface Encoder{
             }
         }else{
             for(i in 0..decodeMapping.size){
-                let item = decodeMapping[i]
+                let item = match(decodeMapping.get(i)){
+                    case Some(c) => UInt32(c)
+                    case None => UInt32('\u{FFFF}')
+                }
                 if(item == codePoint){
                     res = i
                     break

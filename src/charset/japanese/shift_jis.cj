@@ -6,7 +6,7 @@ package charset.japanese
 
 import charset.encoding.*
 
-class EUCJPEncoder <: Encoder {
+class ShiftJISEncoder <: Encoder {
     
     /**
      * Encodes a string into a byte array
@@ -27,7 +27,7 @@ class EUCJPEncoder <: Encoder {
         for(ch in arr){
             var codePoint:UInt32 = UInt32(ch)
             // If code point is an ASCII code point, return a byte whose value is code point.
-            if(codePoint <= 0x7F){
+            if(codePoint <= 0x80){
                 ref[position] = UInt8(codePoint)
                 position += 1
             }else if(codePoint == 0x00A5){
@@ -37,20 +37,21 @@ class EUCJPEncoder <: Encoder {
                 ref[position] = 0x7E
                 position += 1                
             }else if(codePoint >= 0xFF61 && codePoint <= 0xFF9F){
-                ref[position] = 0x8E
-                ref[position + 1] = UInt8(codePoint - 0xFF61 + 0xA1)
-                position += 2                
+                ref[position] = UInt8(codePoint - 0xFF61 + 0xA1)
+                position += 1                
             }else{
                 if(codePoint == 0x2212){
                     codePoint = 0xFF0D              
                 }          
-                var index = indexPointer(jis0208EncodeMapping, jis0208DecodeMapping, codePoint)      
+                var index = indexShiftJISPointer(jis0208EncodeMapping, jis0208DecodeMapping, codePoint)      
                 if(index >= 0){
                     var pointer = UInt32(index)
-                    let lead = pointer / 94 + 0xA1
-                    let trail = pointer % 94 + 0xA1
-                    ref[position] = UInt8(lead)
-                    ref[position+1] = UInt8(trail)
+                    let lead = UInt8(pointer / 188)
+                    let leadOffset:UInt8 = if(lead < 0x1F) {0x81} else {0xC1}
+                    let trail = UInt8(pointer % 188)
+                    let offset:UInt8 = if(trail < 0x3F) {0x40} else {0x41}
+                    ref[position] = UInt8(lead + leadOffset)
+                    ref[position+1] = UInt8(trail + offset)
                     position += 2                    
                 }else{
                     // error
@@ -62,29 +63,46 @@ class EUCJPEncoder <: Encoder {
         }    
         return ref[0..position]
     }
+    func indexShiftJISPointer(encodeMapping:Map<UInt32, UInt32>, decodeMapping:Array<UInt32>, codePoint:UInt32):Int64{
+        var res:Int64 = -1
+        if(!encodeMapping.isEmpty()){
+            if(encodeMapping.contains(codePoint)){
+                res = Int64(encodeMapping[codePoint])
+            }
+        }else{
+            for(i in 0..decodeMapping.size){
+                if(i >= 8272 && i <= 8835){
+                    continue
+                }
+                let item = match(decodeMapping.get(i)){
+                    case Some(c) => c
+                    case None => UInt32('\u{FFFF}')
+                }
+                if(item == codePoint){
+                    res = i
+                    break
+                }
+            }
+        }
+        return res
+    }    
 }
 
 
 
 /**
- * euc-jp Character set decoder
- * euc-jp The single byte part is the same as ASCII
+ * ShiftJIS Character set decoder
+ * ShiftJIS The single byte part is the same as ASCII
  *        The double byte part is ordinary cjk characters
  * @author freeonsky
  * @since 0.28.4
  */
-class EUCJPDecoder <: Decoder{
+class ShiftJISDecoder <: Decoder{
     // Replace character when decoding error
     let replacement = '\u{FFFD}'
 
     /**
      * Decode byte array SRC into character array dest
-     * euc-jp   single byte part is the same as ASCII
-     *          The double byte part: 
-     *              Katakana characters: first is 0x8E, second in 0xA1-0xDF
-     *              JIS X 0208: first in 0xA1-0xFE, second in 0xA1-0xFE
-     *          The three byte part is JIS X 0212:
-     *              first is 0x8F, second in 0xA1-0xFE, thrid in 0xA1-0xFE
      * @param src Range: [srcOffset, srcLimit]
      * @param srcOffset of Int64
      * @param srcLimit of Int64
@@ -104,69 +122,56 @@ class EUCJPDecoder <: Decoder{
         var destIndex = destStart
         while(srcIndex <= srcLimit){
             var u0 = src[srcIndex];
-            // Single byte
-            if(u0 <= 0x7F){
+            // ASCII byte or 0x80, return a code point whose value is byte
+            if(u0 <= 0x80){
                 var c = Char(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
                 srcIndex += 1     
                 continue           
-            }else{
+            }
+            // If byte is in the range 0xA1 to 0xDF, inclusive, return a code point whose value is 0xFF61 - 0xA1 + byte
+            if(u0 >= 0xA1 && u0 <= 0xDF){
+                var c = Char(UInt32(0xFF61 - 0xA1 + UInt32(u0)))
+                dest[destIndex] = c
+                destIndex += 1
+                srcIndex += 1     
+                continue                    
+            }
+            // two byte
+            if((u0 >= 0x81 && u0 <= 0x9F) || (u0 >= 0xE0 && u0 <= 0xFC)){
                 if(srcIndex + 1 > srcLimit){
                     // If only half of the double bytes are in SRC, return and wait for the subsequent data to enter SRC for reprocessing
                     return (srcIndex, destIndex)                    
                 }
-                
                 var u1 = src[srcIndex+1]
-                var pointer:Int64 = 0
+                var pointer:Int64 = -1
                 var codePoint:Char = '\u{0}'
-                // Katakana characters: first is 0x8E, second in 0xA1-0xDF
-                if(u0 == 0x8E && u1 >= 0xA1 && u1 <= 0xDF){
-                    codePoint = Char(0xFF61 - 0xA1 + UInt32(u1))
+                var offset:UInt8 = if(u1 < 0x7F) {0x40} else {0x41}
+                var leadOffset:UInt8 = if(u0 < 0xA0) {0x81} else {0xC1}
+                if((u1 >= 0x40 && u1 <= 0x7E) || (u1 >= 0x80 && u1 <=0xFC)){
+                    pointer = Int64(u0 - leadOffset) * 188 + Int64(u1) - Int64(offset)
+                }
+                if(pointer >= 8836 && pointer <= 10715){
+                    codePoint = Char(0xE000 - 8836 + pointer)
                     dest[destIndex] = codePoint
                     srcIndex += 2
                     destIndex += 1
-                    continue                       
+                    continue 
                 }
-                // The three byte part is JIS X 0212: first is 0x8F, second in 0xA1-0xFE, thrid in 0xA1-0xFE
-                if(u0 == 0x8F && u1 >= 0xA1 && u1 <= 0xDF){
-                    if(srcIndex + 2 > srcLimit){
-                        return (srcIndex, destIndex)
-                    }
-                    let u2 = src[srcIndex + 2]
-                    if(u2 >= 0xA1 && u2 <= 0xDF){
-                        pointer = Int64(Int64(u1 - 0xA1) * 94 + Int64(u2) - 0xA1)
-                        codePoint = match(jis0212DecodeMapping.get(pointer)){
-                            case Some(c) => Char(c)
-                            case None => replacement
-                        }
-                    }else{
-                        codePoint = replacement
-                    }
-                    dest[destIndex] = codePoint
-                    srcIndex += 3
-                    destIndex += 1
-                    continue                        
+                codePoint = match(jis0208DecodeMapping.get(pointer)){
+                    case Some(c) => Char(c)
+                    case None => replacement
                 }
-                // JIS X 0208: first in 0xA1-0xFE, second in 0xA1-0xFE
-                if(u0 >= 0xA1 && u0 <= 0xDF && u1 >= 0xA1 && u1 <= 0xDF){
-                    pointer = Int64(Int64(u0 - 0xA1) * 94 + Int64(u1) - 0xA1)
-                    codePoint = match(jis0208DecodeMapping.get(pointer)){
-                        case Some(c) => Char(c)
-                        case None => replacement
-                    }
-                    dest[destIndex] = codePoint
-                    srcIndex += 2
-                    destIndex += 1
-                    continue                      
-                }
-
-                // error
-                dest[destIndex] = replacement
                 srcIndex += 2
                 destIndex += 1
-                continue                      
+                continue                    
             }
+            
+            dest[destIndex] = replacement
+            srcIndex += 1
+            destIndex += 1
+            continue                  
         }
         return (srcIndex, destIndex)
     }    

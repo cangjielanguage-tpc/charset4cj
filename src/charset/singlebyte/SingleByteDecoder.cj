@@ -54,11 +54,9 @@ class SingleByteDecoder <: Decoder{
                 destIndex += 1
             }else{
                 var pointer = Int64(byte - 0x80)
-                var value = decodeMapping[pointer]
-                if(value == 0xFFFF){
-                    dest[destIndex] = replacement    
-                }else{
-                    dest[destIndex] = Char(value)
+                dest[destIndex] = match(decodeMapping.get(pointer)){
+                    case Some(c) => Char(c)
+                    case None => replacement
                 }
                 destIndex += 1
             }
