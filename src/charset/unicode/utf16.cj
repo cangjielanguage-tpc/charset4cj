@@ -179,6 +179,9 @@ class UTF16Decoder <: Decoder{
         var srcIndex = srcOffset    
         var destIndex = destStart
         while(srcIndex <= srcLimit){
+            if(destIndex >= dest.size){
+                return (srcIndex, destIndex)
+            }            
             var u0 = src[srcIndex];
             // Not enough digits
             if(srcIndex+1 > srcLimit){

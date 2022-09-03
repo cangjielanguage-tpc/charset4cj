@@ -45,6 +45,9 @@ public class GB18030Decoder <: Decoder{
         // dest Processing index
         var destIndex = destStart
         while(srcIndex <= srcLimit){
+            if(destIndex >= dest.size){
+                return (srcIndex, destIndex)
+            }            
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){

@@ -168,6 +168,9 @@ class UTF32Decoder <: Decoder{
         var srcIndex = srcOffset    
         var destIndex = destStart
         while(srcIndex <= srcLimit){
+            if(destIndex >= dest.size){
+                return (srcIndex, destIndex)
+            }            
             // Not enough digits
             if(srcIndex+3 > srcLimit){
                 return (srcIndex, destIndex)

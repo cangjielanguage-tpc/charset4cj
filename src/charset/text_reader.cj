@@ -43,7 +43,20 @@ public class TextReader{
         }        
         return list
     }
-
+    public func read(): Option<Char>{
+        if(eof && this.position == 0){
+            return None
+        }
+        fillBuf()       
+        var decoder = charset.newDecoder()
+        var dest = Array<Char>(1, item:'\0')
+        var (srcIndex, destIndex) = decoder.decode(src, 0, src.size - 1, dest, 0)
+        if(destIndex == 1){
+            rotateLeft(srcIndex)
+            return dest[0]
+        }
+        return None
+    }
     /**
     * read a of line String, when eof, return None
     */

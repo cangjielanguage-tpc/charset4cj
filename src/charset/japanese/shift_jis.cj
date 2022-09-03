@@ -121,6 +121,9 @@ class ShiftJISDecoder <: Decoder{
         // Dest index being processed
         var destIndex = destStart
         while(srcIndex <= srcLimit){
+            if(destIndex >= dest.size){
+                return (srcIndex, destIndex)
+            }            
             var u0 = src[srcIndex];
             // ASCII byte or 0x80, return a code point whose value is byte
             if(u0 <= 0x80){

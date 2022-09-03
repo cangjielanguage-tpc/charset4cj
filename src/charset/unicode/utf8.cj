@@ -147,6 +147,9 @@ class UTF8Decoder <: Decoder{
         var srcIndex = srcOffset    
         var destIndex = destStart
         while(srcIndex <= srcLimit){
+            if(destIndex >= dest.size){
+                return (srcIndex, destIndex)
+            }            
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
