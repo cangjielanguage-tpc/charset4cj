@@ -27,18 +27,10 @@ public class TextReader{
         let list = ArrayList<String>()
         while(true){
             var lineOp:Option<String> = readln()
-            var end = match(lineOp){
-                case Some(s) => false
-                case None => true
-            }
-            if(end){
-                break
+            if(lineOp != None){
+                list.append(lineOp.getOrThrow())    
             }else{
-                var line = match(lineOp){
-                    case Some(s) => s
-                    case None => ""
-                }
-                list.append(line)
+                break
             }
         }        
         return list
@@ -68,26 +60,23 @@ public class TextReader{
         // 如果有换行符
         var linefeed = UInt8(UInt32('\n'))
         var enter = UInt8(UInt32('\r'))
-        var indexOp:Int64 = match(indexOf(src, linefeed)){
-            case Some(index) => index
-            case None => -1
-        }
         var decoder = charset.newDecoder()
-        if(indexOp >= 0){
-            // 判断\n 前面是不是\r
-            var len = indexOp + 1
-            if(indexOp > 0 && src[indexOp - 1] == enter){
-                len -= 1
-            }
-            let line = decoder.decode(src.slice(0, len))
-            // 剩余buf前移
-            rotateLeft(indexOp + 1)
-            return Some(line)
-        }else{
+        var indexOp = indexOf(src, linefeed)
+        if(indexOp == None){
             var dest = Array<Char>(src.size, item:'\0')
             var (srcIndex, destIndex) = decoder.decode(src, 0, src.size - 1, dest, 0)
             rotateLeft(srcIndex)
             return Some(String(dest.slice(0, destIndex)))
+        }else{
+            var len = indexOp.getOrThrow() + 1
+            var index = indexOp.getOrThrow()
+            if(index > 0 && src[index - 1] == enter){
+                len -= 1
+            }
+            let line = decoder.decode(src.slice(0, len))
+            // 剩余buf前移
+            rotateLeft(index + 1)
+            return Some(line)            
         }
     }
     // 将 src 从 index 位置移动到0，依次左移
