@@ -68,10 +68,10 @@ class BIG5Encoder <: Encoder {
     public func encode(str:String): Array<UInt8>{
         var table = Big5EncodeMapping
         // replacement : 0x63 ,0x3F
-        if(str.size() == 0){
+        if(str.size == 0){
             return Array<UInt8>()
         }
-        let ref = Array<UInt8>(str.size() * 2, {i => 0})
+        let ref = Array<UInt8>(str.size * 2, item:0)
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){
@@ -122,7 +122,7 @@ class BIG5Decoder <: Decoder{
      * @param src Range: [srcOffset, srcLimit]
      * @param srcOffset of Int64
      * @param srcLimit of Int64
-     * @param dest Range: [destStart, dest.size()) not include dest.size()
+     * @param dest Range: [destStart, dest.size) not include dest.size
      * @param destStart Indicates a dest subscript that is not currently in use
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
@@ -137,6 +137,9 @@ class BIG5Decoder <: Decoder{
         // Dest index being processed
         var destIndex = destStart
         while(srcIndex <= srcLimit){
+            if(destIndex >= dest.size){
+                return (srcIndex, destIndex)
+            }            
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
@@ -165,9 +168,8 @@ class BIG5Decoder <: Decoder{
                     continue     
                 }
                 pointer = Int64(u0-0x81)*157 + Int64(u1)
-                if(pointer < table.size()){
-                    var s:Array<Char>
-                    //  = Array<Char>(2, {i => '\u{0}'})
+                if(pointer < table.size){
+                    var s:Array<Char> = Array<Char>()
                     if(pointer == 1133){
                         s = "\u{00CA}\u{0304}".toCharArray()
                     }else if(pointer == 1135){

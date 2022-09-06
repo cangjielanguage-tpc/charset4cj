@@ -24,8 +24,8 @@ public interface Decoder{
      * @since 0.28.4
      */
     func decode(src:Array<UInt8>):String{
-        var dest:Array<Char> = Array<Char>(src.size(),{i => '\u{0}'})
-        var res = decode(src, 0, src.size()-1, dest, 0)
+        var dest:Array<Char> = Array<Char>(src.size, item: '\0')
+        var res = decode(src, 0, src.size-1, dest, 0)
         var s = String(dest[0..res[1]])
         return s    
     }
@@ -36,7 +36,7 @@ public interface Decoder{
      * @param src Range: [srcOffset, srcLimit]
      * @param srcOffset Range
      * @param srcLimit Range
-     * @param dest Range: [destStart, dest.size()), not include dest.size()
+     * @param dest Range: [destStart, dest.size), not include dest.size
      * @param destStart 
      *
      * @return (Int64, Int64), return (srcIndex, destIndex)

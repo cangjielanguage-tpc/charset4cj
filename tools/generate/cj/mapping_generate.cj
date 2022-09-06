@@ -44,7 +44,7 @@ func readFileToMap(encodeName: String):Map<UInt32, UInt32>{
                 continue
             }
             let items = line.split("\t")
-            if(items.size() <2){
+            if(items.size <2){
                 continue
             }
             let pointer = UInt32.parse(items[0].trimAscii())
@@ -87,7 +87,7 @@ package charset.${pkg}
     let keys = map.keys()
     let list = ArrayList(keys)
     list.sort()
-    for(v in 0..list.size()){
+    for(v in 0..list.size){
         var i = list[v]
         if(map.contains(UInt32(i))){
             var codePoint = map[UInt32(i)]
@@ -95,7 +95,7 @@ package charset.${pkg}
         }else{
             decodeMappingStr = decodeMappingStr + "\t\t0"
         }
-        if(v != (list.size() - 1)){
+        if(v != (list.size - 1)){
             decodeMappingStr = decodeMappingStr + ",\n"
         }else{
             decodeMappingStr = decodeMappingStr + "\n"

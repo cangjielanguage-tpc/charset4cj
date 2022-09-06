@@ -11,10 +11,10 @@ main (){
     var str2: String = "欢迎你的到来"
     var s1 = encoder.encode(str1)
     var s2 = encoder.encode(str2)
-    if (s1.size() != 32) {
+    if (s1.size != 32) {
         return 1
     }
-    if (s2.size() != 24) {
+    if (s2.size != 24) {
         return 2
     }
     return 0

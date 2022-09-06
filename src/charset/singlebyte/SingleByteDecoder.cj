@@ -33,7 +33,7 @@ class SingleByteDecoder <: Decoder{
      * @param src Range: [srcOffset, srcLimit]
      * @param srcOffset of Int64
      * @param srcLimit of Int64
-     * @param dest Range: [destStart, dest.size()) not include dest.size()
+     * @param dest Range: [destStart, dest.size) not include dest.size
      * @param destStart Indicates a dest subscript that is not currently in use
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
@@ -48,17 +48,18 @@ class SingleByteDecoder <: Decoder{
         // dest processing index
         var destIndex = destStart
         while(srcIndex <= srcLimit){
+            if(destIndex >= dest.size){
+                return (srcIndex, destIndex)
+            }            
             var byte = src[srcIndex]
             if(byte <= 0x7F){
                 dest[destIndex] = Char(UInt32(byte))
                 destIndex += 1
             }else{
                 var pointer = Int64(byte - 0x80)
-                var value = decodeMapping[pointer]
-                if(value == 0xFFFF){
-                    dest[destIndex] = replacement    
-                }else{
-                    dest[destIndex] = Char(value)
+                dest[destIndex] = match(decodeMapping.get(pointer)){
+                    case Some(c) => Char(c)
+                    case None => replacement
                 }
                 destIndex += 1
             }

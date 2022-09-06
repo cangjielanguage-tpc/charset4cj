@@ -29,15 +29,18 @@ public interface Encoder{
      
     func encode(str:String): Array<UInt8>
 
-    static func indexPointer(encodeMapping:Map<UInt32, UInt32>, decodeMapping:Array<UInt32>, codePoint:UInt32):Int64{
+    func indexPointer(encodeMapping:Map<UInt32, UInt32>, decodeMapping:Array<UInt32>, codePoint:UInt32):Int64{
         var res:Int64 = -1
         if(!encodeMapping.isEmpty()){
             if(encodeMapping.contains(codePoint)){
                 res = Int64(encodeMapping[codePoint])
             }
         }else{
-            for(i in 0..decodeMapping.size()){
-                let item = decodeMapping[i]
+            for(i in 0..decodeMapping.size){
+                let item = match(decodeMapping.get(i)){
+                    case Some(c) => UInt32(c)
+                    case None => UInt32('\u{FFFF}')
+                }
                 if(item == codePoint){
                     res = i
                     break
