@@ -1,10 +1,10 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from charset import charset.korean.*
+from charset import charset.*
 from charset import charset.encoding.*
 
 main (){
-    var charset = EUCKRCharset()
+    var charset = Charsets.euckr
     var euckrEncoder = charset.newEncoder()
     var buf1: String = "adafdsa"
     var s1 = euckrEncoder.encode(buf1)

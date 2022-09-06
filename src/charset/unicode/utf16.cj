@@ -10,12 +10,17 @@ package charset.unicode
 
 import charset.encoding.*
 
+// when be is true, create UTF-16BE charset, when be is false create UTF-16LE
+public func newUTF16Charset(be:Bool):Charset{
+    UTF16Charset(be)
+}
+
 /**
  * UTF16 character set
  * @author freeonsky
  * @since 0.28.4
  */
-public class UTF16Charset <: Charset{
+class UTF16Charset <: Charset{
     // Whether it is big end mode, be = true big end mode; Be = false small end mode
     var be:Bool
     

@@ -6,12 +6,22 @@ package charset.japanese
 
 import charset.encoding.*
 
+// EUC-JP japanese encoding charset
+public func newEUCJPCharset():Charset{
+    EUCJPCharset()
+}
+
+// ShiftJIS japanese encoding charset
+public func newShiftJISCharset():Charset{
+    ShiftJISCharset()
+}
+
 /**
  * EUC-JP japanese encoding charset
  * @author freeonsky
  * @since 0.28.4
  */
-public class EUCJPCharset <: Charset{
+class EUCJPCharset <: Charset{
 
     /**
      * The Function is init constructor
@@ -47,11 +57,11 @@ public class EUCJPCharset <: Charset{
 }
 
 /**
- * EUC-JP japanese encoding charset
+ * ShiftJIS japanese encoding charset
  * @author freeonsky
  * @since 0.28.4
  */
-public class ShiftJISCharset <: Charset{
+class ShiftJISCharset <: Charset{
 
     /**
      * The Function is init constructor

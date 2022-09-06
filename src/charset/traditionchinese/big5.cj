@@ -10,12 +10,17 @@ package charset.traditionchinese
 
 import charset.encoding.*
 
+// Big5 encoding charset
+public func newBIG5Charset():Charset{
+    BIG5Charset()
+}
+
 /**
  * Big5 encoding
  * @author freeonsky
  * @since 0.28.4
  */
-public class BIG5Charset <: Charset{
+class BIG5Charset <: Charset{
 
     /**
      * The Function is init constructor

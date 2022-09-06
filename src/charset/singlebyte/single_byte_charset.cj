@@ -13,12 +13,15 @@ from std import collection.*
 
 import charset.encoding.*
 
+public func newSingleByteCharset(name:String):Charset {
+    SingleByteCharset(name)
+}
 /**
  * Single byte character set
  * @author freeonsky
  * @since 0.28.4
  */
-public class SingleByteCharset <: Charset{
+class SingleByteCharset <: Charset{
     let nameMap = HashMap<String, Array<String>>([
         ("IBM866", [
             "866", 

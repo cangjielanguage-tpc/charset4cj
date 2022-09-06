@@ -1,10 +1,10 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from charset import charset.korean.*
+from charset import charset.*
 from charset import charset.simplechinese.*
 
 main (){
-    var charset = GB18030Charset()
+    var charset = Charsets.gb18030
     var euckrEncoder = charset.newEncoder()
     var src1 = "hfkjwefkjashekfh"
     var s1 = euckrEncoder.encode(src1)

@@ -10,12 +10,17 @@ package charset.simplechinese
 
 import charset.encoding.*
 
+// create GB18030Charset
+public func newGB18030Charset():Charset {
+    GB18030Charset()
+}
+
 /**
  * The class is GB18030Charset inherited from Charset
  * @author freeonsky
  * @since 0.28.4
  */
-public class GB18030Charset <: Charset{
+class GB18030Charset <: Charset{
 
     /**
      * The Function is init constructor

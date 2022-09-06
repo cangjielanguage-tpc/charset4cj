@@ -10,12 +10,17 @@ package charset.unicode
 
 import charset.encoding.*
 
+// UTF32 char set, when be is true, create UTF-32BE ,when be is false ,create UTF-32LE
+public func newUTF32Charset(be:Bool):Charset {
+    UTF32Charset(be)
+}
+
 /**
  * UTF32 char set
  * @author freeonsky
  * @since 0.28.4
  */
-public class UTF32Charset <: Charset{
+class UTF32Charset <: Charset{
     // Whether it is big end mode, be = true big end mode; Be = false small end mode
     var be:Bool
 
@@ -59,11 +64,6 @@ public class UTF32Charset <: Charset{
         return decoder
     }
 }
-
-/**
-* UTF-32编码器 
-* 功能： 将unicode codepoint 编码成 utf32 字节序列
-*/
 
 /*
  * UTF-32 encoder

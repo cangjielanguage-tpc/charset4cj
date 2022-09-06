@@ -4,7 +4,7 @@ from charset import charset.*
 from charset import charset.unicode.*
 
 main (){
-    var charset = UTF32Charset(true)
+    var charset = Charsets.utf32be
     var encoder =charset.newEncoder()
     var decoder = charset.newDecoder()
     var str1: String = "你好我𬌗𬌗𬌗𬌗𬌗"
