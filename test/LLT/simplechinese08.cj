@@ -1,10 +1,10 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from charset import charset.korean.*
+from charset import charset.*
 from charset import charset.simplechinese.*
 
 main (){
-    var charset = GB18030Charset()
+    var charset = Charsets.gb18030
     var euckrDncoder = charset.newDecoder()
     var src: Array<UInt8> = Array<UInt8>([0x84, 0x36, 0x81, 0x42, 0x32, 0x32, 0x32, 0x32, 0x32, 0x32, 0x32, 0x32, 0x32, 0x32, 0x32, 0x32])
     var srcOffset: Int64 = 0

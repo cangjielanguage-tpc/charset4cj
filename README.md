@@ -66,64 +66,77 @@ func encode(str:String): Array<UInt8>
 ### 源码目录：
 
 ```
-
+├── LICENSE
 ├── README.md
 ├── doc
-│   ├── assets     
-│   └── 字符集简介.md 
+│   ├── cjcov
+│   └── 字符集简介.md
+├── module.json
 ├── src
-│   └── charset
-│       ├── Charsets.cj		// 常量类，提供forName方法根据字符集名称获取字符集类型，并提供所有支持的字符集常量
-│       ├── encoding		// 字符集接口
-│       │   ├── Charset.cj
-│       │   ├── Decoder.cj
-│       │   └── Encoder.cj
-│       ├── korean			// 韩语字符集编解码实现
-│       │   ├── EUC_KR_mapping.cj
-│       │   └── euckr.cj
-│       ├── simplechinese	// 简体中文字符集编解码实现
-│       │   ├── GB18030Charset.cj
-│       │   ├── GB18030Decoder.cj
-│       │   ├── GB18030Encoder.cj
-│       │   ├── gb18030_mapping.cj
-│       │   └── gb18030_ranges_mapping.cj
-│       ├── singlebyte		// 西欧、阿拉伯单字节字符集编解码实现
-│       │   ├── ibm866_mapping.cj
-│       │   ├── iso_8859_2_mapping.cj
-│       │   ├── iso_8859_3_mapping.cj
-│       │   ├── iso_8859_4_mapping.cj
-│       │   ├── iso_8859_5_mapping.cj
-│       │   ├── ......
-│       │   └── x_mac_cyrillic_mapping.cj
-│       │── traditionchinese	// 繁体中文字符集编解码实现
-│       │   ├── big5.cj
-│       │   └── big5_mapping.cj
-│       └── unicode			// unicode 编解码实现
-│           ├── utf8.cj
-│           ├── utf16.cj
-│           └── utf32.cj         
-├── test
-│   └── UT
-│       └── charset_test.cj
-└── tools 
-    ├── generate
-    │   ├── PrintMapping.cj
-    │   └── cj
-    │       ├── JapanGen.cj
-    │       └── SingleByteGen.cj
-    └── textio
-        ├── IntegerFormat.cj
-        ├── StringScanner.cj
-        ├── StringUtils.cj
-        ├── TextIO_test.cj
-        └── TextIO.cj
-
+│   └── charset
+│       ├── charsets.cj     // 常量类，提供forName方法根据字符集名称获取字符集类型，并提供所有支持的字符集常量
+│       ├── encoding        // 字符集接口
+│       │   ├── charset.cj
+│       │   ├── decoder.cj
+│       │   └── encoder.cj
+│       ├── japanese        // 日语字符集编码实现
+│       │   ├── eucjp.cj
+│       │   ├── jis0208_mapping.cj
+│       │   ├── jis0212_mapping.cj
+│       │   ├── jp_charset.cj
+│       │   └── shift_jis.cj
+│       ├── korean          // 韩语字符集编码实现
+│       │   ├── euc_kr_mapping.cj
+│       │   └── euckr.cj
+│       ├── simplechinese   // 简体中文字符集编码实现
+│       │   ├── gb18030_charset.cj
+│       │   ├── gb18030_decoder.cj
+│       │   ├── gb18030_encoder.cj
+│       │   ├── gb18030_mapping.cj
+│       │   └── gb18030_ranges_mapping.cj
+│       ├── singlebyte      //  西欧、阿拉伯单字节字符集编解码实现
+│       │   ├── ibm866_mapping.cj
+│       │   ├── iso_8859_10_mapping.cj
+│       │   ├── iso_8859_13_mapping.cj
+│       │   ├── iso_8859_14_mapping.cj
+│       │   ├── iso_8859_15_mapping.cj
+│       │   ├── iso_8859_16_mapping.cj
+│       │   ├── iso_8859_2_mapping.cj
+│       │   ├── iso_8859_3_mapping.cj
+│       │   ├── iso_8859_4_mapping.cj
+│       │   ├── iso_8859_5_mapping.cj
+│       │   ├── iso_8859_6_mapping.cj
+│       │   ├── iso_8859_7_mapping.cj
+│       │   ├── iso_8859_8_mapping.cj
+│       │   ├── koi8_r_mapping.cj
+│       │   ├── koi8_u_mapping.cj
+│       │   ├── macintosh_mapping.cj
+│       │   ├── single_byte_charset.cj
+│       │   ├── single_byte_decoder.cj
+│       │   ├── single_byte_encoder.cj
+│       │   ├── windows_1250_mapping.cj
+│       │   ├── windows_1251_mapping.cj
+│       │   ├── windows_1252_mapping.cj
+│       │   ├── windows_1253_mapping.cj
+│       │   ├── windows_1254_mapping.cj
+│       │   ├── windows_1255_mapping.cj
+│       │   ├── windows_1256_mapping.cj
+│       │   ├── windows_1257_mapping.cj
+│       │   ├── windows_1258_mapping.cj
+│       │   ├── windows_874_mapping.cj
+│       │   └── x_mac_cyrillic_mapping.cj
+│       ├── traditionchinese  // 繁体中文字符集编解码实现
+│       │   ├── big5.cj
+│       │   └── big5_mapping.cj
+│       └── unicode           // unicode 编解码实现
+│           ├── utf16.cj
+│           ├── utf32.cj
+│           └── utf8.cj
 ```
 
 - `doc`是库的设计文档、提案、库的使用文档
 - `src`是库源码目录
 - `test`是存放测试用例，包括HLT用例、LLT 用例和UT用例
-- `encoding`是存放的编解码库文件
 - `generate`是代码生成器，用来生成映射表
 
 ### 接口说明
@@ -148,143 +161,85 @@ func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, dest:Array<Char>,
 ```
 func encode(str:String): Array<UInt8>
 ```
-#### class EUCKRCharset
-
-```
-public init()
-public func newEncoder():Encoder
-public func newDecoder():Decoder
-```
-
-#### class GB18030Charset
-
-```
-public init()
-public func newEncoder():Encoder
-public func newDecoder():Decoder
-```
-
-#### class GB18030Decoder
-
-```
-public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64,dest:Array<Char>, destStart:Int64): (Int64, Int64)
-```
-
-#### class GB18030Encoder
-
-```
-public func encode(str:String): Array<UInt8>
-```
-
-#### class SingleByteCharset
-
-```
-public init(name:String)
-public func newEncoder():Encoder
-public func newDecoder():Decoder
-```
-
-#### class SingleByteDecoder
-
-```
-public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, dest:Array<Char>, destStart:Int64): (Int64, Int64)
-```
-
-#### class SingleByteEncoder
-
-```
-public func encode(str:String): Array<UInt8>
-```
-
-#### class BIG5Charset
-
-```
-public init()
-public func newEncoder():Encoder
-public func newDecoder():Decoder
-```
-
-#### class UTF8Charset
-
-```
-public init()
-public func newEncoder():Encoder
-public func newDecoder():Decoder
-```
 
 #### class Charsets
 
 ```
 // UTF-8
-public static let utf8:Charset = UTF8Charset()
+public static let utf8:Charset = newUTF8Charset()
 // utf-16 be
-public static let utf16be:Charset = UTF16Charset(true)
-// utf16 
-public static let utf16:Charset = UTF16Charset(false)
-// utf32be
-public static let utf32be:Charset = UTF32Charset(true)
-// utf32
-public static let utf32:Charset = UTF32Charset(false)
+public static let utf16be:Charset = newUTF16Charset(true)
+// utf16 le
+public static let utf16le:Charset = newUTF16Charset(false)
+// utf32 be
+public static let utf32be:Charset = newUTF32Charset(true)
+// utf32 le
+public static let utf32le:Charset = newUTF32Charset(false)
 // gb18030
-public static let gb18030:Charset = GB18030Charset()
+public static let gb18030:Charset = newGB18030Charset()
 // EUC-KR
-public static let euckr:Charset = EUCKRCharset()
+public static let euckr:Charset = newEUCKRCharset()
+// EUC-JP
+public static let eucjp:Charset = newEUCJPCharset()
+// ShiftJIS
+public static let shift_jis:Charset = newShiftJISCharset()
 // Big5
-public static let big5:Charset = BIG5Charset()
+public static let big5:Charset = newBIG5Charset()
+
 // IBM866
-public static let ibm866:Charset = SingleByteCharset("IBM866")
+public static let ibm866:Charset = newSingleByteCharset("IBM866")
 // ISO-8859-2
-public static let iso_8859_2:Charset = SingleByteCharset("ISO-8859-2")
+public static let iso_8859_2:Charset = newSingleByteCharset("ISO-8859-2")
 // ISO-8859-3
-public static let iso_8859_3:Charset = SingleByteCharset("ISO-8859-3")
+public static let iso_8859_3:Charset = newSingleByteCharset("ISO-8859-3")
 // ISO-8859-4
-public static let iso_8859_4:Charset = SingleByteCharset("ISO-8859-4")
+public static let iso_8859_4:Charset = newSingleByteCharset("ISO-8859-4")
 // ISO-8859-5
-public static let iso_8859_5:Charset = SingleByteCharset("ISO-8859-5")
+public static let iso_8859_5:Charset = newSingleByteCharset("ISO-8859-5")
 // ISO-8859-6
-public static let iso_8859_6:Charset = SingleByteCharset("ISO-8859-6")
+public static let iso_8859_6:Charset = newSingleByteCharset("ISO-8859-6")
 // ISO-8859-7
-public static let iso_8859_7:Charset = SingleByteCharset("ISO-8859-7")
+public static let iso_8859_7:Charset = newSingleByteCharset("ISO-8859-7")
 // ISO-8859-8
-public static let iso_8859_8:Charset = SingleByteCharset("ISO-8859-8")
+public static let iso_8859_8:Charset = newSingleByteCharset("ISO-8859-8")
 // ISO-8859-10
-public static let iso_8859_10:Charset = SingleByteCharset("ISO-8859-10")
+public static let iso_8859_10:Charset = newSingleByteCharset("ISO-8859-10")
 // ISO-8859-13
-public static let iso_8859_13:Charset = SingleByteCharset("ISO-8859-13")
+public static let iso_8859_13:Charset = newSingleByteCharset("ISO-8859-13")
 // ISO-8859-14
-public static let iso_8859_14:Charset = SingleByteCharset("ISO-8859-14")
+public static let iso_8859_14:Charset = newSingleByteCharset("ISO-8859-14")
 // ISO-8859-15
-public static let iso_8859_15:Charset = SingleByteCharset("ISO-8859-15")
+public static let iso_8859_15:Charset = newSingleByteCharset("ISO-8859-15")
 // ISO-8859-16
-public static let iso_8859_16:Charset = SingleByteCharset("ISO-8859-16")
+public static let iso_8859_16:Charset = newSingleByteCharset("ISO-8859-16")
 // KOI8-R
-public static let koi8_r:Charset = SingleByteCharset("KOI8-R")
+public static let koi8_r:Charset = newSingleByteCharset("KOI8-R")
 // KOI8-U
-public static let koi8_u:Charset = SingleByteCharset("KOI8-U")
+public static let koi8_u:Charset = newSingleByteCharset("KOI8-U")
 // macintosh
-public static let macintosh:Charset = SingleByteCharset("macintosh")
+public static let macintosh:Charset = newSingleByteCharset("macintosh")
 // windows-874
-public static let windows_874:Charset = SingleByteCharset("windows-874")
+public static let windows_874:Charset = newSingleByteCharset("windows-874")
 // windows-1250
-public static let windows_1250:Charset = SingleByteCharset("windows-1250")
+public static let windows_1250:Charset = newSingleByteCharset("windows-1250")
 // windows-1251
-public static let windows_1251:Charset = SingleByteCharset("windows-1251")
+public static let windows_1251:Charset = newSingleByteCharset("windows-1251")
 // windows-1252
-public static let windows_1252:Charset = SingleByteCharset("windows-1252")
+public static let windows_1252:Charset = newSingleByteCharset("windows-1252")
 // windows-1253
-public static let windows_1253:Charset = SingleByteCharset("windows-1253")
+public static let windows_1253:Charset = newSingleByteCharset("windows-1253")
 // windows-1254
-public static let windows_1254:Charset = SingleByteCharset("windows-1254")
+public static let windows_1254:Charset = newSingleByteCharset("windows-1254")
 // windows-1255
-public static let windows_1255:Charset = SingleByteCharset("windows-1255")
+public static let windows_1255:Charset = newSingleByteCharset("windows-1255")
 // windows-1256
-public static let windows_1256:Charset = SingleByteCharset("windows-1256")
+public static let windows_1256:Charset = newSingleByteCharset("windows-1256")
 // windows-1257
-public static let windows_1257:Charset = SingleByteCharset("windows-1257")
+public static let windows_1257:Charset = newSingleByteCharset("windows-1257")
 // windows-1258
-public static let windows_1258:Charset = SingleByteCharset("windows-1258")
+public static let windows_1258:Charset = newSingleByteCharset("windows-1258")
 // x-mac-cyrillic
-public static let x_mac_cyrillic:Charset = SingleByteCharset("x-mac-cyrillic") 
+public static let x_mac_cyrillic:Charset = newSingleByteCharset("x-mac-cyrillic")  
 public static func forName(name:String):Option<Charset>
 ```
 
@@ -304,16 +259,17 @@ cpm test test/UT/
 ```cangjie
 from charset import charset.*
 
-main (){
-    var charset = Charsets.big5
-    var encoder = charset.newEncoder()
+main() {
+    var charset = Charsets.gb18030
     var decoder = charset.newDecoder()
-    var buf1 = Array<UInt8>([0xB0, 0xDA, 0xA7, 0x41])
-    var s1 = decoder.decode(buf1)
-    if (!s1.equals("碉峴")) {
+    var encoder = charset.newEncoder() 
+    var src: Array<UInt8> = Array<UInt8>([0xCB, 0xAE, 0xB5, 0xE7, 0xB7, 0xD1])
+    var destStr = decoder.decode(src)    
+    if(destStr == "水电费"){
+        return 0
+    }else{
         return 1
     }
-    return 0
 }
 ```
 

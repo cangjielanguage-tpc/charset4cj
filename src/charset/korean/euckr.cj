@@ -11,12 +11,17 @@ package charset.korean
 
 import charset.encoding.*
 
+// EUC-KR korean charset
+public func newEUCKRCharset():Charset {
+    EUCKRCharset()
+}
+
 /**
  * EUC-KR korean encoding
  * @author freeonsky
  * @since 0.28.4
  */
-public class EUCKRCharset <: Charset{
+class EUCKRCharset <: Charset{
 
     /**
      * The Function is init constructor

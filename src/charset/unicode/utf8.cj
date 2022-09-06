@@ -10,12 +10,16 @@ package charset.unicode
 
 import charset.encoding.*
 
+// create UTF8 character set
+public func newUTF8Charset():Charset {
+    UTF8Charset()
+}
 /**
  * UTF8 character set
  * @author freeonsky
  * @since 0.28.4
  */
-public class UTF8Charset <: Charset{
+class UTF8Charset <: Charset{
 
     /**
      * The Function is init constructor
