@@ -43,6 +43,9 @@ public class Charsets {
     public static let eucjp:Charset = newEUCJPCharset()
     // ShiftJIS
     public static let shift_jis:Charset = newShiftJISCharset()
+    // ISO-2022-JP
+    public static let iso_2022_jp:Charset = newISO2022JPCharset()
+    
     // Big5
     public static let big5:Charset = newBIG5Charset()
 
@@ -112,6 +115,7 @@ public class Charsets {
         big5,
         eucjp,
         shift_jis,
+        iso_2022_jp,
         ibm866,
         iso_8859_2,
         iso_8859_3,

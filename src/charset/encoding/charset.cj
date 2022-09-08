@@ -28,11 +28,11 @@ public abstract class Charset{
      */
     public func nameEquals(name:String):Bool{
         var res = false
-        if(name == this.name){
+        if(name.toAsciiLower() == this.name.toAsciiLower()){
             return true
         }
         for(label in labels){
-            if(label == name){
+            if(label.toAsciiLower() == name.toAsciiLower()){
                 return true
             }
         }

@@ -16,6 +16,49 @@ public func newShiftJISCharset():Charset{
     ShiftJISCharset()
 }
 
+// ISO-2022-JP japanese encoding charset
+public func newISO2022JPCharset():Charset{
+    ISO2022JPCharset()
+}
+
+/**
+ * ISO-2022-JP japanese encoding charset
+ * @author freeonsky
+ * @since 0.28.4
+ */
+class ISO2022JPCharset <: Charset{
+
+    /**
+     * The Function is init constructor
+     *
+     * @since 0.28.4
+     */
+    public init(){
+        this.name = "ISO-2022-JP"
+        this.labels = ["ISO-2022-JP",  "csiso2022jp"]
+    }
+
+    /**
+     * The Function is newEncoder
+     *
+     * @return Type of Encoder
+     * @since 0.28.4
+     */
+    public func newEncoder():Encoder{
+        ISO2022JPEncoder()
+    }
+
+    /**
+     * The Function is newDecoder
+     *
+     * @return Type of Decoder
+     * @since 0.28.4
+     */
+    public func newDecoder():Decoder{
+        ISO2022JPDecoder()
+    }
+}
+
 /**
  * EUC-JP japanese encoding charset
  * @author freeonsky
@@ -69,8 +112,8 @@ class ShiftJISCharset <: Charset{
      * @since 0.28.4
      */
     public init(){
-        this.name = "EUC-JP"
-        this.labels = ["cseucpkdfmtjapanese",  "euc-jp",  "x-euc-jp"]
+        this.name = "Shift_JIS"
+        this.labels = ["csshiftjis","ms932","ms_kanji","shift-jis","shift_jis","sjis","windows-31j","x-sjis"]
     }
 
     /**
