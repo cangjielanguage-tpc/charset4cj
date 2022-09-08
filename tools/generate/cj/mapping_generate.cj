@@ -2,6 +2,7 @@ from net import http.*
 from net import tls.*
 from std import io.*
 from std import collection.*
+from std import convert.*
 
 let encodeMapFlag = false
 func downloadFile(encodeName: String){
@@ -13,15 +14,16 @@ func downloadFile(encodeName: String){
     let url = "https://encoding.spec.whatwg.org/index-${encodeName.toAsciiLower()}.txt"
     var cfg = TlsClientConfig("/etc/ssl/certs/ca-certificates.crt")
     let client = Client(cfg)
-    try{
+    try(fs = File(path, AccessMode.Write, OpenMode.Create)){
         let res = client.get(url)
-        let s = res.readTextToEnd()
-        let fs = FileStream(path)
-        if(fs.openFile()){
-            fs.write(s)
-            fs.close()
-        }
-    }catch(e: Throwable){
+        // let s = res.readTextToEnd()
+        
+        res.copyTo(fs)
+        // if(fs.openFile()){
+        //     fs.write(s)
+        //     fs.close()
+        // }
+    }catch(e: Exception){
         println(e)
     }
 }
@@ -32,27 +34,27 @@ func readFileToMap(encodeName: String):Map<UInt32, UInt32>{
     if(!File.exist(path)){
         downloadFile(encodeName)
     }    
-    let fs = FileStream(path)
-    if(fs.openFile()){
-        var str = fs.readAllText()
-        var lines = str.split("\n")
-        for(line in lines){
-            if(line.startsWith("#")){
-                continue
-            }
-            if(line == ""){
-                continue
-            }
-            let items = line.split("\t")
-            if(items.size <2){
-                continue
-            }
-            let pointer = UInt32.parse(items[0].trimAscii())
-            let codePoint = UInt32.parse(items[1].trimAscii())
-            map.put(pointer, codePoint)
+    let fs = File(path, AccessMode.Read, OpenMode.Open)
+    let sr = StringReader(fs)
+    var lineOp = sr.readln()
+    while(lineOp != None){
+        var line = lineOp.getOrThrow()
+        lineOp = sr.readln()
+        if(line.startsWith("#")){
+            continue
         }
-        fs.close()
+        if(line == ""){
+            continue
+        }
+        let items = line.split("\t")
+        if(items.size <2){
+            continue
+        }
+        let pointer = UInt32.parse(items[0].trimAscii())
+        let codePoint = UInt32.parse(items[1].trimAscii())
+        map.put(pointer, codePoint)
     }
+    
     return map
 }
 
@@ -107,10 +109,10 @@ package charset.${pkg}
     
     let fileName = encodeName.toAsciiLower().replace("-", "_") + "_mapping.cj"
     let path = "../../../src/charset/" + pkg + "/" + fileName
-    let fs = FileStream(path)
-    if(fs.openFile()){
-        fs.write(s)
-        fs.close()
+    try(fs = File(path, AccessMode.Write, OpenMode.OpenOrCreate)){
+        fs.write(s.toUtf8Array())
+    }catch(e:Exception){
+
     }
 }
 
@@ -169,10 +171,10 @@ from std import collection.*
     let fileName = encodeName.toAsciiLower().replace("-", "_") + "_mapping.cj"
     let path = "../../../src/charset/" + pkg + "/" + fileName
     File.delete(path)
-    let fs = FileStream(path)
-    if(fs.openFile()){
-        fs.write(s)
-        fs.close()
+    try(fs = File(path, AccessMode.Write, OpenMode.OpenOrCreate)){
+        fs.write(s.toUtf8Array())
+    }catch(e:Exception){
+        
     }
 }
 
@@ -182,6 +184,7 @@ main(){
     writeMappingFile("gb18030", "simplechinese")
     writeMappingFile("jis0208", "japanese")
     writeMappingFile("jis0212", "japanese")
+    writeMappingFile("iso-2022-jp-katakana", "japanese")
     writeRangeMappingFile("gb18030-ranges", "simplechinese")
 
     let singlebyteencoding = [
