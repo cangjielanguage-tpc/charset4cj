@@ -191,7 +191,6 @@ class UTF16Decoder <: Decoder{
                 return (srcIndex, destIndex)
             }
             var u1 = src[srcIndex + 1]
-            // print("u0:${u0}      u1:${u1}")
             // [0xd800, 0xdc00) high
             // [0xdc00, 0xe000) low          
             var codeUnit:UInt32 = 0
@@ -222,7 +221,6 @@ class UTF16Decoder <: Decoder{
             }else{
                 // Double byte
                 dest[destIndex] = Char(codeUnit)
-                print("${dest[destIndex]}")
                 srcIndex += 2
                 destIndex += 1
                 continue                
