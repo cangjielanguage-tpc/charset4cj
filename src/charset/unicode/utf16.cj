@@ -49,8 +49,7 @@ class UTF16Charset <: Charset{
      * @since 0.28.4
      */
     public func newEncoder():Encoder{
-        let encoder = UTF16Encoder(be)
-        return encoder
+        UTF16Encoder(be)
     }
     
     /**
@@ -60,8 +59,7 @@ class UTF16Charset <: Charset{
      * @since 0.28.4
      */
     public func newDecoder():Decoder{
-        let decoder = UTF16Decoder(be)
-        return decoder
+        UTF16Decoder(be)
     }
 }
 

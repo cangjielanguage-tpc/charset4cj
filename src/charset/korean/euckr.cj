@@ -41,8 +41,7 @@ class EUCKRCharset <: Charset{
      * @since 0.28.4
      */
     public func newEncoder():Encoder{
-        let encoder = EUCKREncoder()
-        return encoder
+        EUCKREncoder()
     }
 
     /**
@@ -52,8 +51,7 @@ class EUCKRCharset <: Charset{
      * @since 0.28.4
      */
     public func newDecoder():Decoder{
-        let decoder = EUCKRDecoder()
-        return decoder
+        EUCKRDecoder()
     }
 }
 

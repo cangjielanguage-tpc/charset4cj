@@ -41,8 +41,7 @@ class GB18030Charset <: Charset{
      * @since 0.28.4
      */
     public func newEncoder():Encoder{
-        var encoder = GB18030Encoder()
-        return encoder
+        GB18030Encoder()
     }
     
     /**
@@ -52,7 +51,6 @@ class GB18030Charset <: Charset{
      * @since 0.28.4
      */
     public func newDecoder():Decoder{
-        var decoder = GB18030Decoder()
-        return decoder
+        GB18030Decoder()
     }
 }

@@ -74,10 +74,7 @@ class ShiftJISEncoder <: Encoder {
                 if(i >= 8272 && i <= 8835){
                     continue
                 }
-                let item = match(decodeMapping.get(i)){
-                    case Some(c) => c
-                    case None => UInt32('\u{FFFF}')
-                }
+                let item = decodeMapping[i]
                 if(item == codePoint){
                     res = i
                     break

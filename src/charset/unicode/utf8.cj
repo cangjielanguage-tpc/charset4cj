@@ -38,8 +38,7 @@ class UTF8Charset <: Charset{
      * @since 0.28.4
      */
     public func newEncoder():Encoder{
-        let encoder = UTF8Encoder()
-        return encoder
+        UTF8Encoder()
     }
 
     /**
@@ -49,8 +48,7 @@ class UTF8Charset <: Charset{
      * @since 0.28.4
      */
     public func newDecoder():Decoder{
-        let decoder = UTF8Decoder()
-        return decoder
+        UTF8Decoder()
     }
 }
 
