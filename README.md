@@ -25,7 +25,6 @@
 
 + 💪 待开发特性
   + 支持gbk ， gb2312，gb18030 的区分
-  + 支持日韩字符集
   + 增加bom支持
 
 ##    <img alt="" src="./doc/assets/readme-icon-framework.png" style="display: inline-block;" width=3%/> 架构

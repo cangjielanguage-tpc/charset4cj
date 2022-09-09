@@ -83,8 +83,7 @@ class EUCJPCharset <: Charset{
      * @since 0.28.4
      */
     public func newEncoder():Encoder{
-        let encoder = EUCJPEncoder()
-        return encoder
+        EUCJPEncoder()
     }
 
     /**
@@ -94,8 +93,7 @@ class EUCJPCharset <: Charset{
      * @since 0.28.4
      */
     public func newDecoder():Decoder{
-        let decoder = EUCJPDecoder()
-        return decoder
+        EUCJPDecoder()
     }
 }
 
@@ -123,8 +121,7 @@ class ShiftJISCharset <: Charset{
      * @since 0.28.4
      */
     public func newEncoder():Encoder{
-        let encoder = ShiftJISEncoder()
-        return encoder
+        ShiftJISEncoder()
     }
 
     /**
@@ -134,7 +131,6 @@ class ShiftJISCharset <: Charset{
      * @since 0.28.4
      */
     public func newDecoder():Decoder{
-        let decoder = ShiftJISDecoder()
-        return decoder
+        ShiftJISDecoder()
     }
 }

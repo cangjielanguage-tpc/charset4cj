@@ -39,8 +39,7 @@ class BIG5Charset <: Charset{
      * @since 0.28.4
      */
     public func newEncoder():Encoder{
-        let encoder = BIG5Encoder()
-        return encoder
+        BIG5Encoder()
     }
 
     /**
@@ -50,8 +49,7 @@ class BIG5Charset <: Charset{
      * @since 0.28.4
      */
     public func newDecoder():Decoder{
-        let decoder = BIG5Decoder()
-        return decoder
+        BIG5Decoder()
     }
 }
 
@@ -86,7 +84,7 @@ class BIG5Encoder <: Encoder {
                 ref[position] = UInt8(codePoint)
                 position += 1
             }else{
-                var index = indexPointer(Big5EncodeMapping, Big5DecodeMapping, codePoint)
+                var index = indexBig5Pointer(Big5EncodeMapping, Big5DecodeMapping, codePoint)
                 if(index >= 0){
                     var pointer = UInt32(index)
                     let lead = pointer / 157 + 0x81
@@ -105,6 +103,38 @@ class BIG5Encoder <: Encoder {
         }    
         return ref[0..position]
     }
+    private func indexBig5Pointer(encodeMapping:Map<UInt32, UInt32>, decodeMapping:Array<UInt32>, codePoint:UInt32):Int64{
+        var res:Int64 = -1
+        if(!encodeMapping.isEmpty()){
+            if(encodeMapping.contains(codePoint)){
+                res = Int64(encodeMapping[codePoint])
+            }
+        }else{
+            if (codePoint == 0x2550 || codePoint == 0x255E ||
+                codePoint == 0x2561 || codePoint == 0x256A ||
+                codePoint == 0x5341 || codePoint == 0x5345) {
+                for(i in (decodeMapping.size-1)..=0 : -1){
+                    let item = decodeMapping[i]
+                    if(item == codePoint){
+                        res = i
+                        break
+                    }                        
+                }
+                return res
+            }            
+            for(i in 0..decodeMapping.size){
+                if(i < (0xA1 - 0x81) * 157){
+                    continue
+                }
+                let item = decodeMapping[i]
+                if(item == codePoint){
+                    res = i
+                    break
+                }
+            }
+        }
+        return res
+    }    
 }
 
 /*
@@ -160,49 +190,61 @@ class BIG5Decoder <: Decoder{
                 }
                 
                 var u1 = src[srcIndex+1]
+                var offset = if(u1 < 0x7F){ 0x40 } else{ 0x62 }
                 var pointer:Int64 = 0
-                if(u1 >= 0x40 && u1 < 0x7F){
-                    u1 -= 0x40
-                }else if(0xa1 <= u1 && u1 < 0xff){
-                    u1 -= 0x62
-                }else {
-                    // Replace with fffd after error
-                    dest[destIndex] = replacement     
-                    destIndex += 1
-                    srcIndex += 1
-                    continue     
+                if((u1 >= 0x40 && u1 <= 0x7E) || (u1 >= 0xA1 && u1 <= 0xFE)){
+                    pointer = Int64(u0 - 0x81) * 157 + Int64(u1) - offset
                 }
-                pointer = Int64(u0-0x81)*157 + Int64(u1)
-                if(pointer < table.size){
-                    var s:Array<Char> = Array<Char>()
-                    if(pointer == 1133){
-                        s = "\u{00CA}\u{0304}".toCharArray()
-                    }else if(pointer == 1135){
-                        s = "\u{00CA}\u{030C}".toCharArray()
-                    }else if(pointer == 1164){
-                        s = "\u{00EA}\u{0304}".toCharArray()
-                    }else if(pointer == 1166){
-                        s = "\u{00EA}\u{030C}".toCharArray()
-                    }else{
-                        dest[destIndex] = Char(table[pointer])
-                        srcIndex += 2
-                        destIndex += 1
-                        continue                      
-                    }
-                    dest[destIndex] = s[0]
-                    destIndex += 1
-                    dest[destIndex] = s[1]
-                    destIndex += 1
+                if(pointer == 1133){
+                    dest[destIndex] = '\u{00CA}'
+                    dest[destIndex + 1] = '\u{0304}'
+                    destIndex += 2
                     srcIndex += 2
                     continue
-                }else{
-                    // Replace with fffd after error
-                    dest[destIndex] = replacement     
+                }
+                if(pointer == 1135){
+                    dest[destIndex] = '\u{00CA}'
+                    dest[destIndex + 1] = '\u{030C}'
+                    destIndex += 2
+                    srcIndex += 2
+                    continue
+                }    
+                if(pointer == 1164){
+                    dest[destIndex] = '\u{00EA}'
+                    dest[destIndex + 1] = '\u{0304}'
+                    destIndex += 2
+                    srcIndex += 2
+                    continue
+                }                              
+                if(pointer == 1166){
+                    dest[destIndex] = '\u{00EA}'
+                    dest[destIndex + 1] = '\u{030C}'
+                    destIndex += 2
+                    srcIndex += 2
+                    continue
+                }                
+                let codePointOp = table.get(pointer)
+                if(codePointOp != None){
+                    dest[destIndex] = Char(codePointOp.getOrThrow())
                     destIndex += 1
-                    srcIndex += 1
-                    continue                   
+                    srcIndex += 2
+                    continue                    
+                }else{
+                    if(u1 >= 0x00 && u1 <= 0x7F){
+                        //skip u0
+                        srcIndex += 1
+                    }else{
+                        srcIndex += 2
+                    }
+                    dest[destIndex] = replacement
+                    destIndex += 1
+                    continue
                 }
             }
+            dest[destIndex] = replacement
+            destIndex += 1
+            srcIndex += 1
+            continue                 
         }
         return (srcIndex, destIndex)
     }    

@@ -313,12 +313,10 @@ class SingleByteCharset <: Charset{
         this.labels = nameMap[name]
     }
     public func newEncoder():Encoder{
-        let encoder = SingleByteEncoder(this)
-        return encoder
+        SingleByteEncoder(this)
     }
     public func newDecoder():Decoder{
-        let decoder = SingleByteDecoder(this)
-        return decoder
+        SingleByteDecoder(this)
     }
     func charsetName():String{
         return super.name

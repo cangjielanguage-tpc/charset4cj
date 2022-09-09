@@ -49,8 +49,7 @@ class UTF32Charset <: Charset{
      * @since 0.28.4
      */
     public func newEncoder():Encoder{
-        let encoder = UTF32Encoder(be)
-        return encoder
+        UTF32Encoder(be)
     }
 
     /**
@@ -60,8 +59,7 @@ class UTF32Charset <: Charset{
      * @since 0.28.4
      */
     public func newDecoder():Decoder{
-        let decoder = UTF32Decoder(be)
-        return decoder
+        UTF32Decoder(be)
     }
 }
 
