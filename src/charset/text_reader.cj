@@ -11,8 +11,7 @@ public class TextReader{
     var charset:Charset
     var bufSize: Int64
     var buf:Array<UInt8>
-    var src:Array<UInt8>
-    var position:Int64
+    var bufLimit:Int64
     var eof = false
 
     public init(input:InputStream, charset!:Charset = Charsets.utf8, bufSize!:Int64 = 8192){
@@ -20,8 +19,7 @@ public class TextReader{
         this.charset = charset
         this.bufSize = bufSize
         buf = Array<UInt8>(bufSize, item:0)
-        src = buf
-        position = 0
+        bufLimit = 0
     }
     public func readAllLine():ArrayList<String>{
         let list = ArrayList<String>()
@@ -36,12 +34,13 @@ public class TextReader{
         return list
     }
     public func read(): Option<Char>{
-        if(eof && this.position == 0){
+        if(eof && this.bufLimit == 0){
             return None
         }
         fillBuf()       
         var decoder = charset.newDecoder()
         var dest = Array<Char>(1, item:'\0')
+        let src = buf.slice(0, this.bufLimit)
         var (srcIndex, destIndex) = decoder.decode(src, 0, src.size - 1, dest, 0)
         if(destIndex == 1){
             rotateLeft(srcIndex)
@@ -53,7 +52,7 @@ public class TextReader{
     * read a of line String, when eof, return None
     */
     public func readln(): Option<String>{
-        if(eof && this.position == 0){
+        if(eof && this.bufLimit == 0){
             return None
         }
         fillBuf()
@@ -61,6 +60,7 @@ public class TextReader{
         var linefeed = UInt8(UInt32('\n'))
         var enter = UInt8(UInt32('\r'))
         var decoder = charset.newDecoder()
+        let src = buf.slice(0, this.bufLimit)
         var indexOp = indexOf(src, linefeed)
         if(indexOp == None){
             var dest = Array<Char>(src.size, item:'\0')
@@ -68,35 +68,36 @@ public class TextReader{
             rotateLeft(srcIndex)
             return Some(String(dest.slice(0, destIndex)))
         }else{
-            var len = indexOp.getOrThrow() + 1
             var index = indexOp.getOrThrow()
+            // skip \n
+            var len = index
+            // skip \r
             if(index > 0 && src[index - 1] == enter){
                 len -= 1
             }
-            let line = decoder.decode(src.slice(0, len))
+            let line = if(len > 0) {decoder.decode(src.slice(0, len))} else {""}
             // 剩余buf前移
             rotateLeft(index + 1)
             return Some(line)            
         }
     }
-    // 将 src 从 index 位置移动到0，依次左移
+    // 将 buf 从 index 位置移动到0，依次左移
     private func rotateLeft(index:Int64){
-        for(i in index..src.size){
-            src[i - index] = src[i]
+        for(i in index..buf.size){
+            buf[i - index] = buf[i]
         }
-        this.position = src.size - index
+        this.bufLimit = this.bufLimit - index
     }
     private func fillBuf(){
-        while(this.position < buf.size - 1){
-            var subArray = buf.slice(0, buf.size - this.position)
+        while(this.bufLimit < buf.size - 1){
+            var subArray = buf.slice(this.bufLimit, buf.size - this.bufLimit)
             let len = input.read(subArray)
             if(len == 0){ // if end of stream break loop
                 eof = true
                 break
             }
-            this.position += len
+            this.bufLimit += len
         }
-        this.src = this.buf.slice(0, this.position)
     }
     
 }
