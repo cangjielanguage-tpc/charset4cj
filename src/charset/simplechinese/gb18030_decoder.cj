@@ -27,19 +27,18 @@ public class GB18030Decoder <: Decoder{
     /**
      * Decode byte array SRC into character array dest
      *
-     * @param src Byte array,range: [srcOffset, srcLimit]
-     * @param srcOffset of Int64
-     * @param srcLimit of Int64
-     * @param dest Character array,range: [destStart, dest.size) ,not include dest.size
-     * @param destStart Indicates a dest subscript that is not currently in use
+     * @param src input byte array
+     * @param dest output Char array
      *
      * @return Type of (Int64, Int64):(srcIndex, destIndex)
      *         srcIndex: Next unprocessed SRC subscript
      *         destIndex: Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
-            dest:Array<Char>, destStart:Int64): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+        var srcOffset:Int64 = 0
+        var srcLimit:Int64 = src.size - 1
+        var destStart:Int64 = 0                         
         // src Processing index
         var srcIndex = srcOffset   
         // dest Processing index

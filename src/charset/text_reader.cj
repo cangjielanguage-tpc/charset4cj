@@ -41,7 +41,7 @@ public class TextReader{
         var decoder = charset.newDecoder()
         var dest = Array<Char>(1, item:'\0')
         let src = buf.slice(0, this.bufLimit)
-        var (srcIndex, destIndex) = decoder.decode(src, 0, src.size - 1, dest, 0)
+        var (srcIndex, destIndex) = decoder.decode(src, dest)
         if(destIndex == 1){
             rotateLeft(srcIndex)
             return dest[0]
@@ -64,7 +64,7 @@ public class TextReader{
         var indexOp = indexOf(src, linefeed)
         if(indexOp == None){
             var dest = Array<Char>(src.size, item:'\0')
-            var (srcIndex, destIndex) = decoder.decode(src, 0, src.size - 1, dest, 0)
+            var (srcIndex, destIndex) = decoder.decode(src, dest)
             rotateLeft(srcIndex)
             return Some(String(dest.slice(0, destIndex)))
         }else{

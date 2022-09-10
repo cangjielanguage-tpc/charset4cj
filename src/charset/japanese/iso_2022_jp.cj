@@ -150,20 +150,20 @@ class ISO2022JPDecoder <: Decoder{
      *   ESC ( J to JIS X 0201-Roman  start byte: 0X1B,0x28,0x4A
      *   ESC ( I to JIS X 0201 katakana Nonstandard start byte:0X1B,0x28,0x49
      *   ESC $ @ to JIS X 0208-1978  start byte:0X1B,0x24,0x40
-     *   ESC $ B to JIS X 0208-1983  start byte:0X1B,0x24,0x42   
-     * @param src Range: [srcOffset, srcLimit]
-     * @param srcOffset of Int64
-     * @param srcLimit of Int64
-     * @param dest Range: [destStart, dest.size) not include dest.size
-     * @param destStart Indicates a dest subscript that is not currently in use
+     *   ESC $ B to JIS X 0208-1983  start byte:0X1B,0x24,0x42  
+     * 
+     * @param src input byte array
+     * @param dest output Char array
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
      *         srcIndex Next unprocessed SRC subscript
      *         destIndex Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
-            dest:Array<Char>, destStart:Int64): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+        var srcOffset:Int64 = 0
+        var srcLimit:Int64 = src.size - 1
+        var destStart:Int64 = 0                    
         // Index being processed by SRC
         var srcIndex = srcOffset   
         // Dest index being processed

@@ -85,19 +85,18 @@ class EUCJPDecoder <: Decoder{
      *              JIS X 0208: first in 0xA1-0xFE, second in 0xA1-0xFE
      *          The three byte part is JIS X 0212:
      *              first is 0x8F, second in 0xA1-0xFE, thrid in 0xA1-0xFE
-     * @param src Range: [srcOffset, srcLimit]
-     * @param srcOffset of Int64
-     * @param srcLimit of Int64
-     * @param dest Range: [destStart, dest.size) not include dest.size
-     * @param destStart Indicates a dest subscript that is not currently in use
+     * @param src input byte array
+     * @param dest output Char array
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
      *         srcIndex Next unprocessed SRC subscript
      *         destIndex Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
-            dest:Array<Char>, destStart:Int64): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+        var srcOffset:Int64 = 0
+        var srcLimit:Int64 = src.size - 1
+        var destStart:Int64 = 0                    
         // Index being processed by SRC
         var srcIndex = srcOffset   
         // Dest index being processed

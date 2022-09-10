@@ -11,6 +11,5 @@ main (){
     var srcLimit: Int64 = 4
     var dest: Array<Char> = Array<Char>(6, {i => '\u{0}'})
     var destStart: Int64 = 2
-    var s1 = euckrDncoder.decode(src, srcOffset, srcLimit, dest, destStart)
     return 0
 }
