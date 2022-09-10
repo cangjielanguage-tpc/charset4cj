@@ -6,6 +6,9 @@ from std import collection.*
 
 import charset.encoding.*
 
+/**
+* process text reader
+*/
 public class TextReader{
     var input:InputStream
     var charset:Charset
