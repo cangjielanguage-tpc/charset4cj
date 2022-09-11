@@ -69,7 +69,8 @@ class GB18030Encoder <: Encoder {
                     ref[position] = UInt8(lead)
                     position += 1
                     ref[position] = UInt8(trail + offset)
-                    position += 1                    
+                    position += 1                  
+                    continue  
                 }
                 //todo If is GBK is true, return error with code point.
                 if(gbk){
@@ -79,17 +80,18 @@ class GB18030Encoder <: Encoder {
                 }
                 // four byte part
                 var pointer = indexGB18030RangesPointerFor(codePoint)
-                var byte1 = UInt8(pointer / 10 / 126 / 10);
-                pointer = pointer - UInt32(byte1 * 10 * 126 * 10);
-                var byte2 = UInt8(pointer / 10 / 126);
-                pointer = pointer - UInt32(byte2 * 10 * 126);
+                var byte1 = UInt8(pointer / 10 / 126 / 10)
+                pointer = pointer - UInt32(byte1) * 10 * 126 * 10
+                var byte2 = UInt8(pointer / 10 / 126)
+                pointer = pointer - UInt32(byte2) * 10 * 126
                 var byte3 = UInt8(pointer / 10);
-                var byte4 = pointer - UInt32(byte3 * 10);
+                var byte4:UInt32 = pointer - UInt32(byte3) * 10
                 ref[position] = UInt8(byte1 + 0x81)
                 ref[position + 1] = UInt8(byte2 + 0x30)
                 ref[position + 2] = UInt8(byte3 + 0x81)
                 ref[position + 3] = UInt8(byte4 + 0x30)
-                position += 4          
+                position += 4      
+                continue    
             }
         }
         return ref[0..position]
