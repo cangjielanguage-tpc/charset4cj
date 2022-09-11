@@ -4,7 +4,7 @@ from charset import charset.*
 from charset import charset.traditionchinese.*
 
 main (){
-    var big5 = Charsets.big5
+    var big5 = Charsets.BIG5
     var encoder = big5.newDecoder()
     var src: Array<UInt8> = Array<UInt8>([0xB0, 0xDA, 0xA7, 0x41, 0xB6])
     var srcOffset: Int64 = 0

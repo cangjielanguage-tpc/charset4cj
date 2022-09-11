@@ -4,7 +4,7 @@ from charset import charset.*
 from charset import charset.simplechinese.*
 
 main (){
-    var charset = Charsets.gb18030
+    var charset = Charsets.GB18030
     var euckrEncoder = charset.newEncoder()
     var src1 = "hfkjwefkjashekfh"
     var s1 = euckrEncoder.encode(src1)

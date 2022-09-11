@@ -3,7 +3,7 @@
 from charset import charset.*
 
 main (){
-    var charset = Charsets.ibm866
+    var charset = Charsets.IBM866
     var decoder = charset.newDecoder()
     var encoder = charset.newEncoder()
     var s1 = "АГЦмт"

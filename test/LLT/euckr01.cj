@@ -4,7 +4,7 @@ from charset import charset.*
 
 main (){
 
-    var charset = Charsets.euckr
+    var charset = Charsets.EUCKR
     var euckrEncoder = charset.newEncoder()
     var euckrDecoder = charset.newDecoder()
     // 0xAC34	갴

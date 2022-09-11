@@ -4,7 +4,7 @@ from charset import charset.*
 from charset import charset.traditionchinese.*
 
 main (){
-    var big5 = Charsets.big5
+    var big5 = Charsets.BIG5
     var encoder = big5.newEncoder()
     var str: String = "你號，中國"
     var s1 = encoder.encode(str)

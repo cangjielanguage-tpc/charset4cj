@@ -4,7 +4,7 @@ from charset import charset.*
 from charset import charset.unicode.*
 
 main (){
-    var charset = Charsets.utf16le
+    var charset = Charsets.UTF16LE
     var encoder =charset.newEncoder()
     var decoder = charset.newDecoder()
     var src: Array<UInt8> = Array<UInt8>([0x84, 0x36, 0x81, 0x42, 0x32, 0x32, 0x32])

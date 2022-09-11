@@ -3,7 +3,7 @@
 from charset import charset.*
 
 main (){
-    var charset = Charsets.big5
+    var charset = Charsets.BIG5
     var encoder = charset.newEncoder()
     var decoder = charset.newDecoder()
     var s1 = "碉峴"

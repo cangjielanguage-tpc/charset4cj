@@ -24,7 +24,6 @@
 - 🚀 通过 Charset 创建编码解码器
 
 + 💪 待开发特性
-  + 支持gbk ， gb2312，gb18030 的区分
   + 增加bom支持
 
 ##    <img alt="" src="./doc/assets/readme-icon-framework.png" style="display: inline-block;" width=3%/> 架构
@@ -40,15 +39,15 @@
 解码器提供了下面两个方法，能够将字节数组转成String对象
 ```
 func decode(src:Array<UInt8>):String
-func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, 
-            dest:Array<Char>, destStart:Int64): (Int64, Int64)
+func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
 ```
 io流（包含文件流、网络流）读取的都是字节数组，要将字节数组转成String，就需要上面2个方法。每种字符集的解码方法各不相同
 
 - 将String转成字节数组
 
 要将String写入到io流，需要将String转成字节数组，此时就需要编码器，
-编码器提供了编码方法，能将String转成字节数组
+编码器提供了编码方法，能将String转成字节数组，传统字符集的字符数量小于unicode， 一些字符在传统字符集中没有，
+从unicode(String)编码到传统字符集，会将没有的字符替换成其它（如：0xF3）字节
 ```
 func encode(str:String): Array<UInt8>
 ```
@@ -96,32 +95,7 @@ func encode(str:String): Array<UInt8>
 │       ├── singlebyte      //  西欧、阿拉伯单字节字符集编解码实现
 │       │   ├── ibm866_mapping.cj
 │       │   ├── iso_8859_10_mapping.cj
-│       │   ├── iso_8859_13_mapping.cj
-│       │   ├── iso_8859_14_mapping.cj
-│       │   ├── iso_8859_15_mapping.cj
-│       │   ├── iso_8859_16_mapping.cj
-│       │   ├── iso_8859_2_mapping.cj
-│       │   ├── iso_8859_3_mapping.cj
-│       │   ├── iso_8859_4_mapping.cj
-│       │   ├── iso_8859_5_mapping.cj
-│       │   ├── iso_8859_6_mapping.cj
-│       │   ├── iso_8859_7_mapping.cj
-│       │   ├── iso_8859_8_mapping.cj
-│       │   ├── koi8_r_mapping.cj
-│       │   ├── koi8_u_mapping.cj
-│       │   ├── macintosh_mapping.cj
-│       │   ├── single_byte_charset.cj
-│       │   ├── single_byte_decoder.cj
-│       │   ├── single_byte_encoder.cj
-│       │   ├── windows_1250_mapping.cj
-│       │   ├── windows_1251_mapping.cj
-│       │   ├── windows_1252_mapping.cj
-│       │   ├── windows_1253_mapping.cj
-│       │   ├── windows_1254_mapping.cj
-│       │   ├── windows_1255_mapping.cj
-│       │   ├── windows_1256_mapping.cj
-│       │   ├── windows_1257_mapping.cj
-│       │   ├── windows_1258_mapping.cj
+│       │   ├── ......
 │       │   ├── windows_874_mapping.cj
 │       │   └── x_mac_cyrillic_mapping.cj
 │       ├── traditionchinese  // 繁体中文字符集编解码实现
@@ -142,6 +116,12 @@ func encode(str:String): Array<UInt8>
 
 主要是核心类和成员函数说明
 
+#### class TextReader
+
+```
+public init(input:InputStream, charset!:Charset = Charsets.UTF8, bufSize!:Int64 = 8192)
+public func readln(): Option<String>
+```
 #### class Charset
 
 ```
@@ -254,6 +234,27 @@ cpm test test/UT/
 ```
 
 ### 示例1
+
+```cangjie
+from charset import charset.*
+
+main() {
+    var f:File = File("doc/字符集简介gbk.md", AccessMode.Read, OpenMode.Open)
+    
+    var sr = TextReader(f, charset: Charsets.gb18030, bufSize:120)
+    while(true){
+        var lineOp:Option<String> = sr.readln()
+        if(lineOp == None){
+            break
+        }
+        let line = lineOp.getOrThrow()
+        println("${line}")
+    }   
+    0
+}
+```
+
+### 示例2
 
 ```cangjie
 from charset import charset.*

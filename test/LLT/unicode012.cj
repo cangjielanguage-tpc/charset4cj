@@ -4,7 +4,7 @@ from charset import charset.*
 from charset import charset.unicode.*
 
 main (){
-    var utf8 = Charsets.utf8
+    var utf8 = Charsets.UTF8
     var decoder = utf8.newDecoder()
     var src: Array<UInt8> = Array<UInt8>([0xF8, 0xDA, 0xA7, 0x41, 0xB6])
     var srcOffset: Int64 = 3

@@ -4,7 +4,7 @@ from charset import charset.*
 
 main (){
 
-    var charset = Charsets.iso_8859_6
+    var charset = Charsets.ISO_8859_6
     var decoder = charset.newDecoder()
     var encoder = charset.newEncoder()
     var s1 = "ف س ئ ب ز "

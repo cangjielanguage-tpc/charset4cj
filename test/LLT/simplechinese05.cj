@@ -4,7 +4,7 @@ from charset import charset.*
 from charset import charset.simplechinese.*
 
 main (){
-    var charset = Charsets.gb18030
+    var charset = Charsets.GB18030
     var euckrDncoder = charset.newDecoder()
     var src: Array<UInt8> = Array<UInt8>([0x81, 0x31, 0x31, 0x30, 0x32, 0x32, 0x32, 0x32, 0x32, 0x32])
     var srcOffset: Int64 = 1
