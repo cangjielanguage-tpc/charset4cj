@@ -72,7 +72,8 @@ class EUCKREncoder <: Encoder {
      */
     public func encode(str:String): Array<UInt8>{
         var table = EUC_KREncodeMapping
-        // replacement : 0x63 ,0x3F
+        // replacement : 0x3F
+        let replacement:UInt8 = 0x3F
         if(str.size == 0){
             return Array<UInt8>()
         }
@@ -96,9 +97,8 @@ class EUCKREncoder <: Encoder {
                     position += 2                    
                 }else{
                     // error
-                    ref[position] = 0x63
-                    ref[position+1] = 0x3F
-                    position += 2
+                    ref[position] = replacement
+                    position += 1
                 }
             }
         }    
