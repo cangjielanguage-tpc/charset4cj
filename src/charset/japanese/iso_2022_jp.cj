@@ -18,8 +18,8 @@ class ISO2022JPEncoder <: Encoder {
      * @since 0.35.2
      */
     public func encode(str:String): Array<UInt8> {
-        // replacement : 0x63 ,0x3F
-        let replacement:UInt8 = 0x63
+        // replacement : 0x3F
+        let replacement:UInt8 = 0x3F
         if(str.size == 0){
             return Array<UInt8>()
         }
