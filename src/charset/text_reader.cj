@@ -17,7 +17,7 @@ public class TextReader{
     var bufLimit:Int64
     var eof = false
 
-    public init(input:InputStream, charset!:Charset = Charsets.utf8, bufSize!:Int64 = 8192){
+    public init(input:InputStream, charset!:Charset = Charsets.UTF8, bufSize!:Int64 = 8192){
         this.input = input
         this.charset = charset
         this.bufSize = bufSize

@@ -19,7 +19,7 @@ import charset.encoding.*
  * @author freeonsky
  * @since 0.28.4
  */
-public class GB18030Decoder <: Decoder{
+class GB18030Decoder <: Decoder{
     // Replace character when decoding error
     let replacement = '\u{FFFD}' 
     let table = gb18030DecodeMapping

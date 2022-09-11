@@ -19,7 +19,12 @@ import charset.encoding.*
  * @author freeonsky
  * @since 0.28.4
  */
-public class GB18030Encoder <: Encoder {
+class GB18030Encoder <: Encoder {
+    var gbk:Bool
+
+    public init(gbk: Bool){
+        this.gbk = gbk
+    }
 
     /**
      * Encodes a string into a byte array
@@ -36,6 +41,7 @@ public class GB18030Encoder <: Encoder {
         let ref = Array<UInt8>(str.size * 4, item:0)
         var position = 0
         var arr = str.toCharArray()
+        let replacement:UInt8 = 0x3F
         for(ch in arr){
             var codePoint:UInt32 = UInt32(ch)
             // If code point is an ASCII code point, return a byte whose value is code point.
@@ -49,7 +55,7 @@ public class GB18030Encoder <: Encoder {
                 ref[position] = 0xA0
                 position += 1
             // If is GBK is true and code point is U+20AC, return byte 0x80.    
-            }else if(codePoint == 0x20AC){
+            }else if(gbk && codePoint == 0x20AC){
                 ref[position] = 0x80
                 position += 1         
             }else{
@@ -66,7 +72,11 @@ public class GB18030Encoder <: Encoder {
                     position += 1                    
                 }
                 //todo If is GBK is true, return error with code point.
-                
+                if(gbk){
+                    ref[position] = replacement
+                    position += 1
+                    continue
+                }
                 // four byte part
                 var pointer = indexGB18030RangesPointerFor(codePoint)
                 var byte1 = UInt8(pointer / 10 / 126 / 10);
@@ -81,7 +91,6 @@ public class GB18030Encoder <: Encoder {
                 ref[position + 3] = UInt8(byte4 + 0x30)
                 position += 4          
             }
-
         }
         return ref[0..position]
     }

@@ -14,7 +14,7 @@ public class TextWriter{
     var charset:Charset
     var encoder:Encoder
 
-    public init(output:OutputStream, charset!:Charset = Charsets.utf8){
+    public init(output:OutputStream, charset!:Charset = Charsets.UTF8){
         this.output = output
         this.charset = charset
         this.encoder = charset.newEncoder()

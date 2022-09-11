@@ -4,7 +4,7 @@ from charset import charset.*
 from charset import charset.encoding.*
 
 main (){
-    var charset = Charsets.euckr
+    var charset = Charsets.EUCKR
     var euckrDncoder = charset.newDecoder()
     var src: Array<UInt8> = Array<UInt8>([0xB0, 0xDA, 0xA7, 0x41, 0xB6])
     var srcOffset: Int64 = 1

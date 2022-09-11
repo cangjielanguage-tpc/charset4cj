@@ -24,7 +24,7 @@ main (){
 }
 
 public func big5(){
-    var charset = Charsets.big5
+    var charset = Charsets.BIG5
     var encoder = charset.newEncoder()
     var decoder = charset.newDecoder()
     var buf1 = Array<UInt8>([0xB8, 0x4D, 0xAE, 0x73])
@@ -45,7 +45,7 @@ public func big5(){
 public func gb18030() {
     var charset = match(Charsets.forName("gb18030")){
         case Some(cs) => cs
-        case _ => Charsets.gb18030
+        case _ => Charsets.GB18030
     }
     var decoder = charset.newDecoder()
 
@@ -75,7 +75,7 @@ public func gb18030() {
 public func ibm866(){
     var charset = match(Charsets.forName("IBM866")){
     case Some(cs) => cs
-    case _ => Charsets.ibm866
+    case _ => Charsets.IBM866
     }
     // var charset = SingleByteCharset("IBM866")
     var decoder = charset.newDecoder()
@@ -92,7 +92,7 @@ public func euk(){
     // var charset = EUCKRCharset()
     var charset = match(Charsets.forName("EUCKR")){
     case Some(cs) => cs
-    case _ => Charsets.euckr
+    case _ => Charsets.EUCKR
     }
     var encoder = charset.newEncoder()
     var decoder = charset.newDecoder()
@@ -113,7 +113,7 @@ func utf16betest(){
     // var charset = UTF16Charset(true) // 大端
     var charset = match(Charsets.forName("UTF-16BE")){
     case Some(cs) => cs
-    case _ => Charsets.utf16be
+    case _ => Charsets.UTF16BE
     }
     var decoder = charset.newDecoder()
 

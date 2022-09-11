@@ -3,7 +3,7 @@
 from charset import charset.*
 
 main (){
-    var charset = Charsets.big5
+    var charset = Charsets.BIG5
     var decoder = charset.newDecoder()
     var buf1 = Array<UInt8>([0xB8, 0x4D, 0xAE, 0x73, 0xB6])
     var buf2 = Array<UInt8>([65, 66, 67, 65, 66, 67, 89])

@@ -4,7 +4,7 @@ from charset import charset.*
 from charset import charset.encoding.*
 
 main (){
-    var charset = Charsets.euckr
+    var charset = Charsets.EUCKR
     var euckrEncoder = charset.newEncoder()
     var buf1: String = "adafdsa"
     var s1 = euckrEncoder.encode(buf1)

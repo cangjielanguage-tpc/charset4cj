@@ -3,7 +3,7 @@
 from charset import charset.*
 
 main() {
-    var charset = Charsets.gb18030
+    var charset = Charsets.GB18030
     var decoder = charset.newDecoder()
     var encoder = charset.newEncoder() 
     var src: Array<UInt8> = Array<UInt8>([0xCB, 0xAE, 0xB5, 0xE7, 0xB7, 0xD1])
