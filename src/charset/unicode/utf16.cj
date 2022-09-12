@@ -112,6 +112,11 @@ class UTF16Encoder <: Encoder {
                     position += 1
                     res[position] = low;
                     position += 1
+                }else{
+                    res[position] = low
+                    position += 1
+                    res[position] = high;
+                    position += 1                    
                 }
             }else{
                 // Four bytes
