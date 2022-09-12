@@ -48,7 +48,9 @@ public class Charsets {
     // ISO-2022-JP
     public static let ISO_2022_JP:Charset = newISO2022JPCharset()
     // Big5
-    public static let BIG5:Charset = newBIG5Charset()
+    public static let BIG5:Charset = newBIG5Charset(false)
+    // Big5-hkscs
+    public static let BIG5_HKSCS:Charset = newBIG5Charset(true)    
     // IBM866
     public static let IBM866:Charset = newSingleByteCharset("IBM866")
     // ISO-8859-2
@@ -114,6 +116,7 @@ public class Charsets {
         GBK,
         EUCKR,
         BIG5,
+        BIG5_HKSCS,
         EUCJP,
         SHIFT_JIS,
         ISO_2022_JP,

@@ -11,9 +11,52 @@ package charset.traditionchinese
 import charset.encoding.*
 
 // Big5 encoding charset
-public func newBIG5Charset():Charset{
-    BIG5Charset()
+public func newBIG5Charset(hkscs:Bool):Charset{
+    if(hkscs){
+        BIG5HKSCSCharset()
+    }else{
+        BIG5Charset()
+    }
 }
+
+/**
+ * big5-hkscs encoding
+ * @author freeonsky
+ * @since 0.28.4
+ */
+class BIG5HKSCSCharset <: Charset{
+
+    /**
+     * The Function is init constructor
+     *
+     * @since 0.28.4
+     */
+    public init(){
+        this.name = "big5-hkscs"
+        this.labels = ["big5-hkscs"]
+    }
+
+    /**
+     * The Function is newEncoder
+     *
+     * @return Type of Encoder
+     * @since 0.28.4
+     */
+    public func newEncoder():Encoder{
+        BIG5Encoder(true)
+    }
+
+    /**
+     * The Function is newDecoder
+     *
+     * @return Type of Decoder
+     * @since 0.28.4
+     */
+    public func newDecoder():Decoder{
+        BIG5Decoder()
+    }
+}
+
 
 /**
  * Big5 encoding
@@ -29,7 +72,7 @@ class BIG5Charset <: Charset{
      */
     public init(){
         this.name = "Big5"
-        this.labels = ["big5", "big5-hkscs", "cn-big5", "csbig5", "x-x-big5"]
+        this.labels = ["big5", "cn-big5", "csbig5", "x-x-big5"]
     }
 
     /**
@@ -39,7 +82,7 @@ class BIG5Charset <: Charset{
      * @since 0.28.4
      */
     public func newEncoder():Encoder{
-        BIG5Encoder()
+        BIG5Encoder(false)
     }
 
     /**
@@ -59,6 +102,10 @@ class BIG5Charset <: Charset{
  * @since 0.28.4
  */
 class BIG5Encoder <: Encoder {
+    var hkscs:Bool
+    public init(hkscs:Bool){
+        this.hkscs = hkscs
+    }
 
     /**
      * Encodes a string into a byte array
@@ -123,8 +170,10 @@ class BIG5Encoder <: Encoder {
                 return res
             }            
             for(i in 0..decodeMapping.size){
-                if(i < (0xA1 - 0x81) * 157){
-                    continue
+                if(!hkscs){
+                    if(i < (0xA1 - 0x81) * 157){
+                        continue
+                    }
                 }
                 let item = decodeMapping[i]
                 if(item == codePoint){
