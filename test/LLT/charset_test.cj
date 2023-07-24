@@ -20,6 +20,7 @@ main (){
         print("euk fail")
         return 1
     }
+    utf16betest()
     return 0
 }
 
@@ -94,7 +95,7 @@ public func euk(){
     case Some(cs) => cs
     case _ => Charsets.EUCKR
     }
-    var encoder = charset.newEncoder()
+    charset.newEncoder()
     var decoder = charset.newDecoder()
 
     var buf1 = Array<UInt8>([0xB9, 0xD0])

@@ -1,12 +1,19 @@
 {
-  "cjc_version": "0.31.4",
-  "organization": "pllab",
+  "cjc_version": "0.39.4",
+  "organization": "cangjie",
   "name": "charset",
   "description": "charset encoder/decoder",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "requires": {},
-  "package_requires": {},
+  "package_requires": {
+    "path_option": [],
+    "package_option": {}
+  },
   "foreign_requires": {},
   "output_type": "dynamic",
-  "command_option": ""
+  "command_option": "-O2",
+  "condition_option": {},
+  "link_option": "",
+  "package_configuration": {},
+  "cross_compile_configuration": {}
 }

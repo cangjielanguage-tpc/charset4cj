@@ -6,10 +6,10 @@ from charset import charset.unicode.*
 main (){
     var charset = Charsets.UTF16LE
     var encoder = charset.newEncoder()
-    var decoder = charset.newDecoder()
+    charset.newDecoder()
     var str1: String = "你好我个"
-    var s1 = encoder.encode(str1)
+    encoder.encode(str1)
     var str2: String = ""
-    var s2 = encoder.encode(str2)
+    encoder.encode(str2)
     return 0
 }

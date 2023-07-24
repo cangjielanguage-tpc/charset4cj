@@ -7,6 +7,6 @@ main (){
     var utf8 = Charsets.UTF8
     var encoder = utf8.newEncoder()
     var str1: String = "h"
-    var s1 = encoder.encode(str1)
+    encoder.encode(str1)
     return 0
 }

@@ -6,7 +6,7 @@ from charset import charset.unicode.*
 main (){
     var charset = Charsets.UTF32BE
     var encoder =charset.newEncoder()
-    var decoder = charset.newDecoder()
+    charset.newDecoder()
     var str1: String = "你好我𬌗𬌗𬌗𬌗𬌗"
     var str2: String = "欢迎你的到来"
     var s1 = encoder.encode(str1)

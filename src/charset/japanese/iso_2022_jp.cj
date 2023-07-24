@@ -26,7 +26,6 @@ class ISO2022JPEncoder <: Encoder {
         let ref = Array<UInt8>(str.size * 4 + 10, item:0)
         var position = 0
         var srcIndex = 0
-        var arr = str.toCharArray()
         while(srcIndex < str.size){
         // for(ch in arr){
             var ch = str[srcIndex]
@@ -43,8 +42,8 @@ class ISO2022JPEncoder <: Encoder {
                 position += 1
                 continue
             }
-            if((state == 1 && codePoint >= 0x00 && codePoint <= 0x7F && (codePoint != 0x5C && codePoint != 0x7E)) 
-                || (codePoint == 0xA5 || codePoint == 0x203E)){
+            if((state == 1 && codePoint >= 0x00 && codePoint <= 0x7F && (codePoint != 0x5C && codePoint != 0x7E)) ||
+                (codePoint == 0xA5 || codePoint == 0x203E)){
                 if(codePoint >= 0x00 && codePoint <= 0x7F){
                     ref[position] = UInt8(codePoint)
                 }
