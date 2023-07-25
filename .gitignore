@@ -8,3 +8,5 @@ bin/
 module-resolve.json
 unittest/
 ci_test/
+ci_lib/
+log/

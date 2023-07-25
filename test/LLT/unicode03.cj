@@ -5,8 +5,8 @@ from charset import charset.unicode.*
 
 main (){
     var charset = Charsets.UTF16BE
-    var encoder =charset.newEncoder()
-    var decoder = charset.newDecoder()
+    var encoder = charset.newEncoder()
+    charset.newDecoder()
     var str1: String = "你好我"
     var s1 = encoder.encode(str1)
     if (s1.size != 6) {

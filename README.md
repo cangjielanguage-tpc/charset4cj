@@ -3,9 +3,9 @@
 </div>
 
 <p align="center">
-<img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/release-v0.0.2-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.29.3-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.39.4-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-90%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
@@ -73,12 +73,16 @@ func encode(str:String): Array<UInt8>
 ├── src
 │   └── charset
 │       ├── charsets.cj     // 常量类，提供forName方法根据字符集名称获取字符集类型，并提供所有支持的字符集常量
+│       ├── text_reader.cj
+│       ├── text_writer.cj
 │       ├── encoding        // 字符集接口
 │       │   ├── charset.cj
 │       │   ├── decoder.cj
 │       │   └── encoder.cj
 │       ├── japanese        // 日语字符集编码实现
 │       │   ├── eucjp.cj
+│       │   ├── iso_2022_jp_katakana_mapping.cj
+│       │   ├── iso_2022_jp.cj
 │       │   ├── jis0208_mapping.cj
 │       │   ├── jis0212_mapping.cj
 │       │   ├── jp_charset.cj
