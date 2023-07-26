@@ -240,22 +240,26 @@ cpm test test/UT/
 ### 示例1
 
 ```cangjie
+from std import fs.*
 from charset import charset.*
 
 main() {
-    var f:File = File("doc/字符集简介gbk.md", AccessMode.Read, OpenMode.Open)
-    
-    var sr = TextReader(f, charset: Charsets.gb18030, bufSize:120)
+    var f:File = File("./字符集简介.md", Open(true, false))
+    var sr = TextReader(f, charset: Charsets.GB18030, bufSize:120)
     while(true){
         var lineOp:Option<String> = sr.readln()
         if(lineOp == None){
             break
         }
-        let line = lineOp.getOrThrow()
-        println("${line}")
+        lineOp.getOrThrow()
     }   
     0
 }
+```
+
+执行结果如下：
+```shell
+0
 ```
 
 ### 示例2
@@ -264,17 +268,22 @@ main() {
 from charset import charset.*
 
 main() {
-    var charset = Charsets.gb18030
+    var charset = Charsets.GB18030
     var decoder = charset.newDecoder()
-    var encoder = charset.newEncoder() 
+    charset.newEncoder() 
     var src: Array<UInt8> = Array<UInt8>([0xCB, 0xAE, 0xB5, 0xE7, 0xB7, 0xD1])
     var destStr = decoder.decode(src)    
     if(destStr == "水电费"){
         return 0
-    }else{
+    } else {
         return 1
     }
 }
+```
+
+执行结果如下：
+```shell
+0
 ```
 
 ## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/>参与贡献
