@@ -1,6 +1,6 @@
 {
   "cjc_version": "0.39.4",
-  "organization": "cangjie",
+  "organization": "pllab",
   "name": "charset",
   "description": "charset encoder/decoder",
   "version": "0.0.2",
