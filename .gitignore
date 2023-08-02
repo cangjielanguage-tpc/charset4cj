@@ -10,3 +10,5 @@ unittest/
 ci_test/
 ci_lib/
 log/
+.cjpm-history
+module-lock.json
