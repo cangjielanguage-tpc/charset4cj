@@ -6,11 +6,11 @@
 <img alt="" src="https://img.shields.io/badge/release-v0.0.2-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjc-v0.39.5-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjcov-90%25-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjcov-89.4%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
-## <img alt="" src="./doc/assets/readme-icon-introduction.png" style="display: inline-block;" width=3%/> 简介
+## <img alt="" src="./doc/assets/readme-icon-introduction.png" style="display: inline-block;" width=3%/> 介绍
 
 仓颉语言编解码库。基于 [WHATWG 字符编码标准](http://encoding.spec.whatwg.org/) 
 
@@ -111,14 +111,13 @@ func encode(str:String): Array<UInt8>
 │           └── utf8.cj
 ```
 
-- `doc`是库的设计文档、提案、库的使用文档
-- `src`是库源码目录
-- `test`是存放测试用例，包括HLT用例、LLT 用例和UT用例
-- `generate`是代码生成器，用来生成映射表
+- `doc` 存放库的设计文档、使用文档、需求文档、LLT 用例覆盖报告
+- `src` 是库源码目录
+- `test` 是存放测试用例的文件夹，含有 HLT 测试用例、LLT 自测用例
 
 ### 接口说明
 
-主要是核心类和成员函数说明
+主要是核心类和成员函数说明,详情见 [API](./doc/feature_api.md)
 
 #### class TextReader
 
@@ -226,18 +225,31 @@ public static let x_mac_cyrillic:Charset = newSingleByteCharset("x-mac-cyrillic"
 public static func forName(name:String):Option<Charset>
 ```
 
-## <img alt="" src="./doc/assets/readme-icon-compile.png" style="display: inline-block;" width=3%/> 编译运行
+## <img alt="" src="./doc/assets/readme-icon-compile.png" style="display: inline-block;" width=3%/> 使用说明
 
 ### 编译
 
-```
-cpm build
+1. 本项目编译运行方式
 
-# 单元测试
-cpm test test/UT/
-```
+-  引入 testJekins 包
 
-### 示例1
+    ```
+    git clone https://gitee.com/HW-PLLab/testJekins
+    ```
+
+    将 src 下 ci_test 放入 ahoCorasick4cj 根目录下,执行：
+
+    ```
+    cjpm clean
+    cjpm update
+    python3 ci_test/main.py build    ---> 编译
+    python3 ci_test/main.py test     ---> 执行 test/LLT 用例
+    ```
+    test/LLT 用例书写参考：https://gitee.com/HW-PLLab/cangjie-library-pages/wikis 的门禁测试脚本使用方式
+
+- 重复本项目编译运行方式的第二步
+
+### 读取字符集功能示例
 
 ```cangjie
 from std import fs.*
@@ -262,7 +274,7 @@ main() {
 0
 ```
 
-### 示例2
+### GB18030 字符集编码解码功能示例
 
 ```cangjie
 from charset import charset.*
@@ -286,6 +298,8 @@ main() {
 0
 ```
 
-## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/>参与贡献
+注意：用例需放入 `test/LLT` 下，执行步骤是: 本项目编译运行方式
 
-[@freeonsky](https://gitee.com/freeonsky)
+## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
+
+欢迎给我们提交 PR，欢迎给我们提交 issue，欢迎参与任何形式的贡献。
