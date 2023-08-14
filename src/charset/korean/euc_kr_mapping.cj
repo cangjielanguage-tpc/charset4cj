@@ -4,7 +4,7 @@
 
 /**
  * @file
- * https://encoding.spec.whatwg.org/index-euc-kr.txt Automatic document generation
+ * whatwg.org Automatic document generation
  */
 
 package charset.korean
