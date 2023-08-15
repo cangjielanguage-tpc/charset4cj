@@ -14,7 +14,7 @@ package charset.encoding
  * @author freeonsky
  * @since 0.28.4
  */
-public abstract class Charset{
+public abstract class Charset <: Hashable & Equatable<Charset> & Equatable<String> & ToString {
     protected var name:String = ""
     protected var labels:Array<String> = Array<String>()
 
