@@ -221,7 +221,7 @@ class BIG5Decoder <: Decoder{
         while(srcIndex <= srcLimit){
             if(destIndex >= dest.size){
                 return (srcIndex, destIndex)
-            }            
+            }
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
@@ -237,11 +237,9 @@ class BIG5Decoder <: Decoder{
                 }
                 
                 var u1 = src[srcIndex+1]
-                var offset = if(u1 < 0x7F){ 0x40 } else{ 0x62 }
+                var offset = assignOffset(u1)
                 var pointer:Int64 = 0
-                if((u1 >= 0x40 && u1 <= 0x7E) || (u1 >= 0xA1 && u1 <= 0xFE)){
-                    pointer = Int64(u0 - 0x81) * 157 + Int64(u1) - offset
-                }
+                pointer = assignPointer(u0, u1, pointer, offset)
                 if(pointer == 1133){
                     dest[destIndex] = '\u{00CA}'
                     dest[destIndex + 1] = '\u{0304}'
@@ -295,4 +293,23 @@ class BIG5Decoder <: Decoder{
         }
         return (srcIndex, destIndex)
     }    
+
+    private func assignOffset(u1: UInt8): Int64 {
+        var offset: Int64
+        if (u1 < 0x7F) {
+            offset = 0x40
+        } else {
+            offset = 0x62
+        }
+        return offset
+    }
+
+    private func assignPointer(u0: UInt8,u1: UInt8, p: Int64, offset: Int64): Int64 {
+        var pointer = p
+        if((u1 >= 0x40 && u1 <= 0x7E) || (u1 >= 0xA1 && u1 <= 0xFE)){
+            pointer = Int64(u0 - 0x81) * 157 + Int64(u1) - offset
+            return pointer
+        }
+        return p
+    }
 }

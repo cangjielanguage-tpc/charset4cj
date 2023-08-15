@@ -146,8 +146,8 @@ class ShiftJISDecoder <: Decoder{
                 var u1 = src[srcIndex+1]
                 var pointer:Int64 = -1
                 var codePoint:Char = '\u{0}'
-                var offset:UInt8 = if(u1 < 0x7F) {0x40} else {0x41}
-                var leadOffset:UInt8 = if(u0 < 0xA0) {0x81} else {0xC1}
+                var offset:UInt8 = assignOffset(u1)
+                var leadOffset:UInt8 = assignLeadOffset(u0)
                 if((u1 >= 0x40 && u1 <= 0x7E) || (u1 >= 0x80 && u1 <=0xFC)){
                     pointer = Int64(u0 - leadOffset) * 188 + Int64(u1) - Int64(offset)
                 }
@@ -173,5 +173,25 @@ class ShiftJISDecoder <: Decoder{
             continue                  
         }
         return (srcIndex, destIndex)
-    }    
+    }
+
+    private func assignOffset(u1: UInt8): UInt8 {
+        var offset: UInt8
+        if (u1 < 0x7F) {
+            offset = 0x40
+        } else {
+            offset = 0x41
+        }
+        return offset
+    }
+
+    private func assignLeadOffset(u0: UInt8): UInt8 {
+        var leadOffset: UInt8
+        if (u0 < 0xA0) {
+            leadOffset = 0x81
+        } else {
+            leadOffset = 0xC1
+        }
+        return leadOffset
+    }
 }
