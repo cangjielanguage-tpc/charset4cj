@@ -4,7 +4,7 @@
 
 /**
  * @file
- * https://encoding.spec.whatwg.org/index-iso-2022-jp-katakana.txt Automatic document generation
+ * whatwg.org Automatic document generation
  */
 
 package charset.japanese

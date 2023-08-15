@@ -4,7 +4,7 @@
 
 /**
  * @file
- * https://encoding.spec.whatwg.org/index-gb18030-ranges.txt Automatic document generation
+ * whatwg.org Automatic document generation
  */
 
 package charset.simplechinese

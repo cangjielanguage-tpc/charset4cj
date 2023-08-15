@@ -4,7 +4,7 @@
 
 /**
  * @file
- * https://encoding.spec.whatwg.org/index-iso-8859-4.txt Automatic document generation
+ * whatwg.org Automatic document generation
  */
 
 package charset.singlebyte

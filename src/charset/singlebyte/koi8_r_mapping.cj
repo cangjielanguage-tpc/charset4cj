@@ -4,7 +4,7 @@
 
 /**
  * @file
- * https://encoding.spec.whatwg.org/index-koi8-r.txt Automatic document generation
+index-koi8-r.txt Automatic document generation
  */
 
 package charset.singlebyte
