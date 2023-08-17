@@ -64,8 +64,6 @@ func encode(str:String): Array<UInt8>
 ### 源码目录：
 
 ```
-├── LICENSE
-├── README.md
 ├── doc
 │   └── assets
 │   └── 字符集简介.md
