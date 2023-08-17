@@ -163,13 +163,7 @@ class UTF8Decoder <: Decoder{
                 // Double byte
                 if(srcIndex+1 <= srcLimit){
                     var u1 = src[srcIndex+1]
-                    if(u1 <= 0b10111111){
-                        var codePoint = UInt32(UInt32(u0 & 0b00011111) << 6) + UInt32(u1 & 0b00111111)
-                        dest[destIndex] = Char(codePoint)
-                    }else{
-                        // Replace with fffd after error
-                        dest[destIndex] = replacement
-                    }
+                    dest[destIndex] = assignCharForU1(u0, u1)
                     destIndex += 1
                     srcIndex += 2
                     continue
@@ -182,14 +176,7 @@ class UTF8Decoder <: Decoder{
                 if(srcIndex + 2 <= srcLimit){
                     var u1 = src[srcIndex+1]
                     var u2 = src[srcIndex + 2]
-                    if(u1 <= 0b10111111 && u2 <= 0b10111111){
-                        var codePoint = UInt32(UInt32(u0 & 0b00001111) << 12) + UInt32(UInt32(u1 & 0b00111111) << 6) + 
-                                            UInt32(u2 & 0b00111111)
-                        dest[destIndex] = Char(codePoint)
-                    }else{
-                        // Replace with fffd after error
-                        dest[destIndex] = replacement
-                    }
+                    dest[destIndex] = assignCharForU2(u0, u1, u2)
                     srcIndex += 3
                     destIndex += 1
                     continue
@@ -203,14 +190,7 @@ class UTF8Decoder <: Decoder{
                     var u1 = src[srcIndex+1]
                     var u2 = src[srcIndex + 2]                
                     var u3 = src[srcIndex + 3]     
-                    if(u1 <= 0b10111111 && u2 <= 0b10111111 && u3 <= 0b10111111){
-                        var codePoint = UInt32(UInt32(u0 & 0b00000111) << 18) + UInt32(UInt32(u1 & 0b00111111) << 12) + 
-                                            UInt32(UInt32(u2 & 0b00111111) << 6) + UInt32(u2 & 0b00111111)
-                        dest[destIndex] = Char(codePoint)
-                    }else{
-                        // Replace with fffd after error
-                        dest[destIndex] = replacement
-                    }         
+                    dest[destIndex] = assignCharForU3(u0, u1, u2, u3)
                     srcIndex += 4
                     destIndex += 1
                     continue
@@ -228,5 +208,35 @@ class UTF8Decoder <: Decoder{
         }        
         (srcIndex, destIndex)
     }    
+
+    private func assignCharForU1(u0: UInt8, u1: UInt8): Char {
+        if(u1 <= 0b10111111) {
+            var codePoint = UInt32(UInt32(u0 & 0b00011111) << 6) + UInt32(u1 & 0b00111111)
+            return Char(codePoint)
+        }else {
+            // Replace with fffd after error
+            return replacement
+        }
+    }
+
+    private func assignCharForU2(u0: UInt8, u1: UInt8, u2: UInt8): Char {
+        if(u1 <= 0b10111111 && u2 <= 0b10111111){
+            var codePoint = UInt32(UInt32(u0 & 0b00001111) << 12) + UInt32(UInt32(u1 & 0b00111111) << 6) + UInt32(u2 & 0b00111111)
+            return Char(codePoint)
+        }else{
+        // Replace with fffd after error
+        return replacement
+        }
+    }
+
+    private func assignCharForU3(u0: UInt8, u1: UInt8, u2: UInt8, u3: UInt8): Char {
+        if(u1 <= 0b10111111 && u2 <= 0b10111111 && u3 <= 0b10111111){
+            var codePoint = UInt32(UInt32(u0 & 0b00000111) << 18) + UInt32(UInt32(u1 & 0b00111111) << 12) + UInt32(UInt32(u2 & 0b00111111) << 6) + UInt32(u2 & 0b00111111)
+            return Char(codePoint)
+        }else{
+            // Replace with fffd after error
+            return replacement
+        } 
+    }
 }
 
