@@ -108,10 +108,10 @@ class EUCJPDecoder
     /**
     * 解码字节数组到字符数组
     *
-    * @param src - 输入字节数组
-    * @param data - 输出字符数组
+    * @param src - 使用特定编码方式编码后的字节数组
+    * @param data - 解码后数据存放的容器数组
     *
-    * @return 返回下一个未处理的数组下标
+    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
     */
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
 ```
@@ -137,10 +137,10 @@ class ISO2022JPDecoder
     /**
     * 解码字节数组到字符数组
     *
-    * @param src - 输入字节数组
-    * @param data - 输出字符数组
+    * @param src - 使用特定编码方式编码后的字节数组
+    * @param data - 解码后数据存放的容器数组
     *
-    * @return 返回下一个未处理的数组下标
+    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
     */
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
 ```
@@ -306,10 +306,10 @@ class EUCKRDecoder
     /**
     * 解码字节数组到字符数组
     *
-    * @param src - 输入字节数组
-    * @param data - 输出字符数组
+    * @param src - 使用特定编码方式编码后的字节数组
+    * @param data - 解码后数据存放的容器数组
     *
-    * @return 返回下一个未处理的数组下标
+    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
     */
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
 ```
@@ -408,10 +408,10 @@ class GB18030Decoder
     /**
     * 解码字节数组到字符数组
     *
-    * @param src - 输入字节数组
-    * @param data - 输出字符数组
+    * @param src - 使用特定编码方式编码后的字节数组
+    * @param data - 解码后数据存放的容器数组
     *
-    * @return 返回下一个未处理的数组下标
+    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
     */
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
 ```
@@ -479,10 +479,10 @@ class SingleByteDecoder
     /**
     * 解码字节数组到字符数组
     *
-    * @param src - 输入字节数组
-    * @param data - 输出字符数组
+    * @param src - 使用特定编码方式编码后的字节数组
+    * @param data - 解码后数据存放的容器数组
     *
-    * @return 返回下一个未处理的数组下标
+    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
     */
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
 ```
@@ -581,10 +581,10 @@ class BIG5Decoder
     /**
     * 解码字节数组到字符数组
     *
-    * @param src - 输入字节数组
-    * @param data - 输出字符数组
+    * @param src - 使用特定编码方式编码后的字节数组
+    * @param data - 解码后数据存放的容器数组
     *
-    * @return 返回下一个未处理的数组下标
+    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
     */
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
 ```
@@ -637,10 +637,10 @@ class UTF8Decoder
     /**
     * 解码字节数组到字符数组
     *
-    * @param src - 输入字节数组
-    * @param data - 输出字符数组
+    * @param src - 使用特定编码方式编码后的字节数组
+    * @param data - 解码后数据存放的容器数组
     *
-    * @return 返回下一个未处理的数组下标
+    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
     */
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
 ```
@@ -706,10 +706,10 @@ class UTF16Decoder
     /**
     * 解码字节数组到字符数组
     *
-    * @param src - 输入字节数组
-    * @param data - 输出字符数组
+    * @param src - 使用特定编码方式编码后的字节数组
+    * @param data - 解码后数据存放的容器数组
     *
-    * @return 返回下一个未处理的数组下标
+    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
     */
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
 ```
@@ -777,10 +777,10 @@ class UTF32Decoder
     /**
     * 解码字节数组到字符数组
     *
-    * @param src - 输入字节数组
-    * @param data - 输出字符数组
+    * @param src - 使用特定编码方式编码后的字节数组
+    * @param data - 解码后数据存放的容器数组
     *
-    * @return 返回下一个未处理的数组下标
+    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
     */
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
 ```
