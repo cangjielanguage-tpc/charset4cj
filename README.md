@@ -67,9 +67,9 @@ func encode(str:String): Array<UInt8>
 ├── LICENSE
 ├── README.md
 ├── doc
-│   ├── cjcov
+│   └── assets
 │   └── 字符集简介.md
-├── module.json
+│   └── feature_api.md
 ├── src
 │   └── charset
 │       ├── charsets.cj     // 常量类，提供forName方法根据字符集名称获取字符集类型，并提供所有支持的字符集常量
@@ -109,11 +109,19 @@ func encode(str:String): Array<UInt8>
 │           ├── utf16.cj
 │           ├── utf32.cj
 │           └── utf8.cj
+├── test
+│   └── HLT
+│   └── LLT
+│   └── UT
+├── gitee_gate.cfg
+├── LICENSE
+├── module.json
+├── README.md
 ```
 
-- `doc` 存放库的设计文档、使用文档、需求文档、LLT 用例覆盖报告
+- `doc` 存放库使用文档
 - `src` 是库源码目录
-- `test` 是存放测试用例的文件夹，含有 HLT 测试用例、LLT 自测用例
+- `test` 是存放测试用例的文件夹，含有 HLT 测试用例、LLT 自测用例 和 UT测试用例
 
 ### 接口说明
 
@@ -274,21 +282,38 @@ main() {
 0
 ```
 
-### GB18030 字符集编码解码功能示例
+### EUCJP 字符集编码解码功能示例
 
 ```cangjie
 from charset import charset.*
+from charset import charset.japanese.*
+from std import unittest.*
+from std import unittest.testmacro.*
+from std import collection.*
 
-main() {
-    var charset = Charsets.GB18030
-    var decoder = charset.newDecoder()
-    charset.newEncoder() 
-    var src: Array<UInt8> = Array<UInt8>([0xCB, 0xAE, 0xB5, 0xE7, 0xB7, 0xD1])
-    var destStr = decoder.decode(src)    
-    if(destStr == "水电费"){
-        return 0
-    } else {
-        return 1
+main(): Int64 {
+    let encodeTest01 = EncodeTest01()
+    encodeTest01.testEUCJPEncode01()
+    return 0
+}
+
+@Test
+public class EncodeTest01 {
+
+    let str: String = "z,ncm,xzjiu"
+    let str_en: String = "中有华为，华有仓颉"
+
+    @TestCase
+    public func testEUCJPEncode01(): Unit {
+        var jp = Charsets.EUCJP
+        var jpen = jp.newEncoder()
+        var jpde = jp.newDecoder()
+        let src: Array<UInt8> = jpen.encode(str)
+        let src2: Array<UInt8> = jpen.encode(str_en)
+        let res = jpde.decode(src, des)
+        jpde.decode(src2, des)
+        @Assert(res[0], 6)
+        @Assert(res[1], 6)
     }
 }
 ```
