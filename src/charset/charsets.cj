@@ -157,9 +157,9 @@ public class Charsets {
      * @return Type of Option<Charset>
      * @since 0.28.4
      */
-    public static func forName(name:String):Option<Charset>{
+    public static func forName(n:String):Option<Charset>{
         for(charset in cache){
-            if(charset.nameEquals(name)){
+            if(charset.nameEquals(n)){
                 return Option.Some(charset)
             }
         }

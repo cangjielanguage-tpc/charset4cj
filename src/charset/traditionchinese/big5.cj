@@ -33,8 +33,8 @@ class BIG5HKSCSCharset <: Charset{
      * @since 0.28.4
      */
     public init(){
-        this.name = "big5-hkscs"
         this.labels = ["big5-hkscs"]
+        this.name = "big5-hkscs"
     }
 
     /**
@@ -120,8 +120,8 @@ class BIG5Charset <: Charset{
      * @since 0.28.4
      */
     public init(){
-        this.name = "Big5"
         this.labels = ["big5", "cn-big5", "csbig5", "x-x-big5"]
+        this.name = "Big5"
     }
 
     /**

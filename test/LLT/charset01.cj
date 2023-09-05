@@ -5,7 +5,7 @@ from charset import charset.*
 main (){
     var charset = match(Charsets.forName("gbk")){
       case Some(v) => v
-      case None => Charsets.GBK
+      case None => throw Exception()
     }
     var rt = charset.nameEquals("chinese")
     if(!rt){

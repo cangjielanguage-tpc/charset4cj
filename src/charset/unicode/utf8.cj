@@ -27,8 +27,8 @@ class UTF8Charset <: Charset{
      * @since 0.28.4
      */
     public init(){
-        this.name = "UTF-8"
         this.labels = ["unicode-1-1-utf-8", "unicode11utf8", "unicode20utf8", "utf-8", "utf8", "x-unicode20utf8"]
+        this.name = "UTF-8"
     }
 
     /**

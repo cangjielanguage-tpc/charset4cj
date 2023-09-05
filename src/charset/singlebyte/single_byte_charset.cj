@@ -309,8 +309,8 @@ class SingleByteCharset <: Charset{
         ("x-mac-cyrillic", x_mac_cyrillicEncodeMapping)    
     ])
     public init(name:String){
-        this.name = name
         this.labels = nameMap[name]
+        this.name = name
     }
     public func newEncoder():Encoder{
         SingleByteEncoder(this)

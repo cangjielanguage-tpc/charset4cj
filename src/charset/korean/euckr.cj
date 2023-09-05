@@ -31,8 +31,8 @@ class EUCKRCharset <: Charset{
      */
     public init(){
         // super("EUC-KR", ["cseuckr",  "csksc56011987",  "euc-kr",  "iso-ir-149",  "korean",  "ks_c_5601-1987",  "ks_c_5601-1989",  "ksc5601",  "ksc_5601",  "windows-949"])
-        this.name = "EUC-KR"
         this.labels = ["cseuckr",  "csksc56011987",  "euc-kr",  "iso-ir-149",  "korean",  "ks_c_5601-1987",  "ks_c_5601-1989",  "ksc5601",  "ksc_5601",  "windows-949"]
+        this.name = "EUC-KR"
     }
 
     /**
@@ -221,6 +221,8 @@ class EUCKRDecoder <: Decoder{
                 srcIndex += 2
                 destIndex += 1
                 continue                
+            } else {
+                throw DecoderException("can't decode the src: " + "${src.toString()}")
             }
         }
         return (srcIndex, destIndex)
