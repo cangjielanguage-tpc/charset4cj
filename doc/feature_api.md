@@ -7,7 +7,7 @@
 
 前置条件：NA
 场景：
-1、通过 Charsets 的常量获取，例如： Charsets.utf8
+1、通过 Charsets 的常量获取，例如： Charsets.UTF8
 2、通过 Charsets 的forName 方法获取， 比如 Charsets.forName("UTF-8")
 约束：NA 
 性能： NA
@@ -15,16 +15,141 @@
 
 #### 1.1 主要接口
 
-所有支持的字符集的常量定义类
-class charsets
+当前库支持的字符集
+public class Charsets
 
 ```cangjie
+
+    // UTF-8
+    public static let UTF8:Charset
+    // utf-16 be
+    public static let UTF16BE:Charset
+    // utf16 le
+    public static let UTF16LE:Charset
+    // utf32 be
+    public static let UTF32BE:Charset
+    // utf32 le
+    public static let UTF32LE:Charset
+    // gb18030
+    public static let GB18030:Charset
+    // gbk
+    public static let GBK:Charset
+    // EUC-KR
+    public static let EUCKR:Charset
+    // EUC-JP
+    public static let EUCJP:Charset
+    // ShiftJIS
+    public static let SHIFT_JIS:Charset
+    // ISO-2022-JP
+    public static let ISO_2022_JP:Charset
+    // Big5
+    public static let BIG5:Charset
+    // Big5-hkscs
+    public static let BIG5_HKSCS:Charset
+    // IBM866
+    public static let IBM866:Charset
+    // ISO-8859-2
+    public static let ISO_8859_2:Charset
+    // ISO-8859-3
+    public static let ISO_8859_3:Charset
+    // ISO-8859-4
+    public static let ISO_8859_4:Charset
+    // ISO-8859-5
+    public static let ISO_8859_5:Charset
+    // ISO-8859-6
+    public static let ISO_8859_6:Charset
+    // ISO-8859-7
+    public static let ISO_8859_7:Charset
+    // ISO-8859-8
+    public static let ISO_8859_8:Charset
+    // ISO-8859-10
+    public static let ISO_8859_10:Charset
+    // ISO-8859-13
+    public static let ISO_8859_13:Charset
+    // ISO-8859-14
+    public static let ISO_8859_14:Charset
+    // ISO-8859-15
+    public static let ISO_8859_15:Charset
+    // ISO-8859-16
+    public static let ISO_8859_16:Charset
+    // KOI8-R
+    public static let KOI8_R:Charset
+    // KOI8-U
+    public static let KOI8_U:Charset
+    // macintosh
+    public static let MACINTOSH:Charset
+    // windows-874
+    public static let WINDOWS_874:Charset
+    // windows-1250
+    public static let WINDOWS_1250:Charset
+    // windows-1251
+    public static let WINDOWS_1251:Charset
+    // windows-1252
+    public static let WINDOWS_1252:Charset
+    // windows-1253
+    public static let WINDOWS_1253:Charset
+    // windows-1254
+    public static let WINDOWS_1254:Charset
+    // windows-1255
+    public static let WINDOWS_1255:Charset
+    // windows-1256
+    public static let WINDOWS_1256:Charset
+    // windows-1257
+    public static let WINDOWS_1257:Charset
+    // windows-1258
+    public static let WINDOWS_1258:Charset
+    // x-mac-cyrillic
+    public static let X_MAC_CYRILLIC:Charset
+
    	/**
-    * 构造方法，构造出一个 TrieBuilder 类对象
+    * 获取基于字符集名称的字符编码类型
     * 
-    * @return 返回一个 TrieBuilder 类对象
+    * @param 传入 String 类型的字符集名称
+    *
+    * @return 返回一个 Option 类对象
     */
     public static func forName(name:String): Option<Charset>
+
+```
+
+编码器接口
+public interface Encoder
+
+```cangjie
+
+   	/**
+    * 编码器的编码方法
+    * 
+    * @param str - 传入一个 String 字符串
+    *
+    * @return 返回编码后的 UInt8 数组
+    */
+    func encode(str:String): Array<UInt8>
+```
+
+解码器接口
+public interface Decoder
+
+```cangjie
+
+   	/**
+    * 解码器的解码方法
+    * 
+    * @param src - 编码后的字节数组
+    *
+    * @return 返回解码后的 String 字符串
+    */
+    func decode(src:Array<UInt8>):String
+
+    /**
+    * 解码字节数组到字符数组
+    *
+    * @param src - 使用特定编码方式编码后的字节数组
+    * @param dest - 解码后数据存放的容器数组
+    *
+    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
+    */
+    func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
 ```
 
 文本输入器
@@ -63,8 +188,6 @@ class TextReader
     public func readln(): Option<String>
 ```
 
-#### 1.2 其它接口
-
 文本输出器
 class TextWriter
 
@@ -86,141 +209,7 @@ class TextWriter
     public func write(s:String): Unit
 ```
 
-日语编码类
-class EUCJPEncoder
-
-```cangjie
-    /**
-    * 编码方法
-    *
-    * @param str - 传入一个 String 字符串
-    *
-    * @return 返回 UInt8 数组
-    */
-    public func encode(str:String): Array<UInt8>
-```
-
-日语解码类
-class EUCJPDecoder
-
-```cangjie
-
-    /**
-    * 解码字节数组到字符数组
-    *
-    * @param src - 使用特定编码方式编码后的字节数组
-    * @param data - 解码后数据存放的容器数组
-    *
-    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
-    */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
-```
-
-iso2022日本编码类
-class ISO2022JPEncoder
-
-```cangjie
-    /**
-    * 编码方法
-    *
-    * @param str - 传入一个 String 字符串
-    *
-    * @return 返回 UInt8 数组
-    */
-    public func encode(str:String): Array<UInt8>
-```
-
-iso2022日本解码类
-class ISO2022JPDecoder
-
-```cangjie
-    /**
-    * 解码字节数组到字符数组
-    *
-    * @param src - 使用特定编码方式编码后的字节数组
-    * @param data - 解码后数据存放的容器数组
-    *
-    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
-    */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
-```
-
-ISO2022日本字符集
-class ISO2022JPCharset
-
-```cangjie
-    /**
-    * ISO2022JPCharset 的无参构造器
-    *
-    */
-    public init()
-    
-    /**
-    * 新建一个编码器
-    *
-    * @return 返回编码器
-    */
-    public func newEncoder(): Encoder
-
-    /**
-    * 新建一个解码器
-    *
-    * @return 返回解码器
-    */
-    public func newDecoder():Decoder
-```
-
-EUC日本字符集
-
-class EUCJPCharset
-
-```cangjie
-    /**
-    * EUCJPCharset 的无参构造器
-    *
-    */
-    public init()
-    
-    /**
-    * 新建一个编码器
-    *
-    * @return 返回编码器
-    */
-    public func newEncoder(): Encoder
-
-    /**
-    * 新建一个解码器
-    *
-    * @return 返回解码器
-    */
-    public func newDecoder():Decoder
-```
-
-ShiftJIS日本字符集
-
-class ShiftJISCharset
-
-```cangjie
-    /**
-    * ShiftJISCharset 的无参构造器
-    *
-    */
-    public init()
-    
-    /**
-    * 新建一个编码器
-    *
-    * @return 返回编码器
-    */
-    public func newEncoder(): Encoder
-
-    /**
-    * 新建一个解码器
-    *
-    * @return 返回解码器
-    */
-    public func newDecoder():Decoder
-```
+#### 1.2 其它接口
 
 top level
 
@@ -245,130 +234,14 @@ top level
     * @return 返回一个字符集
     */
 	public func newISO2022JPCharset():Charset
-```
 
-EUC韩国字符集
-
-class EUCKRCharset
-
-```cangjie
-    /**
-    * EUCKRCharset 的无参构造器
-    *
-    */
-    public init()
-    
-    /**
-    * 新建一个编码器
-    *
-    * @return 返回编码器
-    */
-    public func newEncoder(): Encoder
-
-    /**
-    * 新建一个解码器
-    *
-    * @return 返回解码器
-    */
-    public func newDecoder():Decoder
-```
-
-top level
-
-```cangjie
     /**
     * 新建一个 EUC 韩国字符集
     *
     * @return 返回一个字符集
     */
 	public func newEUCKRCharset():Charset
-```
 
-EUC韩国编码类
-
-class EUCKREncoder
-
-```cangjie
-    /**
-    * 编码方法
-    *
-    * @param str - 传入一个 String 字符串
-    *
-    * @return 返回 UInt8 数组
-    */
-	public func encode(str:String): Array<UInt8>
-```
-
-EUC韩国解码类
-class EUCKRDecoder
-
-```cangjie
-    /**
-    * 解码字节数组到字符数组
-    *
-    * @param src - 使用特定编码方式编码后的字节数组
-    * @param data - 解码后数据存放的容器数组
-    *
-    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
-    */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
-```
-
-GBK字符集
-
-class GBKCharset
-
-```cangjie
-    /**
-    * GBKCharset 的无参构造器
-    *
-    */
-    public init()
-    
-    /**
-    * 新建一个编码器
-    *
-    * @return 返回编码器
-    */
-    public func newEncoder(): Encoder
-
-    /**
-    * 新建一个解码器
-    *
-    * @return 返回解码器
-    */
-    public func newDecoder():Decoder
-```
-
-GB18030字符集
-
-class GB18030Charset
-
-```cangjie
-    /**
-    * GB18030Charset 的无参构造器
-    *
-    */
-    public init()
-    
-    /**
-    * 新建一个编码器
-    *
-    * @return 返回编码器
-    */
-    public func newEncoder(): Encoder
-
-    /**
-    * 新建一个解码器
-    *
-    * @return 返回解码器
-    */
-    public func newDecoder():Decoder
-```
-
-top level
-
-```cangjie
     /**
     * 选择创建 GBK 字符集还是 GB18030 字符集
     *
@@ -377,76 +250,7 @@ top level
     * @return 返回一个字符集
     */
 	public func newGB18030Charset(gbk: Bool): Charset
-```
 
-GB18030简体编码类
-
-class GB18030Encoder
-
-```cangjie
-    /**
-    * GB18030Encoder 的有参构造器
-    *
-    * @param gbk - 传入一个 Bool 类型
-    */    
-	public init(gbk: Bool)
-	
-    /**
-    * 编码方法
-    *
-    * @param str - 传入一个 String 字符串
-    *
-    * @return 返回 UInt8 数组
-    */
-	public func encode(str:String): Array<UInt8>
-```
-
-GB18030Decoder简体解码类
-class GB18030Decoder
-
-```cangjie
-    /**
-    * 解码字节数组到字符数组
-    *
-    * @param src - 使用特定编码方式编码后的字节数组
-    * @param data - 解码后数据存放的容器数组
-    *
-    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
-    */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
-```
-
-SingleByte单字节字符集
-
-class SingleByteCharset
-
-```cangjie
-    /**
-    * SingleByteCharset 的有参构造器
-    *
-    * @param name - 传入一个 String 字符串
-    *
-    */
-    public init(name: String)
-    
-    /**
-    * 新建一个编码器
-    *
-    * @return 返回编码器
-    */
-    public func newEncoder(): Encoder
-
-    /**
-    * 新建一个解码器
-    *
-    * @return 返回解码器
-    */
-    public func newDecoder():Decoder
-```
-
-top level
-
-```cangjie
     /**
     * 选择创建不同类型的单字节编码集
     *
@@ -455,67 +259,7 @@ top level
     * @return 返回一个字符集
     */
 	public func newSingleByteCharset(name: String): Charset
-```
 
-SingleByteEncoder单字节编码类
-
-class SingleByteEncoder
-
-```cangjie
-    /**
-    * 编码方法
-    *
-    * @param str - 传入一个 String 字符串
-    *
-    * @return 返回 UInt8 数组
-    */
-	public func encode(str:String): Array<UInt8>
-```
-
-SingleByteDecoder单字节解码类
-class SingleByteDecoder
-
-```cangjie
-    /**
-    * 解码字节数组到字符数组
-    *
-    * @param src - 使用特定编码方式编码后的字节数组
-    * @param data - 解码后数据存放的容器数组
-    *
-    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
-    */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
-```
-
-BIG5HKSCSCharset字符集
-
-class BIG5HKSCSCharset
-
-```cangjie
-    /**
-    * BIG5HKSCSCharset 的无参构造器
-    *
-    */
-    public init()
-    
-    /**
-    * 新建一个编码器
-    *
-    * @return 返回编码器
-    */
-    public func newEncoder(): Encoder
-
-    /**
-    * 新建一个解码器
-    *
-    * @return 返回解码器
-    */
-    public func newDecoder():Decoder
-```
-
-top level
-
-```cangjie
     /**
     * 选择创建 BIG5 字符集还是 BIG5HKSCS 字符集
     *
@@ -524,199 +268,14 @@ top level
     * @return 返回一个字符集
     */
 	public func newBIG5Charset(hkscs:Bool): Charset
-```
 
-BIG5Charset字符集
-
-class BIG5Charset
-
-```cangjie
-    /**
-    * BIG5Charset 的无参构造器
-    *
-    */
-    public init()
-    
-    /**
-    * 新建一个编码器
-    *
-    * @return 返回编码器
-    */
-    public func newEncoder(): Encoder
-
-    /**
-    * 新建一个解码器
-    *
-    * @return 返回解码器
-    */
-    public func newDecoder():Decoder
-```
-
-BIG5Encoder编码类
-
-class BIG5Encoder
-
-```cangjie
-	/**
-    * SingleByteEncoder 的有参构造器
-    *
-    * @param hkscs - 传入一个 Bool 类型
-    */    
-    public init(hkscs:Bool)
-
-	/**
-    * 编码方法
-    *
-    * @param str - 传入一个 String 字符串
-    *
-    * @return 返回 UInt8 数组
-    */
-	public func encode(str:String): Array<UInt8>
-```
-
-BIG5Decoder解码类
-class BIG5Decoder
-
-```cangjie
-    /**
-    * 解码字节数组到字符数组
-    *
-    * @param src - 使用特定编码方式编码后的字节数组
-    * @param data - 解码后数据存放的容器数组
-    *
-    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
-    */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
-```
-
-UTF8Charset字符集
-
-class UTF8Charset
-
-```cangjie
-    /**
-    * UTF8Charset 的无参构造器
-    *
-    */
-    public init()
-    
-    /**
-    * 新建一个编码器
-    *
-    * @return 返回编码器
-    */
-    public func newEncoder(): Encoder
-
-    /**
-    * 新建一个解码器
-    *
-    * @return 返回解码器
-    */
-    public func newDecoder():Decoder
-```
-
-UTF8Encoder编码类
-
-class UTF8Encoder
-
-```cangjie
-	/**
-    * 编码方法
-    *
-    * @param str - 传入一个 String 字符串
-    *
-    * @return 返回 UInt8 数组
-    */
-	public func encode(str:String): Array<UInt8>
-```
-
-UTF8Decoder解码类
-class UTF8Decoder
-
-```cangjie
-    /**
-    * 解码字节数组到字符数组
-    *
-    * @param src - 使用特定编码方式编码后的字节数组
-    * @param data - 解码后数据存放的容器数组
-    *
-    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
-    */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
-```
-
-top level
-
-```cangjie
   	/**
     * 创建 UTF8 字符集
     *
     * @return 返回一个字符集
     */
 	public func newUTF8Charset():Charset
-```
 
-UTF16Charset字符集
-
-class UTF16Charset
-
-```cangjie
-    /**
-    * UTF16Charset 的无参构造器
-    *
-    * @param be - 传入一个 Bool 类型
-    *
-    */
-    public init(be: Bool)
-    
-    /**
-    * 新建一个编码器
-    *
-    * @return 返回编码器
-    */
-    public func newEncoder(): Encoder
-
-    /**
-    * 新建一个解码器
-    *
-    * @return 返回解码器
-    */
-    public func newDecoder():Decoder
-```
-
-UTF16Encoder编码类
-
-class UTF16Encoder
-
-```cangjie
-	/**
-    * 编码方法
-    *
-    * @param str - 传入一个 String 字符串
-    *
-    * @return 返回 UInt8 数组
-    */
-	public func encode(str:String): Array<UInt8>
-```
-
-UTF16Decoder解码类
-class UTF16Decoder
-
-```cangjie
-    /**
-    * 解码字节数组到字符数组
-    *
-    * @param src - 使用特定编码方式编码后的字节数组
-    * @param data - 解码后数据存放的容器数组
-    *
-    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
-    */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
-```
-
-top level
-
-```cangjie
   	/**
     * 选择创建 UTF-16BE 字符集还是 UTF-16LE 字符集
     *
@@ -725,69 +284,7 @@ top level
     * @return 返回一个字符集
     */
 	public func newUTF16Charset(be:Bool):Charset
-```
 
-UTF32Charset字符集
-
-class UTF32Charset
-
-```cangjie
-    /**
-    * UTF32Charset 的无参构造器
-    *
-    * @param be - 传入一个 Bool 类型
-    *
-    */
-    public init(be: Bool)
-    
-    /**
-    * 新建一个编码器
-    *
-    * @return 返回编码器
-    */
-    public func newEncoder(): Encoder
-
-    /**
-    * 新建一个解码器
-    *
-    * @return 返回解码器
-    */
-    public func newDecoder():Decoder
-```
-
-UTF32Encoder编码类
-
-class UTF32Encoder
-
-```cangjie
-	/**
-    * 编码方法
-    *
-    * @param str - 传入一个 String 字符串
-    *
-    * @return 返回 UInt8 数组
-    */
-	public func encode(str:String): Array<UInt8>
-```
-
-UTF32Decoder解码类
-class UTF32Decoder
-
-```cangjie
-    /**
-    * 解码字节数组到字符数组
-    *
-    * @param src - 使用特定编码方式编码后的字节数组
-    * @param data - 解码后数据存放的容器数组
-    *
-    * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
-    */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
-```
-
-top level
-
-```cangjie
   	/**
     * 选择创建 UTF-32BE 字符集还是 UTF-32LE 字符集
     *
@@ -836,7 +333,7 @@ main() {
 
 字符集抽象类
 
-abstract class Charset
+public abstract class Charset
 
 ```cangjie
   	/**
@@ -858,7 +355,7 @@ abstract class Charset
 
 字符集抽象类
 
-abstract class Charset
+public abstract class Charset
 
 ```cangjie
   	/**
