@@ -17,11 +17,10 @@ class EUCJPEncoder <: Encoder {
      * @since 0.28.4
      */
     public func encode(str:String): Array<UInt8> {
-        let replacement:UInt8 = 0x3F
         if(str.size == 0){
             return Array<UInt8>()
         }
-        let ref = Array<UInt8>(str.size * 2, item:0)
+        let ref = Array<UInt8>(str.size * 3, item:0)
         var position = 0
         var arr = str.toCharArray()
         for(ch in arr){
@@ -52,10 +51,20 @@ class EUCJPEncoder <: Encoder {
                     ref[position] = UInt8(lead)
                     ref[position+1] = UInt8(trail)
                     position += 2                    
-                }else{
-                    // error
-                    ref[position] = replacement
-                    position += 1
+                } else {
+                    index = indexPointer(jis0212EncodeMapping, jis0212DecodeMapping, codePoint)
+                    if(index >= 0){
+                        var pointer = UInt32(index)
+                        let lead = pointer / 94 + 0xA1
+                        let trail = pointer % 94 + 0xA1
+                        ref[position] = UInt8(0x8F) 
+                        ref[position+1] = UInt8(lead)
+                        ref[position+2] = UInt8(trail)
+                        position += 3
+                    } else {
+                        // error
+                        throw Exception("UnicodeEncodeError: 'euc_jp' codec can't encode character " + "'" + "${ch}" + "'")
+                    }
                 }
             }
         }    
@@ -130,12 +139,12 @@ class EUCJPDecoder <: Decoder{
                     continue                       
                 }
                 // The three byte part is JIS X 0212: first is 0x8F, second in 0xA1-0xFE, thrid in 0xA1-0xFE
-                if(u0 == 0x8F && u1 >= 0xA1 && u1 <= 0xDF){
+                if(u0 == 0x8F && u1 >= 0xA1 && u1 <= 0xFE){
                     if(srcIndex + 2 > srcLimit){
                         return (srcIndex, destIndex)
                     }
                     let u2 = src[srcIndex + 2]
-                    if(u2 >= 0xA1 && u2 <= 0xDF){
+                    if(u2 >= 0xA1 && u2 <= 0xFE){
                         pointer = Int64(Int64(u1 - 0xA1) * 94 + Int64(u2) - 0xA1)
                         codePoint = match(jis0212DecodeMapping.get(pointer)){
                             case Some(c) => Char(c)
@@ -150,7 +159,7 @@ class EUCJPDecoder <: Decoder{
                     continue                        
                 }
                 // JIS X 0208: first in 0xA1-0xFE, second in 0xA1-0xFE
-                if(u0 >= 0xA1 && u0 <= 0xDF && u1 >= 0xA1 && u1 <= 0xDF){
+                if(u0 >= 0xA1 && u0 <= 0xFE && u1 >= 0xA1 && u1 <= 0xFE){
                     pointer = Int64(Int64(u0 - 0xA1) * 94 + Int64(u1) - 0xA1)
                     codePoint = match(jis0208DecodeMapping.get(pointer)){
                         case Some(c) => Char(c)
@@ -161,7 +170,6 @@ class EUCJPDecoder <: Decoder{
                     destIndex += 1
                     continue                      
                 }
-
                 // error
                 dest[destIndex] = replacement
                 srcIndex += 2
