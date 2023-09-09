@@ -139,14 +139,15 @@ class BIG5Encoder <: Encoder {
                     let offset:UInt8 = if(trail < 0x3F) {0x40} else {0x62}
                     ref[position] = UInt8(lead)
                     ref[position+1] = UInt8(trail + offset)
-                    position += 2                    
+                    position += 2
                 }else{
                     // error
-                    ref[position] = replacement
-                    position += 1
+                    //ref[position] = replacement
+                    //position += 1
+                    throw Exception("can't encode character "+ch.toString()+" character maps to <undefined>")
                 }
             }
-        }    
+        }
         return ref[0..position]
     }
     private func indexBig5Pointer(encodeMapping:Map<UInt32, UInt32>, decodeMapping:Array<UInt32>, codePoint:UInt32):Int64{
@@ -164,10 +165,10 @@ class BIG5Encoder <: Encoder {
                     if(item == codePoint){
                         res = i
                         break
-                    }                        
+                    }
                 }
                 return res
-            }            
+            }
             for(i in 0..decodeMapping.size){
                 if(!hkscs){
                     if(i < (0xA1 - 0x81) * 157){
@@ -182,7 +183,7 @@ class BIG5Encoder <: Encoder {
             }
         }
         return res
-    }    
+    }
 }
 
 /*
@@ -190,13 +191,13 @@ class BIG5Encoder <: Encoder {
  * gb18030 The single byte part is the same as ASCII
  *         The double byte part is ordinary Chinese characters
  *         The four byte part is mapped with Unicode through a table
- * 
+ *
  * @author freeonsky
  * @since 0.28.4
  */
 class BIG5Decoder <: Decoder{
     // Replace character when decoding error
-    let replacement = '\u{FFFD}' 
+    let replacement = '\u{FFFD}'
     let table = Big5DecodeMapping
 
     /**
@@ -213,9 +214,9 @@ class BIG5Decoder <: Decoder{
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
-        var destStart:Int64 = 0                      
+        var destStart:Int64 = 0
         // Index being processed by SRC
-        var srcIndex = srcOffset   
+        var srcIndex = srcOffset
         // Dest index being processed
         var destIndex = destStart
         while(srcIndex <= srcLimit){
@@ -228,14 +229,14 @@ class BIG5Decoder <: Decoder{
                 var c = Char(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
-                srcIndex += 1     
-                continue           
+                srcIndex += 1
+                continue
             }else if(u0 >= 0x81 && u0 <= 0xFE){
                 if(srcIndex + 1 > srcLimit){
                     // If only half of the double bytes are in SRC, return and wait for the subsequent data to enter SRC for reprocessing
-                    return (srcIndex, destIndex)                    
+                    return (srcIndex, destIndex)
                 }
-                
+
                 var u1 = src[srcIndex+1]
                 var offset = assignOffset(u1)
                 var pointer:Int64 = 0
@@ -253,27 +254,27 @@ class BIG5Decoder <: Decoder{
                     destIndex += 2
                     srcIndex += 2
                     continue
-                }    
+                }
                 if(pointer == 1164){
                     dest[destIndex] = '\u{00EA}'
                     dest[destIndex + 1] = '\u{0304}'
                     destIndex += 2
                     srcIndex += 2
                     continue
-                }                              
+                }
                 if(pointer == 1166){
                     dest[destIndex] = '\u{00EA}'
                     dest[destIndex + 1] = '\u{030C}'
                     destIndex += 2
                     srcIndex += 2
                     continue
-                }                
+                }
                 let codePointOp = table.get(pointer)
                 if(codePointOp != None){
                     dest[destIndex] = Char(codePointOp.getOrThrow())
                     destIndex += 1
                     srcIndex += 2
-                    continue                    
+                    continue
                 }else{
                     if(u1 >= 0x00 && u1 <= 0x7F){
                         //skip u0
@@ -289,10 +290,10 @@ class BIG5Decoder <: Decoder{
             dest[destIndex] = replacement
             destIndex += 1
             srcIndex += 1
-            continue                 
+            continue
         }
         return (srcIndex, destIndex)
-    }    
+    }
 
     private func assignOffset(u1: UInt8): Int64 {
         var offset: Int64

@@ -108,17 +108,29 @@ public class EncodeTest01 {
 
     @TestCase
     public func testISO2022JPEncode04(): Unit {
-        let s = "A¥C\u{1B}\u{28}\u{42}ｱ中🐱B日‾ｲ文"
-        var jp = Charsets.ISO_2022_JP
-        var jpen = jp.newEncoder()
-        jpen.encode(s)
+        var flag = false
+        try{
+            let s = "A¥C\u{1B}\u{28}\u{42}ｱ中🐱B日‾ｲ文"
+            var jp = Charsets.ISO_2022_JP
+            var jpen = jp.newEncoder()
+            jpen.encode(s)
+        }catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
-    
+
     @TestCase
     public func testShiftJISEncode01(): Unit {
-        var jp = Charsets.SHIFT_JIS
-        var jpen = jp.newEncoder()
-        jpen.encode(str)
+        var flag = false
+        try{
+            var jp = Charsets.SHIFT_JIS
+            var jpen = jp.newEncoder()
+            jpen.encode(str_en)
+        }catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
 
     @TestCase
@@ -180,17 +192,29 @@ public class EncodeTest01 {
 
     @TestCase
     public func testIBM866Encode02(): Unit {
-        var ib = Charsets.IBM866
-        var iben = ib.newEncoder()
-        iben.encode(str_te)
+        var flag = false
+        try{
+            var ib = Charsets.IBM866
+            var iben = ib.newEncoder()
+            iben.encode(str_te)
+        }catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
 
     @TestCase
     public func testBIG5Encode01(): Unit {
-        var b5 = Charsets.BIG5
-        var b5en = b5.newEncoder()
-        b5en.encode(str)
-        b5en.encode(str_te)
+        var flag = false
+        try{
+            var b5 = Charsets.BIG5
+            var b5en = b5.newEncoder()
+            b5en.encode(str)
+            b5en.encode(str_te)
+        }catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
 
     @TestCase
@@ -203,9 +227,15 @@ public class EncodeTest01 {
 
     @TestCase
     public func testBIG5HKSCSEncode01(): Unit {
-        var b5hk = Charsets.BIG5_HKSCS
-        var b5hken = b5hk.newEncoder()
-        b5hken.encode(str_te)
+        var flag = false
+        try{
+            var b5hk = Charsets.BIG5_HKSCS
+            var b5hken = b5hk.newEncoder()
+            b5hken.encode(str_te)
+        }catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
 
     @TestCase
@@ -287,9 +317,15 @@ public class EncodeTest01 {
 
     @TestCase
     public func testIBM866Encode03(): Unit {
-        var ib = Charsets.IBM866
-        var iben = ib.newEncoder()
-        iben.encode(str_te)
+        var flag = false
+        try{
+            var ib = Charsets.IBM866
+            var iben = ib.newEncoder()
+            iben.encode(str_te)
+        }catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
 
     @TestCase
@@ -324,9 +360,15 @@ public class EncodeTest01 {
 
     @TestCase
     public func testBIG5HKSCSEncode03(): Unit {
-        var b5hk = Charsets.BIG5_HKSCS
-        var b5hken = b5hk.newEncoder()
-        b5hken.encode(str_te3)
+        var flag = false
+        try{
+            var b5hk = Charsets.BIG5_HKSCS
+            var b5hken = b5hk.newEncoder()
+            b5hken.encode(str_te3)
+        }catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
 
     @TestCase
