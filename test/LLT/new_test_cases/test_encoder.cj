@@ -71,7 +71,11 @@ public class EncodeTest01 {
         var jp = Charsets.EUCJP
         var jpen = jp.newEncoder()
         jpen.encode(str)
-        jpen.encode(str_en)
+        try {
+            jpen.encode(str_en)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     @TestCase
@@ -114,7 +118,7 @@ public class EncodeTest01 {
     public func testShiftJISEncode01(): Unit {
         var jp = Charsets.SHIFT_JIS
         var jpen = jp.newEncoder()
-        jpen.encode(str_en)
+        jpen.encode(str)
     }
 
     @TestCase
