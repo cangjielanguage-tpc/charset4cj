@@ -12,3 +12,5 @@ ci_lib/
 log/
 .cjpm-history
 module-lock.json
+report/
+tmp/

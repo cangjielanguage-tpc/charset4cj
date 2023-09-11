@@ -37,10 +37,9 @@ public class TextReader{
         return list
     }
     public func read(): Option<Char>{
-        if(eof && this.bufLimit == 0){
+        if (checkEOF()) {
             return None
         }
-        fillBuf()       
         var decoder = charset.newDecoder()
         var dest = Array<Char>(1, item:'\0')
         let src = buf.slice(0, this.bufLimit)
@@ -55,10 +54,9 @@ public class TextReader{
     * read a of line String, when eof, return None
     */
     public func readln(): Option<String>{
-        if(eof && this.bufLimit == 0){
+        if (checkEOF()) {
             return None
         }
-        fillBuf()
         // 如果有换行符
         var linefeed = UInt8(UInt32('\n'))
         var enter = UInt8(UInt32('\r'))
@@ -91,7 +89,11 @@ public class TextReader{
         }
         this.bufLimit = this.bufLimit - index
     }
-    private func fillBuf(){
+
+    private func checkEOF(): Bool {
+        if (eof && this.bufLimit == 0) {
+            return true
+        }
         while(this.bufLimit < buf.size - 1){
             var subArray = buf.slice(this.bufLimit, buf.size - this.bufLimit)
             let len = input.read(subArray)
@@ -101,6 +103,7 @@ public class TextReader{
             }
             this.bufLimit += len
         }
+        return eof && this.bufLimit == 0
     }
     
 }
