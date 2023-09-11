@@ -7,7 +7,7 @@ package charset.japanese
 import charset.encoding.*
 
 class ShiftJISEncoder <: Encoder {
-    
+
     /**
      * Encodes a string into a byte array
      *
@@ -33,18 +33,18 @@ class ShiftJISEncoder <: Encoder {
                 position += 1
             }else if(codePoint == 0x00A5){
                 ref[position] = 0x5C
-                position += 1                
+                position += 1
             }else if(codePoint == 0x203E){
                 ref[position] = 0x7E
-                position += 1                
+                position += 1
             }else if(codePoint >= 0xFF61 && codePoint <= 0xFF9F){
                 ref[position] = UInt8(codePoint - 0xFF61 + 0xA1)
-                position += 1                
+                position += 1
             }else{
                 if(codePoint == 0x2212){
-                    codePoint = 0xFF0D              
-                }          
-                var index = indexShiftJISPointer(jis0208EncodeMapping, jis0208DecodeMapping, codePoint)      
+                    codePoint = 0xFF0D
+                }
+                var index = indexShiftJISPointer(jis0208EncodeMapping, jis0208DecodeMapping, codePoint)
                 if(index >= 0){
                     var pointer = UInt32(index)
                     let lead = UInt8(pointer / 188)
@@ -53,14 +53,15 @@ class ShiftJISEncoder <: Encoder {
                     let offset:UInt8 = if(trail < 0x3F) {0x40} else {0x41}
                     ref[position] = UInt8(lead + leadOffset)
                     ref[position+1] = UInt8(trail + offset)
-                    position += 2                    
+                    position += 2
                 }else{
+                    throw Exception("can't encode character "+ch.toString()+" illegal multibyte sequence")
                     // error
-                    ref[position] = replacement
-                    position += 1
+                    // ref[position] = replacement
+                    // position += 1
                 }
             }
-        }    
+        }
         return ref[0..position]
     }
     func indexShiftJISPointer(encodeMapping:Map<UInt32, UInt32>, decodeMapping:Array<UInt32>, codePoint:UInt32):Int64{
@@ -82,7 +83,7 @@ class ShiftJISEncoder <: Encoder {
             }
         }
         return res
-    }    
+    }
 }
 
 
@@ -111,37 +112,37 @@ class ShiftJISDecoder <: Decoder{
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
-        var destStart:Int64 = 0                    
+        var destStart:Int64 = 0
         // Index being processed by SRC
-        var srcIndex = srcOffset   
+        var srcIndex = srcOffset
         // Dest index being processed
         var destIndex = destStart
         while(srcIndex <= srcLimit){
             if(destIndex >= dest.size){
                 return (srcIndex, destIndex)
-            }            
+            }
             var u0 = src[srcIndex];
             // ASCII byte or 0x80, return a code point whose value is byte
             if(u0 <= 0x80){
                 var c = Char(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
-                srcIndex += 1     
-                continue           
+                srcIndex += 1
+                continue
             }
             // If byte is in the range 0xA1 to 0xDF, inclusive, return a code point whose value is 0xFF61 - 0xA1 + byte
             if(u0 >= 0xA1 && u0 <= 0xDF){
                 var c = Char(UInt32(0xFF61 - 0xA1 + UInt32(u0)))
                 dest[destIndex] = c
                 destIndex += 1
-                srcIndex += 1     
-                continue                    
+                srcIndex += 1
+                continue
             }
             // two byte
             if((u0 >= 0x81 && u0 <= 0x9F) || (u0 >= 0xE0 && u0 <= 0xFC)){
                 if(srcIndex + 1 > srcLimit){
                     // If only half of the double bytes are in SRC, return and wait for the subsequent data to enter SRC for reprocessing
-                    return (srcIndex, destIndex)                    
+                    return (srcIndex, destIndex)
                 }
                 var u1 = src[srcIndex+1]
                 var pointer:Int64 = -1
@@ -156,21 +157,21 @@ class ShiftJISDecoder <: Decoder{
                     dest[destIndex] = codePoint
                     srcIndex += 2
                     destIndex += 1
-                    continue 
+                    continue
                 }
                 codePoint = match(jis0208DecodeMapping.get(pointer)){
                     case Some(c) => Char(c)
                     case None => replacement
                 }
+                dest[destIndex] = codePoint
                 srcIndex += 2
                 destIndex += 1
-                continue                    
+                continue
             }
-            
             dest[destIndex] = replacement
             srcIndex += 1
             destIndex += 1
-            continue                  
+            continue
         }
         return (srcIndex, destIndex)
     }

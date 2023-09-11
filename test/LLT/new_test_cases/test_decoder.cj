@@ -113,23 +113,33 @@ public class DecodeTest01 {
 
     @TestCase
     public func testISO2022JPDecode04(): Unit {
-        let s = "A¥C\u{1B}\u{28}\u{42}ｱ中🐱B日‾ｲ文"
-        var jp = Charsets.ISO_2022_JP
-        var jpen = jp.newEncoder()
-        var jpde = jp.newDecoder()
-        let src: Array<UInt8> = jpen.encode(s)
-        jpde.decode(src, des)
+        var flag = false
+        try{
+            let s = "A¥C\u{1B}\u{28}\u{42}ｱ中🐱B日‾ｲ文"
+            var jp = Charsets.ISO_2022_JP
+            var jpen = jp.newEncoder()
+            var jpde = jp.newDecoder()
+            let src: Array<UInt8> = jpen.encode(s)
+            jpde.decode(src, des)
+        }catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
-    
+
     @TestCase
     public func testShiftJISDecode01(): Unit {
-        var jp = Charsets.SHIFT_JIS
-        var jpen = jp.newEncoder()
-        var jpde = jp.newDecoder()
-        let src: Array<UInt8> = jpen.encode(str)
-        let res = jpde.decode(src, des)
-        @Assert(res[0], 6)
-        @Assert(res[1], 6)
+        var flag = false
+        try{
+            var jp = Charsets.SHIFT_JIS
+            var jpen = jp.newEncoder()
+            var jpde = jp.newDecoder()
+            let src: Array<UInt8> = jpen.encode(str_en)
+            let res = jpde.decode(src, des)
+        }catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
 
     @TestCase
@@ -223,25 +233,33 @@ public class DecodeTest01 {
 
     @TestCase
     public func testIBM866Decode02(): Unit {
-        var ib = Charsets.IBM866
-        var iben = ib.newEncoder()
-        var ibde = ib.newDecoder()
-        let src: Array<UInt8> = iben.encode(str_te)
-        let res = ibde.decode(src, des)
-        @Assert(res[0], 6)
-        @Assert(res[1], 6)
+        var flag = false
+        try{
+            var ib = Charsets.IBM866
+            var iben = ib.newEncoder()
+            var ibde = ib.newDecoder()
+            let src: Array<UInt8> = iben.encode(str_te)
+            let res = ibde.decode(src, des)
+        }catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
 
     @TestCase
     public func testBIG5Decode01(): Unit {
-        var b5 = Charsets.BIG5
-        var b5en = b5.newEncoder()
-        var b5de = b5.newDecoder()
-        let src: Array<UInt8> = b5en.encode(str)
-        b5en.encode(str_te)
-        let res = b5de.decode(src, des)
-        @Assert(res[0], 6)
-        @Assert(res[1], 6)
+        var flag = false
+        try{
+            var b5 = Charsets.BIG5
+            var b5en = b5.newEncoder()
+            var b5de = b5.newDecoder()
+            let src: Array<UInt8> = b5en.encode(str)
+            b5en.encode(str_te)
+            let res = b5de.decode(src, des)
+        }catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
 
     @TestCase
@@ -254,13 +272,17 @@ public class DecodeTest01 {
 
     @TestCase
     public func testBIG5HKSCSDecode01(): Unit {
-        var b5hk = Charsets.BIG5_HKSCS
-        var b5hken = b5hk.newEncoder()
-        var b5hkde = b5hk.newDecoder()
-        let src: Array<UInt8> = b5hken.encode(str_te)
-        let res = b5hkde.decode(src, des)
-        @Assert(res[0], 8)
-        @Assert(res[1], 6)
+        var flag = false
+        try{
+            var b5hk = Charsets.BIG5_HKSCS
+            var b5hken = b5hk.newEncoder()
+            var b5hkde = b5hk.newDecoder()
+            let src: Array<UInt8> = b5hken.encode(str_te)
+            let res = b5hkde.decode(src, des)
+        }catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
 
     @TestCase

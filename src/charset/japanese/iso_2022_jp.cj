@@ -8,7 +8,7 @@ import charset.encoding.*
 
 class ISO2022JPEncoder <: Encoder {
     // ASCII:0 | Roman:1 | katakana:2 | JIS:3
-    var state = 0    
+    var state = 0
     /**
      * Encodes a string into a byte array
      *
@@ -27,13 +27,11 @@ class ISO2022JPEncoder <: Encoder {
         var position = 0
         var srcIndex = 0
         while(srcIndex < str.size){
-        // for(ch in arr){
             var ch = str[srcIndex]
             srcIndex += 1
             var codePoint:UInt32 = UInt32(ch)
             // ASCII:0 | Roman:1 | katakana:2 | JIS:3
-            if((state == 0 || state == 1) && 
-                (codePoint == 0x0E || codePoint == 0x0F || codePoint == 0x1B)){
+            if((state == 0 || state == 1) && (codePoint == 0x0E || codePoint == 0x0F || codePoint == 0x1B)){
                 // skip
                 continue
             }
@@ -42,8 +40,7 @@ class ISO2022JPEncoder <: Encoder {
                 position += 1
                 continue
             }
-            if((state == 1 && codePoint >= 0x00 && codePoint <= 0x7F && (codePoint != 0x5C && codePoint != 0x7E)) ||
-                (codePoint == 0xA5 || codePoint == 0x203E)){
+            if((state == 1 && codePoint >= 0x00 && codePoint <= 0x7F && (codePoint != 0x5C && codePoint != 0x7E)) ||(codePoint == 0xA5 || codePoint == 0x203E)){
                 if(codePoint >= 0x00 && codePoint <= 0x7F){
                     ref[position] = UInt8(codePoint)
                 }
@@ -76,7 +73,7 @@ class ISO2022JPEncoder <: Encoder {
                 ref[position + 1] = 0x28
                 ref[position + 2] = 0x4A
                 position += 3
-                continue                
+                continue
             }
             if(codePoint == 0x2212){
                 codePoint = 0xFF0D
@@ -103,6 +100,7 @@ class ISO2022JPEncoder <: Encoder {
                     position += 3
                     continue
                 }
+                throw Exception("can't encode character "+ch.toString()+" character maps to <undefined>")
                 ref[position] = replacement
                 position += 1
                 continue
@@ -114,15 +112,25 @@ class ISO2022JPEncoder <: Encoder {
                 ref[position + 1] = 0x24
                 ref[position + 2] = 0x42
                 position += 3
-                continue                
+                continue
             }
             let lead = pointer / 94 + 0x21
             let trail = pointer % 94 + 0x21
             ref[position] = UInt8(lead)
             ref[position + 1] = UInt8(trail)
             position += 2
+
+            if(srcIndex == str.size){
+                if(state != 0){
+                    state = 0
+                    ref[position] = 0x1B
+                    ref[position + 1] = 0x28
+                    ref[position + 2] = 0x42
+                    position += 3
+                }
+            }
             continue
-        }    
+        }
         return ref[0..position]
     }
 }
@@ -149,8 +157,8 @@ class ISO2022JPDecoder <: Decoder{
      *   ESC ( J to JIS X 0201-Roman  start byte: 0X1B,0x28,0x4A
      *   ESC ( I to JIS X 0201 katakana Nonstandard start byte:0X1B,0x28,0x49
      *   ESC $ @ to JIS X 0208-1978  start byte:0X1B,0x24,0x40
-     *   ESC $ B to JIS X 0208-1983  start byte:0X1B,0x24,0x42  
-     * 
+     *   ESC $ B to JIS X 0208-1983  start byte:0X1B,0x24,0x42
+     *
      * @param src input byte array
      * @param dest output Char array
      *
@@ -162,9 +170,9 @@ class ISO2022JPDecoder <: Decoder{
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
-        var destStart:Int64 = 0                    
+        var destStart:Int64 = 0
         // Index being processed by SRC
-        var srcIndex = srcOffset   
+        var srcIndex = srcOffset
         // Dest index being processed
         var destIndex = destStart
         while(srcIndex <= srcLimit){
@@ -175,7 +183,7 @@ class ISO2022JPDecoder <: Decoder{
             if(u0 == 0x1B){
                 if(srcIndex + 3 > srcLimit){
                     // when escape char sequese < 3 ， return
-                    return (srcIndex, destIndex)                    
+                    return (srcIndex, destIndex)
                 }
                 let u1 = src[srcIndex + 1]
                 let u2 = src[srcIndex + 2]
@@ -183,16 +191,16 @@ class ISO2022JPDecoder <: Decoder{
                 if(u1 == 0x28 && u2 == 0x42){
                     state = 0
                     srcIndex += 3
-                // ESC ( J to JIS X 0201-Roman  start byte: 0X1B,0x28,0x4A    
+                // ESC ( J to JIS X 0201-Roman  start byte: 0X1B,0x28,0x4A
                 }else if(u1 == 0x28 && u2 == 0x4A){
                     state = 1
                     srcIndex += 3
-                // ESC ( I to JIS X 0201 katakana Nonstandard start byte:0X1B,0x28,0x49    
+                // ESC ( I to JIS X 0201 katakana Nonstandard start byte:0X1B,0x28,0x49
                 }else if(u1 == 0x28 && u2 == 0x49){
                     state = 2
                     srcIndex += 3
                 // ESC $ @ to JIS X 0208-1978  start byte:0X1B,0x24,0x40
-                // ESC $ B to JIS X 0208-1983  start byte:0X1B,0x24,0x42    
+                // ESC $ B to JIS X 0208-1983  start byte:0X1B,0x24,0x42
                 }else if(u1 == 0x24 && (u2 == 0x40 || u2 == 0x42)){
                     state = 3
                     srcIndex += 3
@@ -224,18 +232,18 @@ class ISO2022JPDecoder <: Decoder{
                     }
                     destIndex += 1
                     srcIndex += 1
-                }else if(state == 2){ // katakana:2 
+                }else if(state == 2){ // katakana:2
                     if(u0 >= 0x21 && u0 <= 0x5F){
                         dest[destIndex] = Char(UInt32(0xFF61) - UInt32(0x21) + UInt32(u0))
                     }else{
                         dest[destIndex] = replacement
                     }
                     destIndex += 1
-                    srcIndex += 1                    
+                    srcIndex += 1
                 }else if(state == 3){ // JIS:3
                     if(srcIndex + 2 > srcLimit){
                         // when escape char sequese < 3 ， return
-                        return (srcIndex, destIndex)                    
+                        return (srcIndex, destIndex)
                     }
                     let u1 = src[srcIndex + 1]
                     if(u0 >= 0x21 && u0 <= 0x7E && u1 >= 0x21 && u1 <= 0x7E){
@@ -245,12 +253,12 @@ class ISO2022JPDecoder <: Decoder{
                             case None => replacement
                         }
                         srcIndex += 2
-                        destIndex += 1                                         
+                        destIndex += 1
                     }
                 }
             }
 
         }
         return (srcIndex, destIndex)
-    }    
+    }
 }
