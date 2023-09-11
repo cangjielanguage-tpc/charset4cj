@@ -18,7 +18,7 @@
 
 + 🚀 只有两种方式获取字符集Charset
 
-  + 通过 Charsets 的常量获取，例如： Charsets.utf8 
+  + 通过 Charsets 的常量获取，例如： Charsets.UTF8 
   + 通过 Charsets 的forName 方法获取， 比如 Charsets.forName("UTF-8")
 
 - 🚀 通过 Charset 创建编码解码器
@@ -142,7 +142,7 @@ public func newDecoder():Decoder
 
 ```
 func decode(src:Array<UInt8>):String
-func decode(src:Array<UInt8>, srcOffset:Int64, srcLimit:Int64, dest:Array<Char>, destStart:Int64): (Int64, Int64)
+func decode(src:Array<UInt8> dest:Array<Char>): (Int64, Int64)
 ```
 #### interface Encoder
 
@@ -233,29 +233,15 @@ public static func forName(name:String):Option<Charset>
 
 ## <img alt="" src="./doc/assets/readme-icon-compile.png" style="display: inline-block;" width=3%/> 使用说明
 
-### 编译
+### 编译构建
 
-1. 本项目编译运行方式
-
--  引入 testJekins 包
-
-    ```
-    git clone https://gitee.com/HW-PLLab/testJekins
-    ```
-
-    将 src 下 ci_test 放入 ahoCorasick4cj 根目录下,执行：
-
-    ```
-    cjpm clean
-    cjpm update
-    python3 ci_test/main.py build    ---> 编译
-    python3 ci_test/main.py test     ---> 执行 test/LLT 用例
-    ```
-    test/LLT 用例书写参考：https://gitee.com/HW-PLLab/cangjie-library-pages/wikis 的门禁测试脚本使用方式
-
-- 重复本项目编译运行方式的第二步
+```shell
+cjpm build
+```
 
 ### 读取字符集功能示例
+
+注意：字符集简介文件存放于项目的 test/LLT 目录下
 
 ```cangjie
 from std import fs.*
