@@ -50,6 +50,54 @@ class UTF8Charset <: Charset{
     public func newDecoder():Decoder{
         UTF8Decoder()
     }
+
+    public operator func ==(rhs: Charset): Bool {
+        if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
+            return true
+        }
+        for(lable in this.labels) {
+            if(lable.toAsciiLower() == rhs.name.toAsciiLower()){
+                return true
+            }
+        }
+        return false
+    }
+
+    public operator func !=(rhs: Charset): Bool {
+        if (this.name.toAsciiLower() != rhs.name.toAsciiLower()) {
+            return true
+        }
+        for(lable in this.labels) {
+            if(lable.toAsciiLower() != rhs.name.toAsciiLower()){
+                return true
+            }
+        }
+        return false
+    }
+
+    public operator func ==(rhs: String): Bool {
+        if (this.name.equals(rhs)) {
+            return true
+        }
+        return false
+    }
+
+    public operator func !=(rhs: String): Bool {
+        if (!this.name.equals(rhs)) {
+            return true
+        }
+        return false
+    }
+
+    public func hashCode(): Int64 {
+        var hash: Int64 = 0
+        hash = 31 * hash + this.name.hashCode()
+        return hash
+    }
+
+    public func toString(): String {
+        return this.name
+    }
 }
 
 /*
