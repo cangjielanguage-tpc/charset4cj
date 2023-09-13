@@ -63,7 +63,7 @@ class EUCJPEncoder <: Encoder {
                         position += 3
                     } else {
                         // error
-                        throw Exception("UnicodeEncodeError: 'euc_jp' codec can't encode character " + "'" + "${ch}" + "'")
+                        throw Exception("can't encode character "+ch.toString()+" character maps to <undefined>")
                     }
                 }
             }

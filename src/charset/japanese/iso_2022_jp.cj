@@ -18,8 +18,6 @@ class ISO2022JPEncoder <: Encoder {
      * @since 0.35.2
      */
     public func encode(str:String): Array<UInt8> {
-        // replacement : 0x3F
-        let replacement:UInt8 = 0x3F
         if(str.size == 0){
             return Array<UInt8>()
         }
@@ -101,9 +99,6 @@ class ISO2022JPEncoder <: Encoder {
                     continue
                 }
                 throw Exception("can't encode character "+ch.toString()+" character maps to <undefined>")
-                ref[position] = replacement
-                position += 1
-                continue
             }
             if(state != 3){
                 srcIndex -= 1
