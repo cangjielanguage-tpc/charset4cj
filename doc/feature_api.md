@@ -331,9 +331,9 @@ main() {
 
 #### 2.1 主要接口
 
-字符集抽象类
+字符集抽象类，它实现了 Hashable, Equatable, ToString 接口
 
-public abstract class Charset
+public abstract class Charset <: Hashable & Equatable<Charset> & Equatable<String> & ToString
 
 ```cangjie
   	/**
