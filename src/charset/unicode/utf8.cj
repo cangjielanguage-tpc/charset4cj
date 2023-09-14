@@ -64,15 +64,10 @@ class UTF8Charset <: Charset{
     }
 
     public operator func !=(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() != rhs.name.toAsciiLower()) {
-            return true
+        if (this == rhs) {
+            return false
         }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() != rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
+        return true
     }
 
     public operator func ==(rhs: String): Bool {
