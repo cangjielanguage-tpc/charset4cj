@@ -119,8 +119,6 @@ class EUCKREncoder <: Encoder {
      * @since 0.28.4
      */
     public func encode(str:String): Array<UInt8>{
-        // replacement : 0x3F
-        let replacement:UInt8 = 0x3F
         if(str.size == 0){
             return Array<UInt8>()
         }
@@ -143,9 +141,7 @@ class EUCKREncoder <: Encoder {
                     ref[position+1] = UInt8(trail)
                     position += 2                    
                 }else{
-                    // error
-                    ref[position] = replacement
-                    position += 1
+                    throw Exception("can't encode character "+ch.toString()+" character maps to <undefined>")
                 }
             }
         }    

@@ -142,9 +142,15 @@ public class EncodeTest01 {
 
     @TestCase
     public func testEUCKREncode01(): Unit {
+        var flag = false
         var kr = Charsets.EUCKR
         var kren = kr.newEncoder()
-        kren.encode(str_te)
+        try {
+            kren.encode(str_te)
+        } catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
 
     @TestCase

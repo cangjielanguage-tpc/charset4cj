@@ -155,13 +155,17 @@ public class DecodeTest01 {
 
     @TestCase
     public func testEUCKRDecode01(): Unit {
+        var flag = false
         var kr = Charsets.EUCKR
         var kren = kr.newEncoder()
         var krde = kr.newDecoder()
-        let src: Array<UInt8> = kren.encode(str_te)
-        let res = krde.decode(src, des)
-        @Assert(res[0], 8)
-        @Assert(res[1], 6)
+        try {
+            let src: Array<UInt8> = kren.encode(str_te)
+            krde.decode(src, des)
+        } catch(e:Exception){
+            flag = true
+        }
+        @Assert(flag,true)
     }
 
     @TestCase
