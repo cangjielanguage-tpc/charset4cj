@@ -135,7 +135,7 @@ public class DecodeTest01 {
             var jpen = jp.newEncoder()
             var jpde = jp.newDecoder()
             let src: Array<UInt8> = jpen.encode(str_en)
-            let res = jpde.decode(src, des)
+            jpde.decode(src, des)
         }catch(e:Exception){
             flag = true
         }
@@ -243,7 +243,7 @@ public class DecodeTest01 {
             var iben = ib.newEncoder()
             var ibde = ib.newDecoder()
             let src: Array<UInt8> = iben.encode(str_te)
-            let res = ibde.decode(src, des)
+            ibde.decode(src, des)
         }catch(e:Exception){
             flag = true
         }
@@ -259,7 +259,7 @@ public class DecodeTest01 {
             var b5de = b5.newDecoder()
             let src: Array<UInt8> = b5en.encode(str)
             b5en.encode(str_te)
-            let res = b5de.decode(src, des)
+            b5de.decode(src, des)
         }catch(e:Exception){
             flag = true
         }
@@ -282,7 +282,7 @@ public class DecodeTest01 {
             var b5hken = b5hk.newEncoder()
             var b5hkde = b5hk.newDecoder()
             let src: Array<UInt8> = b5hken.encode(str_te)
-            let res = b5hkde.decode(src, des)
+            b5hkde.decode(src, des)
         }catch(e:Exception){
             flag = true
         }
