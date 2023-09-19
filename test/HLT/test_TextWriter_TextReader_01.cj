@@ -140,7 +140,7 @@ hello cangjie
         var exp_content=content_MultiLine.split("\n")
         @Assert(re.size,exp_content.size-1)
         for (index in 0..exp_content.size-1){
-            @Assert(re[index],exp_content[index])
+            @Assert(re[index] ,exp_content[index])
         }
     }
 }
