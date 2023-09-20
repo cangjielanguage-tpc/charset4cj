@@ -209,6 +209,22 @@ class TextWriter
     public func write(s:String): Unit
 ```
 
+字符集转换器
+class CharsetTransfer
+
+```cangjie
+    /**
+    * 字符集转换方法
+    *
+    * @param input - 传入一个 InputStream 输入流
+    * @param output - 传入一个 OutputStream 输出流
+    * @param inputCharset - 传入一个待转换的字符集类
+    * @param outputCharset - 传入一个实际转换的字符集类
+    *
+    */
+    public static func transfer(input: InputStream, output: OutputStream, inputCharset: Charset, outputCharset: Charset): Unit
+```
+
 #### 1.2 其它接口
 
 top level
