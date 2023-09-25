@@ -6,7 +6,7 @@
 <img alt="" src="https://img.shields.io/badge/release-v0.0.2-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjc-v0.39.7-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjcov-89.4%25-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjcov-90.7%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
@@ -240,7 +240,19 @@ public static func forName(name:String):Option<Charset>
 
 ### 编译构建
 
+#### linux环境编译
+
+编译描述和具体shell命令
+
 ```shell
+cjpm build
+```
+
+#### Windows环境编译
+
+编译描述和具体cmd命令
+
+```cmd
 cjpm build
 ```
 
@@ -268,7 +280,7 @@ main() {
 
 执行结果如下：
 ```shell
-0
+[ PASSED ] CASE: testReadMe01
 ```
 
 ### EUCJP 字符集编码解码功能示例
@@ -309,7 +321,7 @@ public class EncodeTest01 {
 
 执行结果如下：
 ```shell
-0
+[ PASSED ] CASE: testReadMe02
 ```
 
 注意：用例需放入 `test/LLT` 下，执行步骤是: 本项目编译运行方式
