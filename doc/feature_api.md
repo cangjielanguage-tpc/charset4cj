@@ -334,7 +334,7 @@ main() {
 执行结果如下：
 
 ```shell
-0
+[ PASSED ] CASE: testFeatureApi01
 ```
 
 ### 2 通过 Charset 字符集创建编码解码器
@@ -421,6 +421,6 @@ main() {
 执行结果如下：
 
 ```shell
-0
+[ PASSED ] CASE: testFeatureApi02
 ```
 
