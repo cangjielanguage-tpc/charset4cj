@@ -16,15 +16,8 @@ func downloadFile(encodeName: String){
     let client = Client(cfg)
     try(fs = File(path, AccessMode.Write, OpenMode.Create)){
         let res = client.get(url)
-        // let s = res.readTextToEnd()
-        
         res.copyTo(fs)
-        // if(fs.openFile()){
-        //     fs.write(s)
-        //     fs.close()
-        // }
     }catch(e: Exception){
-        println(e)
     }
 }
 
@@ -153,7 +146,6 @@ from std import collection.*
 
     var encodeMappingStr = "let " + encodeName.replace("-", "_")  + "EncodeMapping = HashMap<UInt32, UInt32>([\n"
     if(encodeMapFlag){
-        println("hello")
         for(i in 0..maxPointer+1){
             if(map.contains(UInt32(i))){
                 var codePoint = map[UInt32(i)]
