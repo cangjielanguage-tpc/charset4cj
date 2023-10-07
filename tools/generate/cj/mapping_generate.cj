@@ -10,8 +10,7 @@ func downloadFile(encodeName: String){
     if(File.exist(path)){
         return
     }
-    // 1. download file
-    let url = "https://encoding.spec.whatwg.org/index-${encodeName.toAsciiLower()}.txt"
+    let url = ""
     var cfg = TlsClientConfig("/etc/ssl/certs/ca-certificates.crt")
     let client = Client(cfg)
     try(fs = File(path, AccessMode.Write, OpenMode.Create)){
