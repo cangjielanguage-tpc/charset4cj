@@ -66,7 +66,6 @@ func encode(str:String): Array<UInt8>
 ```
 ├── doc
 │   └── assets
-│   └── 字符集简介.md
 │   └── feature_api.md
 ├── src
 │   └── charset
@@ -108,9 +107,16 @@ func encode(str:String): Array<UInt8>
 │           ├── utf32.cj
 │           └── utf8.cj
 ├── test
+│   └── DOC
+│   └── FUZZ
 │   └── HLT
 │   └── LLT
 │   └── UT
+├── tools
+│   └── generate
+│         └── cj
+│             └── mapping_generate.cj // mapping 映射集生成工具
+├── CHANGELOG.md
 ├── gitee_gate.cfg
 ├── LICENSE
 ├── module.json
@@ -119,122 +125,11 @@ func encode(str:String): Array<UInt8>
 
 - `doc` 存放库使用文档
 - `src` 是库源码目录
-- `test` 是存放测试用例的文件夹，含有 HLT 测试用例、LLT 自测用例 和 UT测试用例
+- `test` 是存放测试用例的文件夹，含有 DOC 文档用例、FUZZ 测试用例、HLT 测试用例、LLT 自测用例 和 UT测试用例
 
 ### 接口说明
 
 主要是核心类和成员函数说明,详情见 [API](./doc/feature_api.md)
-
-#### class TextReader
-
-```
-public init(input:InputStream, charset!:Charset = Charsets.UTF8, bufSize!:Int64 = 8192)
-public func readln(): Option<String>
-```
-#### class Charset
-
-```
-public func nameEquals(name:String):Bool
-public func newEncoder():Encoder
-public func newDecoder():Decoder
-```
-#### interface Decoder
-
-```
-func decode(src:Array<UInt8>):String
-func decode(src:Array<UInt8> dest:Array<Char>): (Int64, Int64)
-```
-#### interface Encoder
-
-```
-func encode(str:String): Array<UInt8>
-```
-
-#### class Charsets
-
-```
-// UTF-8
-public static let UTF8:Charset = newUTF8Charset()
-// utf-16 be
-public static let UTF16BE:Charset = newUTF16Charset(true)
-// utf16 le
-public static let UTF16LE:Charset = newUTF16Charset(false)
-// utf32 be
-public static let UTF32BE:Charset = newUTF32Charset(true)
-// utf32 le
-public static let UTF32LE:Charset = newUTF32Charset(false)
-// gb18030
-public static let GB18030:Charset = newGB18030Charset(false)
-// gbk
-public static let GBK:Charset = newGB18030Charset(true)
-// EUC-KR
-public static let EUCKR:Charset = newEUCKRCharset()
-// EUC-JP
-public static let EUCJP:Charset = newEUCJPCharset()
-// ShiftJIS
-public static let SHIFT_JIS:Charset = newShiftJISCharset()
-// ISO-2022-JP
-public static let ISO_2022_JP:Charset = newISO2022JPCharset()
-// Big5
-public static let BIG5:Charset = newBIG5Charset(false)
-// Big5-hkscs
-public static let BIG5_HKSCS:Charset = newBIG5Charset(true)    
-// IBM866
-public static let IBM866:Charset = newSingleByteCharset("IBM866")
-// ISO-8859-2
-public static let ISO_8859_2:Charset = newSingleByteCharset("ISO-8859-2")
-// ISO-8859-3
-public static let ISO_8859_3:Charset = newSingleByteCharset("ISO-8859-3")
-// ISO-8859-4
-public static let ISO_8859_4:Charset = newSingleByteCharset("ISO-8859-4")
-// ISO-8859-5
-public static let ISO_8859_5:Charset = newSingleByteCharset("ISO-8859-5")
-// ISO-8859-6
-public static let ISO_8859_6:Charset = newSingleByteCharset("ISO-8859-6")
-// ISO-8859-7
-public static let ISO_8859_7:Charset = newSingleByteCharset("ISO-8859-7")
-// ISO-8859-8
-public static let ISO_8859_8:Charset = newSingleByteCharset("ISO-8859-8")
-// ISO-8859-10
-public static let ISO_8859_10:Charset = newSingleByteCharset("ISO-8859-10")
-// ISO-8859-13
-public static let ISO_8859_13:Charset = newSingleByteCharset("ISO-8859-13")
-// ISO-8859-14
-public static let ISO_8859_14:Charset = newSingleByteCharset("ISO-8859-14")
-// ISO-8859-15
-public static let ISO_8859_15:Charset = newSingleByteCharset("ISO-8859-15")
-// ISO-8859-16
-public static let ISO_8859_16:Charset = newSingleByteCharset("ISO-8859-16")
-// KOI8-R
-public static let KOI8_R:Charset = newSingleByteCharset("KOI8-R")
-// KOI8-U
-public static let KOI8_U:Charset = newSingleByteCharset("KOI8-U")
-// macintosh
-public static let MACINTOSH:Charset = newSingleByteCharset("macintosh")
-// windows-874
-public static let WINDOWS_874:Charset = newSingleByteCharset("windows-874")
-// windows-1250
-public static let WINDOWS_1250:Charset = newSingleByteCharset("windows-1250")
-// windows-1251
-public static let WINDOWS_1251:Charset = newSingleByteCharset("windows-1251")
-// windows-1252
-public static let WINDOWS_1252:Charset = newSingleByteCharset("windows-1252")
-// windows-1253
-public static let WINDOWS_1253:Charset = newSingleByteCharset("windows-1253")
-// windows-1254
-public static let WINDOWS_1254:Charset = newSingleByteCharset("windows-1254")
-// windows-1255
-public static let WINDOWS_1255:Charset = newSingleByteCharset("windows-1255")
-// windows-1256
-public static let WINDOWS_1256:Charset = newSingleByteCharset("windows-1256")
-// windows-1257
-public static let WINDOWS_1257:Charset = newSingleByteCharset("windows-1257")
-// windows-1258
-public static let WINDOWS_1258:Charset = newSingleByteCharset("windows-1258")
-// x-mac-cyrillic
-public static let X_MAC_CYRILLIC:Charset = newSingleByteCharset("x-mac-cyrillic")
-public static func forName(name:String):Option<Charset>
-```
 
 ## <img alt="" src="./doc/assets/readme-icon-compile.png" style="display: inline-block;" width=3%/> 使用说明
 
@@ -263,18 +158,31 @@ cjpm build
 ```cangjie
 from std import fs.*
 from charset import charset.*
+from std import unittest.*
+from std import unittest.testmacro.*
 
 main() {
-    var f:File = File("./字符集简介.md", Open(true, false))
-    var sr = TextReader(f, charset: Charsets.GB18030, bufSize:120)
-    while(true){
-        var lineOp:Option<String> = sr.readln()
-        if(lineOp == None){
-            break
-        }
-        lineOp.getOrThrow()
-    }   
+    let ccc = Test_ReadMe01()
+    ccc.execute()
+    ccc.printResult()
     0
+}
+@Test
+public class Test_ReadMe01 {
+    @TestCase
+    public func testReadMe01(): Unit {
+		var f:File = File("./字符集简介.md", Open(true, false))
+		var sr = TextReader(f, charset: Charsets.GB18030, bufSize:120)
+		var lineOp:Option<String>=Option<String>.Some("origin")
+		while(true){
+			lineOp = sr.readln()
+			if(lineOp == None){
+				break
+			}
+			lineOp.getOrThrow()
+		}   		
+        @Assert(lineOp==None, true)
+    }
 }
 ```
 
@@ -286,35 +194,33 @@ main() {
 ### EUCJP 字符集编码解码功能示例
 
 ```cangjie
+from std import fs.*
 from charset import charset.*
-from charset import charset.japanese.*
 from std import unittest.*
 from std import unittest.testmacro.*
-from std import collection.*
 
-main(): Int64 {
-    let encodeTest01 = EncodeTest01()
-    encodeTest01.testEUCJPEncode01()
-    return 0
+main() {
+    let ccc = Test_ReadMe02()
+    ccc.execute()
+    ccc.printResult()
+    0
 }
-
 @Test
-public class EncodeTest01 {
-
+public class Test_ReadMe02 {
     let str: String = "z,ncm,xzjiu"
-    let str_en: String = "中有华为，华有仓颉"
-
+    let str_en: String = "￡％＃＆＊＠§"
     @TestCase
-    public func testEUCJPEncode01(): Unit {
+    public func testReadMe02(): Unit {
         var jp = Charsets.EUCJP
         var jpen = jp.newEncoder()
         var jpde = jp.newDecoder()
         let src: Array<UInt8> = jpen.encode(str)
         let src2: Array<UInt8> = jpen.encode(str_en)
+        let des=Array<Char>(30,item:'0')
         let res = jpde.decode(src, des)
         jpde.decode(src2, des)
-        @Assert(res[0], 6)
-        @Assert(res[1], 6)
+        @Assert(res[0], 11)
+        @Assert(res[1], 11)
     }
 }
 ```
@@ -324,7 +230,7 @@ public class EncodeTest01 {
 [ PASSED ] CASE: testReadMe02
 ```
 
-注意：用例需放入 `test/LLT` 下，执行步骤是: 本项目编译运行方式
+注意：用例需放入 `test/LLT` 下
 
 ## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
 

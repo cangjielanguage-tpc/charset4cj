@@ -20,85 +20,45 @@ public class Charsets
 
 ```cangjie
 
-    // UTF-8
     public static let UTF8:Charset
-    // utf-16 be
     public static let UTF16BE:Charset
-    // utf16 le
     public static let UTF16LE:Charset
-    // utf32 be
     public static let UTF32BE:Charset
-    // utf32 le
     public static let UTF32LE:Charset
-    // gb18030
     public static let GB18030:Charset
-    // gbk
     public static let GBK:Charset
-    // EUC-KR
     public static let EUCKR:Charset
-    // EUC-JP
     public static let EUCJP:Charset
-    // ShiftJIS
     public static let SHIFT_JIS:Charset
-    // ISO-2022-JP
     public static let ISO_2022_JP:Charset
-    // Big5
     public static let BIG5:Charset
-    // Big5-hkscs
     public static let BIG5_HKSCS:Charset
-    // IBM866
     public static let IBM866:Charset
-    // ISO-8859-2
     public static let ISO_8859_2:Charset
-    // ISO-8859-3
     public static let ISO_8859_3:Charset
-    // ISO-8859-4
     public static let ISO_8859_4:Charset
-    // ISO-8859-5
     public static let ISO_8859_5:Charset
-    // ISO-8859-6
     public static let ISO_8859_6:Charset
-    // ISO-8859-7
     public static let ISO_8859_7:Charset
-    // ISO-8859-8
     public static let ISO_8859_8:Charset
-    // ISO-8859-10
     public static let ISO_8859_10:Charset
-    // ISO-8859-13
     public static let ISO_8859_13:Charset
-    // ISO-8859-14
     public static let ISO_8859_14:Charset
-    // ISO-8859-15
     public static let ISO_8859_15:Charset
-    // ISO-8859-16
     public static let ISO_8859_16:Charset
-    // KOI8-R
     public static let KOI8_R:Charset
-    // KOI8-U
     public static let KOI8_U:Charset
-    // macintosh
     public static let MACINTOSH:Charset
-    // windows-874
     public static let WINDOWS_874:Charset
-    // windows-1250
     public static let WINDOWS_1250:Charset
-    // windows-1251
     public static let WINDOWS_1251:Charset
-    // windows-1252
     public static let WINDOWS_1252:Charset
-    // windows-1253
     public static let WINDOWS_1253:Charset
-    // windows-1254
     public static let WINDOWS_1254:Charset
-    // windows-1255
     public static let WINDOWS_1255:Charset
-    // windows-1256
     public static let WINDOWS_1256:Charset
-    // windows-1257
     public static let WINDOWS_1257:Charset
-    // windows-1258
     public static let WINDOWS_1258:Charset
-    // x-mac-cyrillic
     public static let X_MAC_CYRILLIC:Charset
 
    	/**
@@ -106,7 +66,7 @@ public class Charsets
     * 
     * @param 传入 String 类型的字符集名称
     *
-    * @return 返回一个 Option 类对象
+    * @return 返回一个 Option 类对象，若传入的 name 字符集名称不在支持的字符集范围内，则返回 Option<Charset>.None
     */
     public static func forName(name:String): Option<Charset>
 
@@ -123,6 +83,8 @@ public interface Encoder
     * @param str - 传入一个 String 字符串
     *
     * @return 返回编码后的 UInt8 数组
+    *
+    * @exception 如果传入的字符串不属于此字符集的 mapping 映射表中的范围，则会抛出编码失败异常
     */
     func encode(str:String): Array<UInt8>
 ```
@@ -138,6 +100,8 @@ public interface Decoder
     * @param src - 编码后的字节数组
     *
     * @return 返回解码后的 String 字符串
+    *
+    * @exception 如果传入的 UInt8 源数组不属于此字符集的 mapping 映射表中的范围，则会抛出解码失败异常
     */
     func decode(src:Array<UInt8>):String
 
@@ -148,6 +112,8 @@ public interface Decoder
     * @param dest - 解码后数据存放的容器数组
     *
     * @return 返回元组类型，第一个 Int64 表示下一个未处理的 src 下标，第二个 Int64 表示下一个未处理的 dest 下标
+    *
+    * @exception 如果传入的 UInt8 源数组不属于此字符集的 mapping 映射表中的范围，则会抛出解码失败异常
     */
     func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
 ```
@@ -261,7 +227,7 @@ top level
     /**
     * 选择创建 GBK 字符集还是 GB18030 字符集
     *
-    * @param gbk - 传入一个 Bool 类型
+    * @param gbk - 传入一个 Bool 类型，若为 true，代表创建的是 GBK 字符集，反之为 GB18030 字符集对象
     *
     * @return 返回一个字符集
     */
@@ -270,7 +236,7 @@ top level
     /**
     * 选择创建不同类型的单字节编码集
     *
-    * @param name - 传入一个 String 类型
+    * @param name - 传入一个单字节编码集名称，生成字符集对象
     *
     * @return 返回一个字符集
     */
@@ -279,7 +245,7 @@ top level
     /**
     * 选择创建 BIG5 字符集还是 BIG5HKSCS 字符集
     *
-    * @param hkscs - 传入一个 Bool 类型
+    * @param hkscs - 传入一个 Bool 类型，若为 true，代表创建的是 BIG5HKSCS 字符集，反之为 BIG5 字符集对象
     *
     * @return 返回一个字符集
     */
@@ -295,7 +261,7 @@ top level
   	/**
     * 选择创建 UTF-16BE 字符集还是 UTF-16LE 字符集
     *
-    * @param be - 传入一个 Bool 类型
+    * @param be - 传入一个 Bool 类型，若为 true，代表创建的是 UTF-16BE 字符集，反之为 UTF-16LE 字符集
     *
     * @return 返回一个字符集
     */
@@ -304,7 +270,7 @@ top level
   	/**
     * 选择创建 UTF-32BE 字符集还是 UTF-32LE 字符集
     *
-    * @param be - 传入一个 Bool 类型
+    * @param be - 传入一个 Bool 类型，若为 true，代表创建的是 UTF-32BE 字符集，反之为 UTF-32LE 字符集
     *
     * @return 返回一个字符集
     */
@@ -316,18 +282,31 @@ top level
 ```cangjie
 from std import fs.*
 from charset import charset.*
+from std import unittest.*
+from std import unittest.testmacro.*
 
 main() {
-    var f:File = File("./字符集简介.md", Open(true, false))
-    var sr = TextReader(f, charset: Charsets.GB18030, bufSize:120)
-    while(true){
-        var lineOp:Option<String> = sr.readln()
-        if(lineOp == None){
-            break
-        }
-        lineOp.getOrThrow()
-    }   
+    let ccc = Test_FeatureApi01()
+    ccc.execute()
+    ccc.printResult()
     0
+}
+@Test
+public class Test_FeatureApi01 {
+    @TestCase
+    public func testFeatureApi01(): Unit {
+		var f:File = File("./字符集简介.md", Open(true, false))
+		var sr = TextReader(f, charset: Charsets.GB18030, bufSize:120)
+		var lineOp:Option<String>=Option<String>.Some("origin")
+		while(true){
+			lineOp = sr.readln()
+			if(lineOp == None){
+				break
+			}
+			lineOp.getOrThrow()
+		}   		
+        @Assert(lineOp==None, true)
+    }
 }
 ```
 
@@ -402,18 +381,27 @@ top level
 #### 2.3 示例
 
 ```cangjie
+from std import fs.*
 from charset import charset.*
+from std import unittest.*
+from std import unittest.testmacro.*
 
 main() {
-    var charset = Charsets.GB18030
-    var decoder = charset.newDecoder()
-    charset.newEncoder() 
-    var src: Array<UInt8> = Array<UInt8>([0xCB, 0xAE, 0xB5, 0xE7, 0xB7, 0xD1])
-    var destStr = decoder.decode(src)    
-    if(destStr == "水电费"){
-        return 0
-    } else {
-        return 1
+    let ccc = Test_FeatureApi02()
+    ccc.execute()
+    ccc.printResult()
+    0
+}
+@Test
+public class Test_FeatureApi02 {
+    @TestCase
+    public func testFeatureApi02(): Unit {
+		var charset = Charsets.GB18030
+		var decoder = charset.newDecoder()
+		charset.newEncoder() 
+		var src: Array<UInt8> = Array<UInt8>([0xCB, 0xAE, 0xB5, 0xE7, 0xB7, 0xD1])
+		var destStr = decoder.decode(src)  
+        @Assert(destStr,"水电费")		
     }
 }
 ```
