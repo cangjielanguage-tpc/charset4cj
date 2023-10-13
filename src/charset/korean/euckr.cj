@@ -10,6 +10,7 @@
 package charset.korean
 
 import charset.encoding.*
+import charset.exception.*
 
 // EUC-KR korean charset
 public func newEUCKRCharset():Charset {
@@ -141,7 +142,7 @@ class EUCKREncoder <: Encoder {
                     ref[position+1] = UInt8(trail)
                     position += 2                    
                 }else{
-                    throw Exception("can't encode character "+ch.toString()+" character maps to <undefined>")
+                    throw EncoderException("can't encode character "+ch.toString()+" character maps to <undefined>")
                 }
             }
         }    

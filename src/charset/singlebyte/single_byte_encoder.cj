@@ -11,6 +11,7 @@ package charset.singlebyte
 
 from std import collection.*
 import charset.encoding.*
+import charset.exception.*
 
 /**
  * Single byte character set encoder
@@ -47,9 +48,7 @@ class SingleByteEncoder <: Encoder {
             }else{
                 var index = indexPointer(encodeMapping, decodeMapping, UInt32(character))
                 if(index < 0){
-                    //ref[i] = replacement
-                    //这里可以报异常了
-                    throw Exception("can't encode character "+character.toString()+" character maps to <undefined>")
+                    throw EncoderException("can't encode character "+character.toString()+" character maps to <undefined>")
                 }else{
                     ref[i] = UInt8(index) + 0x80
                 }

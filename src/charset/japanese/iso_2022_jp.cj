@@ -5,6 +5,7 @@
 package charset.japanese
 
 import charset.encoding.*
+import charset.exception.*
 
 class ISO2022JPEncoder <: Encoder {
     // ASCII:0 | Roman:1 | katakana:2 | JIS:3
@@ -98,7 +99,7 @@ class ISO2022JPEncoder <: Encoder {
                     position += 3
                     continue
                 }
-                throw Exception("can't encode character "+ch.toString()+" character maps to <undefined>")
+                throw EncoderException("can't encode character "+ch.toString()+" character maps to <undefined>")
             }
             if(state != 3){
                 srcIndex -= 1

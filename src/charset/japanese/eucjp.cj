@@ -5,6 +5,7 @@
 package charset.japanese
 
 import charset.encoding.*
+import charset.exception.*
 
 class EUCJPEncoder <: Encoder {
     
@@ -62,8 +63,7 @@ class EUCJPEncoder <: Encoder {
                         ref[position+2] = UInt8(trail)
                         position += 3
                     } else {
-                        // error
-                        throw Exception("can't encode character "+ch.toString()+" character maps to <undefined>")
+                        throw EncoderException("can't encode character "+ch.toString()+" character maps to <undefined>")
                     }
                 }
             }

@@ -3,6 +3,7 @@
 
 from charset import charset.*
 from charset import charset.japanese.*
+from charset import charset.exception.*
 from std import unittest.*
 from std import unittest.testmacro.*
 from std import collection.*
@@ -73,7 +74,7 @@ public class EncodeTest01 {
         jpen.encode(str)
         try {
             jpen.encode(str_en)
-        } catch (e: Exception) {
+        } catch (e: EncoderException) {
             e.printStackTrace()
         }
     }
@@ -114,7 +115,7 @@ public class EncodeTest01 {
             var jp = Charsets.ISO_2022_JP
             var jpen = jp.newEncoder()
             jpen.encode(s)
-        }catch(e:Exception){
+        }catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
@@ -127,7 +128,7 @@ public class EncodeTest01 {
             var jp = Charsets.SHIFT_JIS
             var jpen = jp.newEncoder()
             jpen.encode(str_en)
-        }catch(e:Exception){
+        }catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
@@ -147,7 +148,7 @@ public class EncodeTest01 {
         var kren = kr.newEncoder()
         try {
             kren.encode(str_te)
-        } catch(e:Exception){
+        } catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
@@ -203,7 +204,7 @@ public class EncodeTest01 {
             var ib = Charsets.IBM866
             var iben = ib.newEncoder()
             iben.encode(str_te)
-        }catch(e:Exception){
+        }catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
@@ -217,7 +218,7 @@ public class EncodeTest01 {
             var b5en = b5.newEncoder()
             b5en.encode(str)
             b5en.encode(str_te)
-        }catch(e:Exception){
+        }catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
@@ -238,7 +239,7 @@ public class EncodeTest01 {
             var b5hk = Charsets.BIG5_HKSCS
             var b5hken = b5hk.newEncoder()
             b5hken.encode(str_te)
-        }catch(e:Exception){
+        }catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
@@ -328,7 +329,7 @@ public class EncodeTest01 {
             var ib = Charsets.IBM866
             var iben = ib.newEncoder()
             iben.encode(str_te)
-        }catch(e:Exception){
+        }catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
@@ -371,7 +372,7 @@ public class EncodeTest01 {
             var b5hk = Charsets.BIG5_HKSCS
             var b5hken = b5hk.newEncoder()
             b5hken.encode(str_te3)
-        }catch(e:Exception){
+        }catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
