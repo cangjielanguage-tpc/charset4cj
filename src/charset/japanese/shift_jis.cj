@@ -5,6 +5,7 @@
 package charset.japanese
 
 import charset.encoding.*
+import charset.exception.*
 
 class ShiftJISEncoder <: Encoder {
 
@@ -53,10 +54,7 @@ class ShiftJISEncoder <: Encoder {
                     ref[position+1] = UInt8(trail + offset)
                     position += 2
                 }else{
-                    throw Exception("can't encode character "+ch.toString()+" illegal multibyte sequence")
-                    // error
-                    // ref[position] = replacement
-                    // position += 1
+                    throw EncoderException("can't encode character "+ch.toString()+" illegal multibyte sequence")
                 }
             }
         }

@@ -3,6 +3,7 @@
 
 from charset import charset.*
 from charset import charset.japanese.*
+from charset import charset.exception.*
 from std import unittest.*
 from std import unittest.testmacro.*
 from std import collection.*
@@ -62,7 +63,7 @@ public class DecodeTest01 {
         try {
             let src2: Array<UInt8> = jpen.encode(str_en)
             jpde.decode(src2, des)
-        } catch (e: Exception) {
+        } catch (e: EncoderException) {
             e.printStackTrace()
         }
     }
@@ -121,7 +122,7 @@ public class DecodeTest01 {
             var jpde = jp.newDecoder()
             let src: Array<UInt8> = jpen.encode(s)
             jpde.decode(src, des)
-        }catch(e:Exception){
+        }catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
@@ -136,7 +137,7 @@ public class DecodeTest01 {
             var jpde = jp.newDecoder()
             let src: Array<UInt8> = jpen.encode(str_en)
             jpde.decode(src, des)
-        }catch(e:Exception){
+        }catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
@@ -162,7 +163,7 @@ public class DecodeTest01 {
         try {
             let src: Array<UInt8> = kren.encode(str_te)
             krde.decode(src, des)
-        } catch(e:Exception){
+        } catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
@@ -244,7 +245,7 @@ public class DecodeTest01 {
             var ibde = ib.newDecoder()
             let src: Array<UInt8> = iben.encode(str_te)
             ibde.decode(src, des)
-        }catch(e:Exception){
+        }catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
@@ -260,7 +261,7 @@ public class DecodeTest01 {
             let src: Array<UInt8> = b5en.encode(str)
             b5en.encode(str_te)
             b5de.decode(src, des)
-        }catch(e:Exception){
+        }catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)
@@ -283,7 +284,7 @@ public class DecodeTest01 {
             var b5hkde = b5hk.newDecoder()
             let src: Array<UInt8> = b5hken.encode(str_te)
             b5hkde.decode(src, des)
-        }catch(e:Exception){
+        }catch(e:EncoderException){
             flag = true
         }
         @Assert(flag,true)

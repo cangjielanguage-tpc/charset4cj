@@ -9,6 +9,7 @@
 package charset.traditionchinese
 
 import charset.encoding.*
+import charset.exception.*
 
 // Big5 encoding charset
 public func newBIG5Charset(hkscs:Bool):Charset{
@@ -235,10 +236,7 @@ class BIG5Encoder <: Encoder {
                     ref[position+1] = UInt8(trail + offset)
                     position += 2
                 }else{
-                    // error
-                    //ref[position] = replacement
-                    //position += 1
-                    throw Exception("can't encode character "+ch.toString()+" character maps to <undefined>")
+                    throw EncoderException("can't encode character "+ch.toString()+" character maps to <undefined>")
                 }
             }
         }

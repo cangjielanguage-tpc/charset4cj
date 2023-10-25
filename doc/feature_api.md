@@ -277,6 +277,69 @@ top level
 	public func newUTF32Charset(be:Bool):Charset
 ```
 
+自定义异常类 CharsetException
+
+```cangjie
+public open class CharsetException <: Exception {
+
+     /*
+     * CharsetException 的有参构造器
+     *
+     * @param 参数 msg - 异常信息
+     */
+     public init(msg: String)
+
+    /*
+     * 返回异常信息
+     *
+     * @return String - 返回异常信息字符串
+     */
+     public func toString(): String
+}
+```
+
+编码异常类 EncoderException
+
+```cangjie
+public class EncoderException <: CharsetException {
+
+     /*
+     * EncoderException 的有参构造器
+     *
+     * @param 参数 msg - 异常信息
+     */
+     public init(msg: String)
+
+    /*
+     * 返回异常信息
+     *
+     * @return String - 返回异常信息字符串
+     */
+     public func toString(): String
+}
+```
+
+解码异常类 DecoderException
+
+```cangjie
+public class DecoderException <: CharsetException {
+
+     /*
+     * DecoderException 的有参构造器
+     *
+     * @param 参数 msg - 异常信息
+     */
+     public init(msg: String)
+
+    /*
+     * 返回异常信息
+     *
+     * @return String - 返回异常信息字符串
+     */
+     public func toString(): String
+}
+```
+
 #### 1.3 示例
 
 ```cangjie

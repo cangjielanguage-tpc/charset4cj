@@ -3,7 +3,7 @@
 </div>
 
 <p align="center">
-<img alt="" src="https://img.shields.io/badge/release-v0.0.2-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/release-v0.0.3-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjc-v0.39.8-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-90.7%25-brightgreen" style="display: inline-block;" />
@@ -76,6 +76,10 @@ func encode(str:String): Array<UInt8>
 │       │   ├── charset.cj
 │       │   ├── decoder.cj
 │       │   └── encoder.cj
+│       ├── exception
+│       │   ├── charset_exception.cj
+│       │   ├── decoder_exception.cj
+│       │   └── encoder_exception.cj
 │       ├── japanese        // 日语字符集编码实现
 │       │   ├── eucjp.cj
 │       │   ├── iso_2022_jp_katakana_mapping.cj
@@ -149,6 +153,57 @@ cjpm build
 
 ```cmd
 cjpm build
+```
+
+### 执行用例
+编译用例并执行，步骤如下：
+
+#### 1. 进入 test/ 目录下创建 tmp 文件夹，然后编译测试用例
+```shell
+cd test/
+mkdir tmp
+cjc -O2 --import-path xxxxx/build/release -L xxxxx/build/release/charset -l charset_charset.unicode -l charset_charset.korean -l charset_charset.exception -l charset_charset.simplechinese -l charset_charset.encoding -l charset_charset.japanese -l charset_charset.singlebyte -l charset_charset.traditionchinese -l charset_charset test/HLT/test_CharSets_forName_01.cj -o test/tmp/test.cj.out --test
+```
+
+##### 1.1 具体说明
+
+- cjc命令, -O2表示开启优化
+```shell
+cjc -O2
+```
+- --import-path 导入charset库编译出来的库文件地址, 注意地址最后有".."
+- xxx 代表自己的工作目录，应替换成自己的实际工作目录
+- -L 导入库文件的完整路径
+- 导入多个库,每个库都需要--import-path和 -L
+
+```shell
+--import-path xxxxx/build/release -L xxxxx/build/release/charset -l charset_charset.unicode -l charset_charset.korean -l charset_charset.exception -l charset_charset.simplechinese -l charset_charset.encoding -l charset_charset.japanese -l charset_charset.singlebyte -l charset_charset.traditionchinese -l charset_charset
+```
+- -l 要导入的具体的包, 用"库名_包名",一般库文件生成时是"lib库名_包名.后缀"的格式
+- 导入一个库中有多个包时,用多个 -l
+
+- 测试用例的完整路径和用例中引入文件的完整路径
+- -o 用例编译后输出的位置和名称, .out结尾, 一般使用"用例名称.out"
+- --test 用例编译命令结尾
+```shell
+test/HLT/test_CharSets_forName_01.cj -o test/tmp/test.cj.out --test
+```
+
+#### 2. 把编译好的文件复制到 .out 文件下(test/tmp/) 
+- 把build/release/charset 目录中的文件都复制到 .out 文件位置(test/tmp/ 中)
+
+#### 3. 进入到.out文件位置，执行用例
+- 进入到.out文件位置执行用例
+```shell
+cd test/tmp
+```
+- windows系统打开cmd,输入.out文件完整名称即可执行
+```shell
+test.cj.out
+```
+- Linux系统使用 ./.out文件完整名称
+```shell
+./test.cj.out
 ```
 
 ### 读取字符集功能示例
