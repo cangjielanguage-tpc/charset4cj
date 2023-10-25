@@ -34,8 +34,8 @@ class ISO2022JPCharset <: Charset{
      * @since 0.28.4
      */
     public init(){
-        this.name = "ISO-2022-JP"
         this.labels = ["ISO-2022-JP",  "csiso2022jp"]
+        this.name = "ISO-2022-JP"
     }
 
     /**
@@ -120,8 +120,8 @@ class EUCJPCharset <: Charset{
      * @since 0.28.4
      */
     public init(){
-        this.name = "EUC-JP"
         this.labels = ["cseucpkdfmtjapanese",  "euc-jp",  "x-euc-jp"]
+        this.name = "EUC-JP"
     }
 
     /**
@@ -206,8 +206,8 @@ class ShiftJISCharset <: Charset{
      * @since 0.28.4
      */
     public init(){
-        this.name = "Shift_JIS"
         this.labels = ["csshiftjis","ms932","ms_kanji","shift-jis","shift_jis","sjis","windows-31j","x-sjis"]
+        this.name = "Shift_JIS"
     }
 
     /**
@@ -229,7 +229,7 @@ class ShiftJISCharset <: Charset{
     public func newDecoder():Decoder{
         ShiftJISDecoder()
     }
-
+    
     public operator func ==(rhs: Charset): Bool {
         if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
             return true

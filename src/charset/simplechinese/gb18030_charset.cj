@@ -33,8 +33,8 @@ class GBKCharset <: Charset{
      */
     public init(){
         // Actual number of characters gbk > gb2312 , for ease of handling,  use gb2312 as gbk
-        this.name = "gbk"
         this.labels = ["chinese", "csgb2312", "csiso58gb231280", "gb2312", "gb_2312", "gb_2312-80", "gbk", "iso-ir-58", "x-gbk"]
+        this.name = "gbk"
     }
 
     /**
@@ -118,8 +118,8 @@ class GB18030Charset <: Charset{
      * @since 0.28.4
      */
     public init(){
-        this.name = "gb18030"
         this.labels = ["gb18030"]
+        this.name = "gb18030"
     }
 
     /**

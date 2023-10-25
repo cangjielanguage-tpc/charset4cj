@@ -26,13 +26,25 @@ public abstract class Charset <: Hashable & Equatable<Charset> & Equatable<Strin
      * @return Bool 
      * @since 0.28.4
      */
-    public func nameEquals(name:String):Bool{
+    public func nameEquals(n:String):Bool{
         var res = false
-        if(name.toAsciiLower().equals(this.name.toAsciiLower())){
+        if (n.size != this.name.size) {
+            var contains = false
+            for (label in labels) {
+                if(label.size == n.size) {
+                    contains = true
+                    break
+                }
+            }
+            if (!contains) {
+                return false
+            }
+        }
+        if (n.toAsciiLower() == this.name.toAsciiLower()) {
             return true
         }
-        for(i in 0..labels.size){
-            if(labels[i].toAsciiLower() == name.toAsciiLower()){
+        for (label in labels) {
+            if(label.toAsciiLower() == n.toAsciiLower()) {
                 return true
             }
         }

@@ -34,11 +34,11 @@ class UTF32Charset <: Charset{
     public init(be:Bool){
         this.be = be
         if(be){
-            this.name = "UTF-32BE"
             this.labels = ["utf-32be"]
+            this.name = "UTF-32BE"
         }else{
-            this.name = "UTF-32LE"
             this.labels = ["utf-32le"]
+            this.name = "UTF-32LE"
         }
     }
 

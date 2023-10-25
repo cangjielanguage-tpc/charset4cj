@@ -10,6 +10,7 @@
 package charset.simplechinese
 
 import charset.encoding.*
+import charset.exception.*
 
 /**
  * gb18030  Character set decoder
@@ -140,6 +141,8 @@ class GB18030Decoder <: Decoder{
                     srcIndex += 1
                     continue                                       
                 }           
+            } else {
+                throw DecoderException("can't decode the src: " + "${src.toString()}")
             }
         }
         return (srcIndex, destIndex)

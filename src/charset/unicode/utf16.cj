@@ -34,11 +34,11 @@ class UTF16Charset <: Charset{
     public init(be:Bool){
         this.be = be
         if(be){
-            this.name = "UTF-16BE"
             this.labels = ["unicodefffe", "utf-16be"]
+            this.name = "UTF-16BE"
         }else{
-            this.name = "UTF-16LE"
             this.labels = ["csunicode", "iso-10646-ucs-2", "ucs-2", "unicode", "unicodefeff", "utf-16", "utf-16le"]
+            this.name = "UTF-16LE"
         }
     }
     
