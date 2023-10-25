@@ -48,6 +48,7 @@ public class TestCharsetTransfer{
         try{
             CharsetTransfer.transfer(input,output,Charsets.UTF8,Charsets.ISO_2022_JP)
         }catch(e:Exception){
+            println(e.toString())
             if(e.toString().contains("can't encode character 吴")){
                 flag=1
             }

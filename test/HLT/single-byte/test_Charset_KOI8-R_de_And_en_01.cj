@@ -4,6 +4,7 @@
 from std import unittest.*
 from std import unittest.testmacro.*
 from charset import charset.*
+from charset import charset.exception.*
 from std import fs.*
 @Test
 public class TestCharsetKOI8_R{
@@ -46,8 +47,8 @@ public class TestCharsetKOI8_R{
         var excp_flag=1
         try{
             encoder.encode(encode_String)
-        }catch(e:Exception){
-            if(e.toString().contains("can't encode character 吴")){
+        }catch(e:EncoderException){
+            if(e.toString().contains("EncoderException: can't encode character 吴 character maps to <undefined>")){
                 excp_flag=0
             }
         }
