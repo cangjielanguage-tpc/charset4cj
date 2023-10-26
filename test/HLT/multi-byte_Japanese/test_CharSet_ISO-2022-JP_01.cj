@@ -7,6 +7,7 @@ from std import unittest.*
 from std import unittest.testmacro.*
 from charset import charset.encoding.*
 from charset import charset.*
+from charset import charset.exception.*
 from std import fs.*
 from std import collection.*
 
@@ -48,7 +49,7 @@ public class TestCharsetISO_2022_JP{
         try{
             encoder.encode(encode_String)
         }catch(e:Exception){
-            if(e.toString().contains("can't encode character 吴")){
+            if(e.toString().contains("EncoderException: can't encode character 吴 character maps to <undefined>")){
                 excp_flag=0
             }
         }
