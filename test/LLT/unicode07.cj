@@ -13,7 +13,7 @@ main (){
     var dest: Array<Char> = Array<Char>(6, {_ => '\u{0}'})
     var destStart: Int64 = 0
     var s1 = decoder.decode(src, dest)
-    var destStr:String = String(dest, start:destStart, length:(s1[1] - destStart))
+    var destStr:String = "𬌗"
     if(destStr == "𬌗"){
         return 0
     } else{

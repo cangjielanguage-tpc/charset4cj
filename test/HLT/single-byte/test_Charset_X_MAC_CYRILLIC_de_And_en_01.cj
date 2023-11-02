@@ -78,7 +78,7 @@ public class TestCharsetX_MAC_CYRILLIC{
         var desc=Array<Char>(en_re.size-1,item:'c')
         var decoder=Charsets.X_MAC_CYRILLIC.newDecoder()
         var de_re=decoder.decode(en_re,desc)
-        @Assert(de_re[0],encoder.encode(encode_String.substring(0,desc.size)).size)
+        @Assert(de_re[0],encoder.encode(encode_String[..desc.size]).size)
         @Assert(de_re[1],desc.size)
     }    
 }

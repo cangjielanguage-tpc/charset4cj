@@ -25,7 +25,7 @@ public class ReaderWriter01 {
 
     @TestCase
     public func testTextReader01(): Unit {
-        bas.write(str.toUtf8Array())
+        bas.write(str.toArray())
         var reader: TextReader = TextReader(bas)
         reader.read()
         reader.readln()
@@ -34,7 +34,7 @@ public class ReaderWriter01 {
 
     @TestCase
     public func testTextReader02(): Unit {
-        bas.write(str2.toUtf8Array())
+        bas.write(str2.toArray())
         var reader: TextReader = TextReader(bas)
         reader.read()
         reader.readln()

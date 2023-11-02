@@ -9,10 +9,10 @@ main (){
     var buf2 = Array<UInt8>([65, 66, 67, 65, 66, 67, 89])
     var s1 = decoder.decode(buf1)
     var s2 = decoder.decode(buf2)
-    if (!s1.equals("碉峴")) {
+    if (s1 != "碉峴") {
         return 1
     }
-    if (!s2.equals("ABCABCY")) {
+    if (s2 != "ABCABCY") {
         return 2
     }
     return 0

@@ -53,20 +53,20 @@ public func gb18030() {
     // 单 字节解码
     var buf1 = Array<UInt8>([65, 66, 67, 65, 66, 67])
     var s1 = decoder.decode(buf1)
-    if (!s1.equals("ABCABC")) {
+    if (s1 != "ABCABC") {
         return 1
     }
 
     // 双 字节解码
     var buf2 = Array<UInt8>([0xC4, 0xE3, 0xBA, 0xC3,0xCE, 0xD2])
     var s2 = decoder.decode(buf2)
-    if (!s2.equals("你好我")) {
+    if (s2 != "你好我") {
         return 1
     }
     // 四字节 𬌗
     var buf4 = Array<UInt8>([0x99,0x31,0xD2,0x39,0x99,0x31,0xD2,0x39,0x99,0x31,0xD2,0x39,0x99,0x31,0xD2,0x39,0x99,0x31,0xD2,0x39])
     var s4 = decoder.decode(buf4)
-    if (!s4.equals("𬌗𬌗𬌗𬌗𬌗")) {
+    if (s4 != "𬌗𬌗𬌗𬌗𬌗") {
         return 1
     }
 
@@ -82,7 +82,7 @@ public func ibm866(){
     var decoder = charset.newDecoder()
     var buf1 = Array<UInt8>([0x80, 0x81,0x82,0x83,0x84,0x85])
     var s1 = decoder.decode(buf1)
-    if (!s1.equals("АБВГДЕ")) {
+    if (s1 != "АБВГДЕ") {
         return 1
     }
     print("s1:${s1}\t")
@@ -126,7 +126,7 @@ func utf16betest(){
     var buf1 = Array<UInt8>([0x55, 0x4a,0x62,0x11,0xD8, 0x70, 0xDF, 0x17])
     var s1 = decoder.decode(buf1)
     print("s1：${s1}\n")
-    if (!s.equals("啊𬌗𬌗𬌗𬌗𬌗𬌗𬌗𬌗")) {
+    if (s != "啊𬌗𬌗𬌗𬌗𬌗𬌗𬌗𬌗") {
         return 1
     }
     return 0

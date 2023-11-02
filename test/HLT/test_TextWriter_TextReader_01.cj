@@ -71,7 +71,7 @@ hello cangjie
         var tw=TextWriter(temp)
         tw.write(content_singleLine)
         var tr=TextReader(temp)
-        var exp_content=content_singleLine.toCharArray()
+        var exp_content=content_singleLine.toRuneArray()
         var re='a'
         var exp_re='a'
         for (index in 0..exp_content.size){
@@ -106,7 +106,7 @@ hello cangjie
         var tw=TextWriter(temp)
         tw.write(content_MultiLine)
         var tr=TextReader(temp)
-        var exp_content=content_MultiLine.toCharArray()
+        var exp_content=content_MultiLine.toRuneArray()
         var re='a'
         var exp_re='a'
         for (index in 0..exp_content.size){

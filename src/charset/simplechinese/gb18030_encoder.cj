@@ -40,7 +40,7 @@ class GB18030Encoder <: Encoder {
         }
         let ref = Array<UInt8>(str.size * 4, item:0)
         var position = 0
-        var arr = str.toCharArray()
+        var arr = str.toRuneArray()
         let replacement:UInt8 = 0x3F
         for(ch in arr){
             var codePoint:UInt32 = UInt32(ch)

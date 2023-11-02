@@ -39,7 +39,7 @@ class SingleByteEncoder <: Encoder {
      * @since 0.28.4
      */
     public func encode(str:String): Array<UInt8>{
-        var buf:Array<Char> = str.toCharArray()
+        var buf:Array<Char> = str.toRuneArray()
         let ref = Array<UInt8>(buf.size, item:0)
         var i = 0
         for(character in buf){

@@ -87,14 +87,14 @@ class UTF16Charset <: Charset{
     }
 
     public operator func ==(rhs: String): Bool {
-        if (this.name.equals(rhs)) {
+        if (this.name == rhs) {
             return true
         }
         return false
     }
 
     public operator func !=(rhs: String): Bool {
-        if (!this.name.equals(rhs)) {
+        if (this.name != rhs) {
             return true
         }
         return false
@@ -148,7 +148,7 @@ class UTF16Encoder <: Encoder {
         var res = Array<UInt8>(str.size * 4, item:0)
         // First unprocessed subscript of array
         var position = 0
-        var arr = str.toCharArray()
+        var arr = str.toRuneArray()
         for(ch in arr){
             var codePoint:UInt32 = UInt32(ch)
             // Double byte
