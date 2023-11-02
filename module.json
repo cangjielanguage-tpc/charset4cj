@@ -1,5 +1,5 @@
 {
-  "cjc_version": "0.45.2",
+  "cjc_version": "0.47.2",
   "organization": "pllab",
   "name": "charset",
   "description": "charset encoder/decoder",
