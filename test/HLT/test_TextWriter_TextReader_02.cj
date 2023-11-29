@@ -22,7 +22,7 @@ public class TestTextWriter{
     @TestCase
     func testTextWriterTextReader10(): Unit {
         var temp=ByteArrayStream()
-        temp.write(content_singleLine.toUtf8Array())
+        temp.write(content_singleLine.toArray())
         var tw=TextWriter(temp,charset:Charsets.ISO_2022_JP)
         tw.write(content_singleLine)
         var tr=TextReader(temp,charset:Charsets.ISO_2022_JP,bufSize:10240)
@@ -34,7 +34,7 @@ public class TestTextWriter{
     @TestCase
     func testTextWriterTextReader11(): Unit {
         var temp=ByteArrayStream()
-        temp.write(content_singleLine.toUtf8Array())
+        temp.write(content_singleLine.toArray())
         var tw=TextWriter(temp,charset:Charsets.ISO_2022_JP)
         tw.write(content_singleLine)
         var tr=TextReader(temp,charset:Charsets.ISO_8859_13,bufSize:10240)

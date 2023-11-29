@@ -67,7 +67,7 @@ public class TestCharsetUTF8{
         var desc=Array<Char>(en_re.size-1,item:'c')
         var decoder=Charsets.UTF8.newDecoder()
         var de_re=decoder.decode(en_re,desc)
-        @Assert(de_re[0],encoder.encode(encode_String.substring(0,desc.size)).size)
+        @Assert(de_re[0],encoder.encode(encode_String[..desc.size]).size)
         @Assert(de_re[1],desc.size)
     }    
 }

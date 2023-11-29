@@ -82,14 +82,14 @@ class GBKCharset <: Charset{
     }
 
     public operator func ==(rhs: String): Bool {
-        if (this.name.equals(rhs)) {
+        if (this.name == rhs) {
             return true
         }
         return false
     }
 
     public operator func !=(rhs: String): Bool {
-        if (!this.name.equals(rhs)) {
+        if (this.name != rhs) {
             return true
         }
         return false
@@ -167,14 +167,14 @@ class GB18030Charset <: Charset{
     }
 
     public operator func ==(rhs: String): Bool {
-        if (this.name.equals(rhs)) {
+        if (this.name == rhs) {
             return true
         }
         return false
     }
 
     public operator func !=(rhs: String): Bool {
-        if (!this.name.equals(rhs)) {
+        if (this.name != rhs) {
             return true
         }
         return false

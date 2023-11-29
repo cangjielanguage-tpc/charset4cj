@@ -30,7 +30,7 @@ public class TestCharsetTransfer{
     func testCharsetTransferTransfer02(): Unit {
         var input=ByteArrayStream()
         var src="fhsfhuigidgfdfsfgt758932745987"
-        input.write(src.toUtf8Array())
+        input.write(src.toArray())
         var output=ByteArrayStream()
         CharsetTransfer.transfer(input,output,Charsets.ISO_2022_JP,Charsets.ISO_2022_JP)
         var desc=output.readToEnd()
@@ -42,7 +42,7 @@ public class TestCharsetTransfer{
     func testCharsetTransferTransfer03(): Unit {
         var input=ByteArrayStream()
         var src="吴爱华嘎嘎嘎估计覅而地方就是附近偶然FAFIDSGJOferegee324525"
-        input.write(src.toUtf8Array())
+        input.write(src.toArray())
         var output=ByteArrayStream()
         var flag=0
         try{

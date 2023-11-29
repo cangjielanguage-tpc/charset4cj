@@ -25,8 +25,9 @@ class ISO2022JPEncoder <: Encoder {
         let ref = Array<UInt8>(str.size * 4 + 10, item:0)
         var position = 0
         var srcIndex = 0
-        while(srcIndex < str.size){
-            var ch = str[srcIndex]
+        var arr = str.toRuneArray()
+        while(srcIndex < arr.size){
+            var ch = arr[srcIndex]
             srcIndex += 1
             var codePoint:UInt32 = UInt32(ch)
             // ASCII:0 | Roman:1 | katakana:2 | JIS:3

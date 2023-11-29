@@ -82,14 +82,14 @@ class BIG5HKSCSCharset <: Charset{
     }
 
     public operator func ==(rhs: String): Bool {
-        if (this.name.equals(rhs)) {
+        if (this.name == rhs) {
             return true
         }
         return false
     }
 
     public operator func !=(rhs: String): Bool {
-        if (!this.name.equals(rhs)) {
+        if (this.name != rhs) {
             return true
         }
         return false
@@ -169,14 +169,14 @@ class BIG5Charset <: Charset{
     }
 
     public operator func ==(rhs: String): Bool {
-        if (this.name.equals(rhs)) {
+        if (this.name == rhs) {
             return true
         }
         return false
     }
 
     public operator func !=(rhs: String): Bool {
-        if (!this.name.equals(rhs)) {
+        if (this.name != rhs) {
             return true
         }
         return false
@@ -218,7 +218,7 @@ class BIG5Encoder <: Encoder {
         }
         let ref = Array<UInt8>(str.size * 2, item:0)
         var position = 0
-        var arr = str.toCharArray()
+        var arr = str.toRuneArray()
         for(ch in arr){
             var codePoint:UInt32 = UInt32(ch)
             // If code point is an ASCII code point, return a byte whose value is code point.

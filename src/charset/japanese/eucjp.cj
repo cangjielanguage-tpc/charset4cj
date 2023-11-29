@@ -23,7 +23,7 @@ class EUCJPEncoder <: Encoder {
         }
         let ref = Array<UInt8>(str.size * 3, item:0)
         var position = 0
-        var arr = str.toCharArray()
+        var arr = str.toRuneArray()
         for(ch in arr){
             var codePoint:UInt32 = UInt32(ch)
             // If code point is an ASCII code point, return a byte whose value is code point.

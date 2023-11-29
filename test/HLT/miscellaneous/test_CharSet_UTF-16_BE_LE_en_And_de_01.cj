@@ -80,7 +80,7 @@ public class TestCharsetUTF16{
         var desc=Array<Char>(encode_String.size-1,item:'c')
         var decoder=Charsets.UTF16BE.newDecoder()
         var de_re=decoder.decode(en_re,desc)
-        @Assert(de_re[0],encoder.encode(encode_String.substring(0,encode_String.size-1)).size)
+        @Assert(de_re[0],encoder.encode(encode_String[..encode_String.size-1]).size)
         @Assert(de_re[1],desc.size)
     }
     @TestCase
@@ -113,7 +113,7 @@ public class TestCharsetUTF16{
         var desc=Array<Char>(encode_String.size-1,item:'c')
         var decoder=Charsets.UTF16LE.newDecoder()
         var de_re=decoder.decode(en_re,desc)
-        @Assert(de_re[0],encoder.encode(encode_String.substring(0,encode_String.size-1)).size)
+        @Assert(de_re[0],encoder.encode(encode_String[..encode_String.size-1]).size)
         @Assert(de_re[1],desc.size)
     }
 }
