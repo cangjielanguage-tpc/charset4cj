@@ -16,3 +16,4 @@ tmp/
 *.gcda
 *.gcno
 output/
+*.macrocall
