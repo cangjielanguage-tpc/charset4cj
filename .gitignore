@@ -17,3 +17,6 @@ tmp/
 *.gcno
 output/
 *.macrocall
+.cache/
+cjpm.*
+target/
