@@ -10,7 +10,7 @@ from std import collection.*
 main(): Int64 {
     let testAddImpl = TestAddImpl()
     testAddImpl.testIndexPointer()
-    testAddImpl.testEucjpEncoder()
+    testAddImpl.testEucjpnewEncoder()
     testAddImpl.testJPCharset()
     testAddImpl.testJPCharset02()
     testAddImpl.testJPCharset03()
@@ -49,7 +49,7 @@ public class TestAddImpl {
     }
 
     @TestCase
-    public func testEucjpEncoder(): Unit {
+    public func testEucjpnewEncoder(): Unit {
         var flag = 0
         var jp = Charsets.EUCJP
         var jpe = jp.newEncoder()

@@ -142,6 +142,5 @@ let x_mac_cyrillicDecodeMapping: Array<UInt32> = [
 		0x20ac
 ]
 
-let x_mac_cyrillicEncodeMapping = HashMap<UInt32, UInt32>([
+let x_mac_cyrillicEncodeMapping: Map<UInt32, UInt32> = HashMap<UInt32, UInt32>([
 ])
-

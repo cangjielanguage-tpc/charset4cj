@@ -10,20 +10,17 @@ package charset.unicode
 
 import charset.encoding.*
 
-// when be is true, create UTF-16BE charset, when be is false create UTF-16LE
-public func newUTF16Charset(be:Bool):Charset{
-    UTF16Charset(be)
-}
-
 /**
  * UTF16 character set
  * @author freeonsky
  * @since 0.28.4
  */
-class UTF16Charset <: Charset{
+public class UTF16Charset <: Charset{
+    public static let beInstance = UTF16Charset(true, "UTF-16BE", "unicodefffe", "utf-16be")
+    public static let leInstance = UTF16Charset(false, "UTF-16LE", "csunicode", "iso-10646-ucs-2", "ucs-2", "unicode", "unicodefeff", "utf-16", "utf-16le","utf16")
     // Whether it is big end mode, be = true big end mode; Be = false small end mode
-    var be:Bool
-    
+    private let be:Bool
+
     /**
      * The Function is init constructor
      *
@@ -31,17 +28,18 @@ class UTF16Charset <: Charset{
      *
      * @since 0.28.4
      */
-    public init(be:Bool){
+    private init(be: Bool, name: String, labels: Array<String>){
+        super(name, labels)
         this.be = be
-        if(be){
-            this.labels = ["unicodefffe", "utf-16be"]
-            this.name = "UTF-16BE"
-        }else{
-            this.labels = ["csunicode", "iso-10646-ucs-2", "ucs-2", "unicode", "unicodefeff", "utf-16", "utf-16le"]
-            this.name = "UTF-16LE"
-        }
+        // if(be){
+        //     this.labels = ["unicodefffe", "utf-16be"]
+        //     this.name = "UTF-16BE"
+        // }else{
+        //     this.labels = ["csunicode", "iso-10646-ucs-2", "ucs-2", "unicode", "unicodefeff", "utf-16", "utf-16le"]
+        //     this.name = "UTF-16LE"
+        // }
     }
-    
+
     /**
      * The Function is newEncoder
      *
@@ -51,7 +49,7 @@ class UTF16Charset <: Charset{
     public func newEncoder():Encoder{
         UTF16Encoder(be)
     }
-    
+
     /**
      * The Function is newDecoder
      *
@@ -60,54 +58,6 @@ class UTF16Charset <: Charset{
      */
     public func newDecoder():Decoder{
         UTF16Decoder(be)
-    }
-
-    public operator func ==(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() == rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func !=(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() != rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() != rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func ==(rhs: String): Bool {
-        if (this.name == rhs) {
-            return true
-        }
-        return false
-    }
-
-    public operator func !=(rhs: String): Bool {
-        if (this.name != rhs) {
-            return true
-        }
-        return false
-    }
-
-    public func hashCode(): Int64 {
-        var hash: Int64 = 0
-        hash = 31 * hash + this.name.hashCode()
-        return hash
-    }
-
-    public func toString(): String {
-        return this.name
     }
 }
 
@@ -119,8 +69,8 @@ class UTF16Charset <: Charset{
  */
 class UTF16Encoder <: Encoder {
     // Whether it is big end mode, be = true big end mode; Be = false small end mode
-    var be:Bool
-    
+    private let be:Bool
+
     /*
      * The Function is init constructor
      *
@@ -131,7 +81,7 @@ class UTF16Encoder <: Encoder {
     init(be:Bool){
         this.be = be
     }
-  
+
     /**
      * Encodes a string into a byte array
      *
@@ -164,7 +114,7 @@ class UTF16Encoder <: Encoder {
                     res[position] = low
                     position += 1
                     res[position] = high;
-                    position += 1                    
+                    position += 1
                 }
             }else{
                 // Four bytes
@@ -183,7 +133,7 @@ class UTF16Encoder <: Encoder {
                     res[position] = u2
                     position += 1
                     res[position] = u3
-                    position += 1                                                            
+                    position += 1
                 }else{
                     res[position] = u1
                     position += 1
@@ -192,7 +142,7 @@ class UTF16Encoder <: Encoder {
                     res[position] = u3
                     position += 1
                     res[position] = u2
-                    position += 1                    
+                    position += 1
                 }
             }
         }
@@ -208,10 +158,10 @@ class UTF16Encoder <: Encoder {
  * @since 0.28.4
  */
 class UTF16Decoder <: Decoder{
-    let replacement = '\u{FFFD}'
+    private let replacement = '\u{FFFD}'
     // Whether it is big end mode, be = true big end mode; Be = false small end mode
-    var be:Bool
-    
+    private let be:Bool
+
     init(be:Bool){
         this.be = be
     }
@@ -230,13 +180,13 @@ class UTF16Decoder <: Decoder{
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
-        var destStart:Int64 = 0                
-        var srcIndex = srcOffset    
+        var destStart:Int64 = 0
+        var srcIndex = srcOffset
         var destIndex = destStart
         while(srcIndex <= srcLimit){
             if(destIndex >= dest.size){
                 return (srcIndex, destIndex)
-            }            
+            }
             var u0 = src[srcIndex];
             // Not enough digits
             if(srcIndex+1 > srcLimit){
@@ -244,7 +194,7 @@ class UTF16Decoder <: Decoder{
             }
             var u1 = src[srcIndex + 1]
             // [0xd800, 0xdc00) high
-            // [0xdc00, 0xe000) low          
+            // [0xdc00, 0xe000) low
             var codeUnit:UInt32 = 0
             if(be){
                 codeUnit = (UInt32(u0) << 8) + UInt32(u1)
@@ -275,10 +225,9 @@ class UTF16Decoder <: Decoder{
                 dest[destIndex] = Char(codeUnit)
                 srcIndex += 2
                 destIndex += 1
-                continue                
+                continue
             }
-        }        
+        }
         (srcIndex, destIndex)
-    }    
+    }
 }
-

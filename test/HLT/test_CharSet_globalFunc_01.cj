@@ -31,12 +31,12 @@ public class TestCharset{
     var encode_String="FAFIDSGJOferegee324525"
     @TestCase
     func testGlobalFunc01(): Unit {
-        var encoder01=newEUCJPCharset().newEncoder()
+        var encoder01=EUCJPCharset.instance.newEncoder()
         var encoder02=Charsets.EUCJP.newEncoder()
         var en_re01=encoder01.encode(encode_String)
         var en_re02=encoder02.encode(encode_String)
         @Assert(en_re01,en_re02)
-        var decoder01=newEUCJPCharset().newDecoder()
+        var decoder01=EUCJPCharset.instance.newDecoder()
         var decoder02=Charsets.EUCJP.newDecoder()
         var de_re01=decoder01.decode(en_re01)
         var de_re02=decoder02.decode(en_re02)
@@ -44,12 +44,12 @@ public class TestCharset{
     }
     @TestCase
     func testGlobalFunc02(): Unit {
-        var encoder01=newShiftJISCharset().newEncoder()
+        var encoder01=ShiftJISCharset.instance.newEncoder()
         var encoder02=Charsets.SHIFT_JIS.newEncoder()
         var en_re01=encoder01.encode(encode_String)
         var en_re02=encoder02.encode(encode_String)
         @Assert(en_re01,en_re02)
-        var decoder01=newShiftJISCharset().newDecoder()
+        var decoder01=ShiftJISCharset.instance.newDecoder()
         var decoder02=Charsets.SHIFT_JIS.newDecoder()
         var de_re01=decoder01.decode(en_re01)
         var de_re02=decoder02.decode(en_re02)
@@ -57,12 +57,12 @@ public class TestCharset{
     }
     @TestCase
     func testGlobalFunc03(): Unit {
-        var encoder01=newISO2022JPCharset().newEncoder()
+        var encoder01=ISO2022JPCharset.instance.newEncoder()
         var encoder02=Charsets.ISO_2022_JP.newEncoder()
         var en_re01=encoder01.encode(encode_String)
         var en_re02=encoder02.encode(encode_String)
         @Assert(en_re01,en_re02)
-        var decoder01=newISO2022JPCharset().newDecoder()
+        var decoder01=ISO2022JPCharset.instance.newDecoder()
         var decoder02=Charsets.ISO_2022_JP.newDecoder()
         var de_re01=decoder01.decode(en_re01)
         var de_re02=decoder02.decode(en_re02)
@@ -70,12 +70,12 @@ public class TestCharset{
     }
     @TestCase
     func testGlobalFunc04(): Unit {
-        var encoder01=newEUCKRCharset().newEncoder()
+        var encoder01=EUCKRCharset.instance.newEncoder()
         var encoder02=Charsets.EUCKR.newEncoder()
         var en_re01=encoder01.encode(encode_String)
         var en_re02=encoder02.encode(encode_String)
         @Assert(en_re01,en_re02)
-        var decoder01=newEUCKRCharset().newDecoder()
+        var decoder01=EUCKRCharset.instance.newDecoder()
         var decoder02=Charsets.EUCKR.newDecoder()
         var de_re01=decoder01.decode(en_re01)
         var de_re02=decoder02.decode(en_re02)
@@ -83,12 +83,12 @@ public class TestCharset{
     }
     @TestCase
     func testGlobalFunc05(): Unit {
-        var encoder01=newGB18030Charset(false).newEncoder()
+        var encoder01=GB18030Charset.instance.newEncoder()
         var encoder02=Charsets.GB18030.newEncoder()
         var en_re01=encoder01.encode(encode_String)
         var en_re02=encoder02.encode(encode_String)
         @Assert(en_re01,en_re02)
-        var decoder01=newGB18030Charset(false).newDecoder()
+        var decoder01=GB18030Charset.instance.newDecoder()
         var decoder02=Charsets.GB18030.newDecoder()
         var de_re01=decoder01.decode(en_re01)
         var de_re02=decoder02.decode(en_re02)
@@ -96,12 +96,12 @@ public class TestCharset{
     }
     @TestCase
     func testGlobalFunc06(): Unit {
-        var encoder01=newBIG5Charset(true).newEncoder()
+        var encoder01=BIG5HKSCSCharset.instance.newEncoder()
         var encoder02=Charsets.BIG5_HKSCS.newEncoder()
         var en_re01=encoder01.encode(encode_String)
         var en_re02=encoder02.encode(encode_String)
         @Assert(en_re01,en_re02)
-        var decoder01=newBIG5Charset(true).newDecoder()
+        var decoder01=BIG5HKSCSCharset.instance.newDecoder()
         var decoder02=Charsets.BIG5_HKSCS.newDecoder()
         var de_re01=decoder01.decode(en_re01)
         var de_re02=decoder02.decode(en_re02)
@@ -109,12 +109,12 @@ public class TestCharset{
     }
     @TestCase
     func testGlobalFunc0601(): Unit {
-        var encoder01=newBIG5Charset(false).newEncoder()
+        var encoder01=BIG5Charset.instance.newEncoder()
         var encoder02=Charsets.BIG5.newEncoder()
         var en_re01=encoder01.encode(encode_String)
         var en_re02=encoder02.encode(encode_String)
         @Assert(en_re01,en_re02)
-        var decoder01=newBIG5Charset(false).newDecoder()
+        var decoder01=BIG5Charset.instance.newDecoder()
         var decoder02=Charsets.BIG5.newDecoder()
         var de_re01=decoder01.decode(en_re01)
         var de_re02=decoder02.decode(en_re02)
@@ -122,12 +122,12 @@ public class TestCharset{
     }
     @TestCase
     func testGlobalFunc07(): Unit {
-        var encoder01=newUTF16Charset(true).newEncoder()
+        var encoder01=UTF16Charset.beInstance.newEncoder()
         var encoder02=Charsets.UTF16BE.newEncoder()
         var en_re01=encoder01.encode(encode_String)
         var en_re02=encoder02.encode(encode_String)
         @Assert(en_re01,en_re02)
-        var decoder01=newUTF16Charset(true).newDecoder()
+        var decoder01=UTF16Charset.beInstance.newDecoder()
         var decoder02=Charsets.UTF16BE.newDecoder()
         var de_re01=decoder01.decode(en_re01)
         var de_re02=decoder02.decode(en_re02)
@@ -135,12 +135,12 @@ public class TestCharset{
     }
     @TestCase
     func testGlobalFunc08(): Unit {
-        var encoder01=newUTF16Charset(false).newEncoder()
+        var encoder01=UTF16Charset.leInstance.newEncoder()
         var encoder02=Charsets.UTF16LE.newEncoder()
         var en_re01=encoder01.encode(encode_String)
         var en_re02=encoder02.encode(encode_String)
         @Assert(en_re01,en_re02)
-        var decoder01=newUTF16Charset(false).newDecoder()
+        var decoder01=UTF16Charset.leInstance.newDecoder()
         var decoder02=Charsets.UTF16LE.newDecoder()
         var de_re01=decoder01.decode(en_re01)
         var de_re02=decoder02.decode(en_re02)
@@ -148,12 +148,12 @@ public class TestCharset{
     }
     @TestCase
     func testGlobalFunc09(): Unit {
-        var encoder01=newUTF32Charset(true).newEncoder()
+        var encoder01=UTF32Charset.beInstance.newEncoder()
         var encoder02=Charsets.UTF32BE.newEncoder()
         var en_re01=encoder01.encode(encode_String)
         var en_re02=encoder02.encode(encode_String)
         @Assert(en_re01,en_re02)
-        var decoder01=newUTF32Charset(true).newDecoder()
+        var decoder01=UTF32Charset.beInstance.newDecoder()
         var decoder02=Charsets.UTF32BE.newDecoder()
         var de_re01=decoder01.decode(en_re01)
         var de_re02=decoder02.decode(en_re02)
@@ -161,12 +161,12 @@ public class TestCharset{
     }
     @TestCase
     func testGlobalFunc10(): Unit {
-        var encoder01=newUTF32Charset(false).newEncoder()
+        var encoder01=UTF32Charset.leInstance.newEncoder()
         var encoder02=Charsets.UTF32LE.newEncoder()
         var en_re01=encoder01.encode(encode_String)
         var en_re02=encoder02.encode(encode_String)
         @Assert(en_re01,en_re02)
-        var decoder01=newUTF32Charset(false).newDecoder()
+        var decoder01=UTF32Charset.leInstance.newDecoder()
         var decoder02=Charsets.UTF32LE.newDecoder()
         var de_re01=decoder01.decode(en_re01)
         var de_re02=decoder02.decode(en_re02)
@@ -174,12 +174,12 @@ public class TestCharset{
     }
     @TestCase
     func testGlobalFunc11(): Unit {
-        var encoder01=newUTF8Charset().newEncoder()
+        var encoder01=UTF8Charset.instance.newEncoder()
         var encoder02=Charsets.UTF8.newEncoder()
         var en_re01=encoder01.encode(encode_String)
         var en_re02=encoder02.encode(encode_String)
         @Assert(en_re01,en_re02)
-        var decoder01=newUTF8Charset().newDecoder()
+        var decoder01=UTF8Charset.instance.newDecoder()
         var decoder02=Charsets.UTF8.newDecoder()
         var de_re01=decoder01.decode(en_re01)
         var de_re02=decoder02.decode(en_re02)
@@ -187,16 +187,16 @@ public class TestCharset{
     }
     @TestCase
     func testGlobalFunc12(): Unit {
-        var charset01=newSingleByteCharset("IBM866")
+        var charset01=SingleByteCharset.IBM866
         @Assert(charset01 is Charset,true)
-        var flag=1
-        try{
-            newSingleByteCharset("EUCK-R")
-        }catch(e:NoneValueException){
-            if(e.toString().contains("Value does not exist")){
-                flag=0
-            }
-        }
-        @Assert(flag,0)
+        // var flag=1
+        // try{
+        //     newSingleByteCharset("EUCK-R")
+        // }catch(e:NoneValueException){
+        //     if(e.toString().contains("Value does not exist")){
+        //         flag=0
+        //     }
+        // }
+        // @Assert(flag,0)
     }
 }

@@ -15,16 +15,17 @@ import charset.exception.*
 /**
  * gb18030  Character set decoder
  * GB18030  single byte part is the same as ASCII
- *          The double byte part is ordinary Chinese characters  
+ *          The double byte part is ordinary Chinese characters
  *          The four byte part is mapped with Unicode through a table
  * @author freeonsky
  * @since 0.28.4
  */
 class GB18030Decoder <: Decoder{
+    init(){}
     // Replace character when decoding error
-    let replacement = '\u{FFFD}' 
-    let table = gb18030DecodeMapping
-   
+    private let replacement = '\u{FFFD}'
+    private let table = gb18030DecodeMapping
+
     /**
      * Decode byte array SRC into character array dest
      *
@@ -39,34 +40,34 @@ class GB18030Decoder <: Decoder{
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
-        var destStart:Int64 = 0                         
+        var destStart:Int64 = 0
         // src Processing index
-        var srcIndex = srcOffset   
+        var srcIndex = srcOffset
         // dest Processing index
         var destIndex = destStart
         while(srcIndex <= srcLimit){
             if(destIndex >= dest.size){
                 return (srcIndex, destIndex)
-            }            
+            }
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
                 var c = Char(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
-                srcIndex += 1     
-                continue           
+                srcIndex += 1
+                continue
             }else if(u0 == 0x80){
                 dest[destIndex] = Char(0x20AC)
-                destIndex += 1      
+                destIndex += 1
                 srcIndex += 1
-                continue                 
+                continue
             }else if(u0 >= 0x81 && u0 <= 0xFE){
                 if(srcIndex + 1 > srcLimit){
                     // If only half of the double bytes are in SRC, return and wait for the subsequent data to enter SRC for reprocessing
-                    return (srcIndex, destIndex)                    
+                    return (srcIndex, destIndex)
                 }
-                
+
                 var u1 = src[srcIndex+1]
                 // Double byte
                 if((u1 >= 0x40 && u1 <= 0x7E) || (u1 >= 0x80 && u1 <= 0xFE)){
@@ -74,7 +75,7 @@ class GB18030Decoder <: Decoder{
                                             0x40
                                         }else{
                                             0x41
-                                        }                
+                                        }
                     var pointer = Int64(Int64(u0 - 0x81) * 190) + Int64(u1 - offset)
                     var codePoint = if(pointer < 23940){
                                         Char(table[pointer])
@@ -84,7 +85,7 @@ class GB18030Decoder <: Decoder{
                     dest[destIndex] = codePoint
                     destIndex += 1
                     srcIndex += 2
-                    continue                    
+                    continue
                 }else if(u1 >= 0x30 && u1 <= 0x39){
                     if(srcIndex + 3 > srcLimit){
                         // If only a part of the four bytes is in SRC, return and wait for the subsequent data to enter SRC for reprocessing
@@ -97,9 +98,9 @@ class GB18030Decoder <: Decoder{
                         var pointer = Int64(u0 - 0x81) * (10 * 126 * 10) +
                                     Int64(u1 - 0x30) * (10 * 126) +
                                     Int64(u2 - 0x81) * 10 +
-                                    Int64(u3) - 0x30      
+                                    Int64(u3) - 0x30
                         if(pointer == 7457){
-                            dest[destIndex] = '\u{E7C7}' 
+                            dest[destIndex] = '\u{E7C7}'
                             srcIndex += 4
                             destIndex += 1
                             continue
@@ -107,7 +108,7 @@ class GB18030Decoder <: Decoder{
                             srcIndex += 4
                             destIndex += 1
                             dest[destIndex] = replacement
-                            continue          
+                            continue
                         }else{
                             var start = 0
                             var end = gb18030_rangesMapping.size
@@ -119,32 +120,32 @@ class GB18030Decoder <: Decoder{
                                     end = h
                                 }
                             }
-                            var code:Array<UInt32> = gb18030_rangesMapping[start - 1]   
+                            var code:Array<UInt32> = gb18030_rangesMapping[start - 1]
                             var codePoint = UInt32(UInt32(pointer) + UInt32(code[1]) - UInt32(code[0]))
                             dest[destIndex] = Char(codePoint)
                             destIndex += 1
                             srcIndex += 4
-                            continue                                                                             
-                        }                                                     
+                            continue
+                        }
                     }else{
                         // error
                         srcIndex += 4
                         destIndex += 1
                         dest[destIndex] = replacement
-                        continue                               
+                        continue
                     }
-                
+
                 }else{
                     // Replace with fffd after error
-                    dest[destIndex] = replacement     
+                    dest[destIndex] = replacement
                     destIndex += 1
                     srcIndex += 1
-                    continue                                       
-                }           
+                    continue
+                }
             } else {
                 throw DecoderException("can't decode the src: " + "${src.toString()}")
             }
         }
         return (srcIndex, destIndex)
-    }    
+    }
 }

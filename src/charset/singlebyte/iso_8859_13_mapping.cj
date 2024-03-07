@@ -142,6 +142,5 @@ let iso_8859_13DecodeMapping: Array<UInt32> = [
 		0x2019
 ]
 
-let iso_8859_13EncodeMapping = HashMap<UInt32, UInt32>([
+let iso_8859_13EncodeMapping: Map<UInt32, UInt32> = HashMap<UInt32, UInt32>([
 ])
-

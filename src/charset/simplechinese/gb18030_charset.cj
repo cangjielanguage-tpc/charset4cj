@@ -10,31 +10,23 @@ package charset.simplechinese
 
 import charset.encoding.*
 
-// create GB18030Charset
-public func newGB18030Charset(gbk: Bool):Charset {
-    if(gbk){
-        GBKCharset()
-    }else{
-        GB18030Charset()
-    }
-}
-
-
 /**
  * The class is GBKCharset inherited from Charset
  * @author freeonsky
  * @since 0.28.4
  */
-class GBKCharset <: Charset{
+public class GBKCharset <: Charset{
+    public static let instance = GBKCharset()
     /**
      * The Function is init constructor
      *
      * @since 0.28.4
      */
-    public init(){
+    private init(){
+        super("gbk", "chinese", "csgb2312", "csiso58gb231280", "gb2312", "gb_2312", "gb_2312-80", "gbk", "iso-ir-58", "x-gbk")
         // Actual number of characters gbk > gb2312 , for ease of handling,  use gb2312 as gbk
-        this.labels = ["chinese", "csgb2312", "csiso58gb231280", "gb2312", "gb_2312", "gb_2312-80", "gbk", "iso-ir-58", "x-gbk"]
-        this.name = "gbk"
+        // this.labels = ["chinese", "csgb2312", "csiso58gb231280", "gb2312", "gb_2312", "gb_2312-80", "gbk", "iso-ir-58", "x-gbk"]
+        // this.name = "gbk"
     }
 
     /**
@@ -46,7 +38,7 @@ class GBKCharset <: Charset{
     public func newEncoder():Encoder{
         GB18030Encoder(true)
     }
-    
+
     /**
      * The Function is newDecoder
      *
@@ -56,54 +48,6 @@ class GBKCharset <: Charset{
     public func newDecoder():Decoder{
         GB18030Decoder()
     }
-
-    public operator func ==(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() == rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func !=(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() != rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() != rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func ==(rhs: String): Bool {
-        if (this.name == rhs) {
-            return true
-        }
-        return false
-    }
-
-    public operator func !=(rhs: String): Bool {
-        if (this.name != rhs) {
-            return true
-        }
-        return false
-    }
-
-    public func hashCode(): Int64 {
-        var hash: Int64 = 0
-        hash = 31 * hash + this.name.hashCode()
-        return hash
-    }
-
-    public func toString(): String {
-        return this.name
-    }
 }
 
 /**
@@ -111,15 +55,17 @@ class GBKCharset <: Charset{
  * @author freeonsky
  * @since 0.28.4
  */
-class GB18030Charset <: Charset{
+public class GB18030Charset <: Charset{
+    public static let instance = GB18030Charset()
     /**
      * The Function is init constructor
      *
      * @since 0.28.4
      */
-    public init(){
-        this.labels = ["gb18030"]
-        this.name = "gb18030"
+    private init(){
+        super("gb18030", "gb18030")
+        // this.labels = ["gb18030"]
+        // this.name = "gb18030"
     }
 
     /**
@@ -131,7 +77,7 @@ class GB18030Charset <: Charset{
     public func newEncoder():Encoder{
         GB18030Encoder(false)
     }
-    
+
     /**
      * The Function is newDecoder
      *
@@ -140,53 +86,5 @@ class GB18030Charset <: Charset{
      */
     public func newDecoder():Decoder{
         GB18030Decoder()
-    }
-
-    public operator func ==(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() == rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func !=(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() != rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() != rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func ==(rhs: String): Bool {
-        if (this.name == rhs) {
-            return true
-        }
-        return false
-    }
-
-    public operator func !=(rhs: String): Bool {
-        if (this.name != rhs) {
-            return true
-        }
-        return false
-    }
-
-    public func hashCode(): Int64 {
-        var hash: Int64 = 0
-        hash = 31 * hash + this.name.hashCode()
-        return hash
-    }
-
-    public func toString(): String {
-        return this.name
     }
 }

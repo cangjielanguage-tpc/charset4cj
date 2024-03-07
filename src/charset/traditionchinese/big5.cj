@@ -11,30 +11,22 @@ package charset.traditionchinese
 import charset.encoding.*
 import charset.exception.*
 
-// Big5 encoding charset
-public func newBIG5Charset(hkscs:Bool):Charset{
-    if(hkscs){
-        BIG5HKSCSCharset()
-    }else{
-        BIG5Charset()
-    }
-}
-
 /**
  * big5-hkscs encoding
  * @author freeonsky
  * @since 0.28.4
  */
-class BIG5HKSCSCharset <: Charset{
-
+public class BIG5HKSCSCharset <: Charset{
+    public static let instance = BIG5HKSCSCharset()
     /**
      * The Function is init constructor
      *
      * @since 0.28.4
      */
-    public init(){
-        this.labels = ["big5-hkscs"]
-        this.name = "big5-hkscs"
+    private init(){
+        super("big5-hkscs", "big5-hkscs")
+        // this.labels = ["big5-hkscs"]
+        // this.name = "big5-hkscs"
     }
 
     /**
@@ -56,54 +48,6 @@ class BIG5HKSCSCharset <: Charset{
     public func newDecoder():Decoder{
         BIG5Decoder()
     }
-
-    public operator func ==(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() == rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func !=(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() != rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() != rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func ==(rhs: String): Bool {
-        if (this.name == rhs) {
-            return true
-        }
-        return false
-    }
-
-    public operator func !=(rhs: String): Bool {
-        if (this.name != rhs) {
-            return true
-        }
-        return false
-    }
-
-    public func hashCode(): Int64 {
-        var hash: Int64 = 0
-        hash = 31 * hash + this.name.hashCode()
-        return hash
-    }
-
-    public func toString(): String {
-        return this.name
-    }
 }
 
 
@@ -112,16 +56,17 @@ class BIG5HKSCSCharset <: Charset{
  * @author freeonsky
  * @since 0.28.4
  */
-class BIG5Charset <: Charset{
-
+public class BIG5Charset <: Charset{
+    public static let instance = BIG5Charset()
     /**
      * The Function is init constructor
      *
      * @since 0.28.4
      */
     public init(){
-        this.labels = ["big5", "cn-big5", "csbig5", "x-x-big5"]
-        this.name = "Big5"
+        super("Big5", "big5", "cn-big5", "csbig5", "x-x-big5")
+        // this.labels = ["big5", "cn-big5", "csbig5", "x-x-big5"]
+        // this.name = "Big5"
     }
 
     /**
@@ -143,54 +88,6 @@ class BIG5Charset <: Charset{
     public func newDecoder():Decoder{
         BIG5Decoder()
     }
-
-    public operator func ==(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() == rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func !=(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() != rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() != rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func ==(rhs: String): Bool {
-        if (this.name == rhs) {
-            return true
-        }
-        return false
-    }
-
-    public operator func !=(rhs: String): Bool {
-        if (this.name != rhs) {
-            return true
-        }
-        return false
-    }
-
-    public func hashCode(): Int64 {
-        var hash: Int64 = 0
-        hash = 31 * hash + this.name.hashCode()
-        return hash
-    }
-
-    public func toString(): String {
-        return this.name
-    }
 }
 
 /*
@@ -199,8 +96,8 @@ class BIG5Charset <: Charset{
  * @since 0.28.4
  */
 class BIG5Encoder <: Encoder {
-    var hkscs:Bool
-    public init(hkscs:Bool){
+    private let hkscs:Bool
+    init(hkscs:Bool){
         this.hkscs = hkscs
     }
 
@@ -226,7 +123,7 @@ class BIG5Encoder <: Encoder {
                 ref[position] = UInt8(codePoint)
                 position += 1
             }else{
-                var index = indexBig5Pointer(Big5EncodeMapping, Big5DecodeMapping, codePoint)
+                var index = indexBig5Pointer(codePoint)
                 if(index >= 0){
                     var pointer = UInt32(index)
                     let lead = pointer / 157 + 0x81
@@ -242,7 +139,9 @@ class BIG5Encoder <: Encoder {
         }
         return ref[0..position]
     }
-    private func indexBig5Pointer(encodeMapping:Map<UInt32, UInt32>, decodeMapping:Array<UInt32>, codePoint:UInt32):Int64{
+    private func indexBig5Pointer(codePoint:UInt32):Int64{
+        let encodeMapping = Big5EncodeMapping
+        let decodeMapping = Big5DecodeMapping
         var res:Int64 = -1
         if(!encodeMapping.isEmpty()){
             if(encodeMapping.contains(codePoint)){
@@ -288,9 +187,10 @@ class BIG5Encoder <: Encoder {
  * @since 0.28.4
  */
 class BIG5Decoder <: Decoder{
+    init(){}
     // Replace character when decoding error
-    let replacement = '\u{FFFD}'
-    let table = Big5DecodeMapping
+    private let replacement = '\u{FFFD}'
+    private let table = Big5DecodeMapping
 
     /**
      * Decode byte array SRC into character array dest

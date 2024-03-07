@@ -29,11 +29,11 @@ public class TextReader{
         while(true){
             var lineOp:Option<String> = readln()
             if(lineOp != None){
-                list.append(lineOp.getOrThrow())    
+                list.append(lineOp.getOrThrow())
             }else{
                 break
             }
-        }        
+        }
         return list
     }
     public func read(): Option<Char>{
@@ -79,7 +79,7 @@ public class TextReader{
             let line = if(len > 0) {decoder.decode(src.slice(0, len))} else {""}
             // 剩余buf前移
             rotateLeft(index + 1)
-            return Some(line)            
+            return Some(line)
         }
     }
     // 将 buf 从 index 位置移动到0，依次左移
@@ -105,5 +105,5 @@ public class TextReader{
         }
         return eof && this.bufLimit == 0
     }
-    
+
 }

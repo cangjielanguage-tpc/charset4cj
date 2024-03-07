@@ -142,6 +142,5 @@ let iso_8859_5DecodeMapping: Array<UInt32> = [
 		0x045f
 ]
 
-let iso_8859_5EncodeMapping = HashMap<UInt32, UInt32>([
+let iso_8859_5EncodeMapping: Map<UInt32, UInt32> = HashMap<UInt32, UInt32>([
 ])
-

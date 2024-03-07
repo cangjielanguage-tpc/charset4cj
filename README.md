@@ -12,13 +12,13 @@
 
 ## <img alt="" src="./doc/assets/readme-icon-introduction.png" style="display: inline-block;" width=3%/> 介绍
 
-仓颉语言编解码库。基于 [WHATWG 字符编码标准](http://encoding.spec.whatwg.org/) 
+仓颉语言编解码库。基于 [WHATWG 字符编码标准](http://encoding.spec.whatwg.org/)
 
 ### 特性
 
 + 🚀 只有两种方式获取字符集Charset
 
-  + 通过 Charsets 的常量获取，例如： Charsets.UTF8 
+  + 通过 Charsets 的常量获取，例如： Charsets.UTF8
   + 通过 Charsets 的forName 方法获取， 比如 Charsets.forName("UTF-8")
 
 - 🚀 通过 Charset 创建编码解码器
@@ -35,7 +35,7 @@
 </p>
 
 - 将字节数组转成String对象
-  
+
 解码器提供了下面两个方法，能够将字节数组转成String对象
 ```
 func decode(src:Array<UInt8>):String
@@ -189,7 +189,7 @@ cjc -O2
 test/HLT/test_CharSets_forName_01.cj -o test/tmp/test.cj.out --test
 ```
 
-#### 2. 把编译好的文件复制到 .out 文件下(test/tmp/) 
+#### 2. 把编译好的文件复制到 .out 文件下(test/tmp/)
 - 把build/release/charset 目录中的文件都复制到 .out 文件位置(test/tmp/ 中)
 
 #### 3. 进入到.out文件位置，执行用例
@@ -235,7 +235,7 @@ public class Test_ReadMe01 {
 				break
 			}
 			lineOp.getOrThrow()
-		}   		
+		}
         @Assert(lineOp==None, true)
     }
 }

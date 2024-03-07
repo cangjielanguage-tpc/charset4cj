@@ -14,15 +14,15 @@ import charset.encoding.*
 /**
  * The class is GB18030Encoder inherited from Encoder
  * GB18030  single byte part is the same as ASCII
- *          The double byte part is ordinary Chinese characters  
+ *          The double byte part is ordinary Chinese characters
  *          The four byte part is mapped with Unicode through a table
  * @author freeonsky
  * @since 0.28.4
  */
 class GB18030Encoder <: Encoder {
-    var gbk:Bool
+    private let gbk:Bool
 
-    public init(gbk: Bool){
+    init(gbk: Bool){
         this.gbk = gbk
     }
 
@@ -54,12 +54,12 @@ class GB18030Encoder <: Encoder {
                 position += 1
                 ref[position] = 0xA0
                 position += 1
-            // If is GBK is true and code point is U+20AC, return byte 0x80.    
+            // If is GBK is true and code point is U+20AC, return byte 0x80.
             }else if(gbk && codePoint == 0x20AC){
                 ref[position] = 0x80
-                position += 1         
+                position += 1
             }else{
-                // double byte part           
+                // double byte part
                 var index = indexPointer(gb18030EncodeMapping, gb18030DecodeMapping, codePoint)
                 if(index >= 0){
                     let pointer = UInt32(index)
@@ -69,8 +69,8 @@ class GB18030Encoder <: Encoder {
                     ref[position] = UInt8(lead)
                     position += 1
                     ref[position] = UInt8(trail + offset)
-                    position += 1                  
-                    continue  
+                    position += 1
+                    continue
                 }
                 //todo If is GBK is true, return error with code point.
                 if(gbk){
@@ -90,8 +90,8 @@ class GB18030Encoder <: Encoder {
                 ref[position + 1] = UInt8(byte2 + 0x30)
                 ref[position + 2] = UInt8(byte3 + 0x81)
                 ref[position + 3] = UInt8(byte4 + 0x30)
-                position += 4      
-                continue    
+                position += 4
+                continue
             }
         }
         return ref[0..position]
@@ -109,7 +109,7 @@ class GB18030Encoder <: Encoder {
         var pointer_offset:UInt32 = 0;
         var idx = gb18030_rangesMapping;
 
-        for(entry in idx){    
+        for(entry in idx){
             if (entry[1] <= code_point) {
                 offset = entry[1];
                 pointer_offset = entry[0];
@@ -120,5 +120,5 @@ class GB18030Encoder <: Encoder {
 
         // 3. Return a pointer whose value is pointer offset + code point - offset.
         return pointer_offset + code_point - offset;
-    }    
+    }
 }

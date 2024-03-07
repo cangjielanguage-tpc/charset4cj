@@ -138,6 +138,5 @@ let windows_874DecodeMapping: Array<UInt32> = [
 		0x0e5b
 ]
 
-let windows_874EncodeMapping = HashMap<UInt32, UInt32>([
+let windows_874EncodeMapping: Map<UInt32, UInt32> = HashMap<UInt32, UInt32>([
 ])
-

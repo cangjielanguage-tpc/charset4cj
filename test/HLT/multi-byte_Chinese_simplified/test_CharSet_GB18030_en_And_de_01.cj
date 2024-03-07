@@ -69,5 +69,5 @@ public class TestCharsetGB18030{
         var de_re=decoder.decode(en_re,desc)
         @Assert(de_re[0],encoder.encode(encode_String[..desc.size]).size)
         @Assert(de_re[1],desc.size)
-    }    
+    }
 }

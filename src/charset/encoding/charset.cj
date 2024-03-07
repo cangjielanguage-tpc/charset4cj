@@ -9,46 +9,60 @@
 
 package charset.encoding
 
+from std import collection.HashSet
+
 /**
  * The class is Charset
  * @author freeonsky
  * @since 0.28.4
  */
 public abstract class Charset <: Hashable & Equatable<Charset> & Equatable<String> & ToString {
-    protected var name:String = ""
-    protected var labels:Array<String> = Array<String>()
+    protected let name: String
+    private let labels_ = HashSet<String>()
+    protected init(name: String, labels: Array<String>){
+        this.name = name
+        putLabel(name, this.labels_)
+        for(label in labels){
+            putLabel(label, this.labels_)
+        }
+    }
+    static func putLabel(label: String, labels: Set<String>){
+        labels.put(label)
+        labels.put(label.toAsciiLower())
+        labels.put(label.toAsciiUpper())
+    }
+    public func hashCode(): Int64 {
+        name.hashCode()
+    }
+    public operator func ==(rhs: Charset){
+        nameEquals(rhs.name)
+    }
+    public operator func !=(rhs: Charset){
+        !(this == rhs)
+    }
+    public operator func ==(name: String){
+        nameEquals(name)
+    }
+    public operator func !=(name: String){
+        !(this == name)
+    }
+    public func toString(){
+        name
+    }
+    public func labels(): Iterator<String>{
+        labels_.iterator()
+    }
 
     /**
      * Judge whether the character set name (or labels) is a given string
      *
-     * @param name Character set name 
+     * @param name Character set name
      *
-     * @return Bool 
+     * @return Bool
      * @since 0.28.4
      */
     public func nameEquals(n:String):Bool{
-        var res = false
-        if (n.size != this.name.size) {
-            var contains = false
-            for (label in labels) {
-                if(label.size == n.size) {
-                    contains = true
-                    break
-                }
-            }
-            if (!contains) {
-                return false
-            }
-        }
-        if (n.toAsciiLower() == this.name.toAsciiLower()) {
-            return true
-        }
-        for (label in labels) {
-            if(label.toAsciiLower() == n.toAsciiLower()) {
-                return true
-            }
-        }
-        return res
+        labels_.contains(n)
     }
 
     /**

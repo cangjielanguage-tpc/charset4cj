@@ -142,6 +142,5 @@ let iso_8859_2DecodeMapping: Array<UInt32> = [
 		0x02d9
 ]
 
-let iso_8859_2EncodeMapping = HashMap<UInt32, UInt32>([
+let iso_8859_2EncodeMapping: Map<UInt32, UInt32> = HashMap<UInt32, UInt32>([
 ])
-

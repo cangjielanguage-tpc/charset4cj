@@ -142,6 +142,5 @@ let koi8_rDecodeMapping: Array<UInt32> = [
 		0x042a
 ]
 
-let koi8_rEncodeMapping = HashMap<UInt32, UInt32>([
+let koi8_rEncodeMapping: Map<UInt32, UInt32> = HashMap<UInt32, UInt32>([
 ])
-

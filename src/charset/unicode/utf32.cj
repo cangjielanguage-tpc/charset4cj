@@ -10,19 +10,16 @@ package charset.unicode
 
 import charset.encoding.*
 
-// UTF32 char set, when be is true, create UTF-32BE ,when be is false ,create UTF-32LE
-public func newUTF32Charset(be:Bool):Charset {
-    UTF32Charset(be)
-}
-
 /**
  * UTF32 char set
  * @author freeonsky
  * @since 0.28.4
  */
-class UTF32Charset <: Charset{
+public class UTF32Charset <: Charset{
+    public static let beInstance = UTF32Charset(true, "UTF-32BE", "utf-32be")
+    public static let leInstance = UTF32Charset(false, "UTF-32LE", "utf-32le")
     // Whether it is big end mode, be = true big end mode; Be = false small end mode
-    var be:Bool
+    private let be:Bool
 
     /**
      * The Function is init constructor
@@ -31,65 +28,17 @@ class UTF32Charset <: Charset{
      *
      * @since 0.28.4
      */
-    public init(be:Bool){
+    private init(be:Bool, name: String, labels: Array<String>){
+        super(name, labels)
         this.be = be
-        if(be){
-            this.labels = ["utf-32be"]
-            this.name = "UTF-32BE"
-        }else{
-            this.labels = ["utf-32le"]
-            this.name = "UTF-32LE"
-        }
+        // if(be){
+        //     this.labels = ["utf-32be"]
+        //     this.name = "UTF-32BE"
+        // }else{
+        //     this.labels = ["utf-32le"]
+        //     this.name = "UTF-32LE"
+        // }
     }
-
-    public operator func ==(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() == rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func !=(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() != rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() != rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func ==(rhs: String): Bool {
-        if (this.name == rhs) {
-            return true
-        }
-        return false
-    }
-
-    public operator func !=(rhs: String): Bool {
-        if (this.name != rhs) {
-            return true
-        }
-        return false
-    }
-
-    public func hashCode(): Int64 {
-        var hash: Int64 = 0
-        hash = 31 * hash + this.name.hashCode()
-        return hash
-    }
-
-    public func toString(): String {
-        return this.name
-    }
-
     /**
      * The Function is newEncoder
      *
@@ -119,7 +68,7 @@ class UTF32Charset <: Charset{
  */
 class UTF32Encoder <: Encoder {
     // Whether it is big end mode, be = true big end mode; Be = false small end mode
-    var be:Bool
+    private let be:Bool
 
     /*
      * The Function is init constructor
@@ -155,7 +104,7 @@ class UTF32Encoder <: Encoder {
             var u1 = UInt8((codePoint >> 16) & 0xFF)
             var u2 = UInt8((codePoint >> 8) & 0xFF)
             var u3 = UInt8(codePoint & 0xFF)
-            
+
             if(be){
                 res[position] = u0
                 position += 1
@@ -164,7 +113,7 @@ class UTF32Encoder <: Encoder {
                 res[position] = u2
                 position += 1
                 res[position] = u3
-                position += 1                    
+                position += 1
             }else{
                 res[position] = u3
                 position += 1
@@ -173,7 +122,7 @@ class UTF32Encoder <: Encoder {
                 res[position] = u1
                 position += 1
                 res[position] = u0
-                position += 1                       
+                position += 1
             }
         }
         return res[0..position]
@@ -188,9 +137,9 @@ class UTF32Encoder <: Encoder {
  * @since 0.28.4
  */
 class UTF32Decoder <: Decoder{
-    let replacement = '\u{FFFD}'
+    private let replacement = '\u{FFFD}'
     // Whether it is big end mode, be = true big end mode; Be = false small end mode
-    var be:Bool
+    private let be:Bool
     init(be:Bool){
         this.be = be
     }
@@ -209,21 +158,21 @@ class UTF32Decoder <: Decoder{
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
-        var destStart:Int64 = 0                     
-        var srcIndex = srcOffset    
+        var destStart:Int64 = 0
+        var srcIndex = srcOffset
         var destIndex = destStart
         while(srcIndex <= srcLimit){
             if(destIndex >= dest.size){
                 return (srcIndex, destIndex)
-            }            
+            }
             // Not enough digits
             if(srcIndex+3 > srcLimit){
                 return (srcIndex, destIndex)
             }
             var u0 = src[srcIndex];
             var u1 = src[srcIndex + 1]
-            var u2 = src[srcIndex + 2]     
-            var u3 = src[srcIndex + 3]     
+            var u2 = src[srcIndex + 2]
+            var u3 = src[srcIndex + 3]
             var codeUnit:UInt32 = if(be){
                 (UInt32(u0) << 24) + (UInt32(u1) << 16) + (UInt32(u2) << 8) + UInt32(u3)
             }else{
@@ -233,8 +182,7 @@ class UTF32Decoder <: Decoder{
             destIndex += 1
             srcIndex += 4
             continue
-        }        
+        }
         (srcIndex, destIndex)
-    }    
+    }
 }
-

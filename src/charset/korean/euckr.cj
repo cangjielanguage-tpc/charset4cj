@@ -12,27 +12,22 @@ package charset.korean
 import charset.encoding.*
 import charset.exception.*
 
-// EUC-KR korean charset
-public func newEUCKRCharset():Charset {
-    EUCKRCharset()
-}
-
 /**
  * EUC-KR korean encoding
  * @author freeonsky
  * @since 0.28.4
  */
-class EUCKRCharset <: Charset{
-
+public class EUCKRCharset <: Charset{
+    public static let instance = EUCKRCharset()
     /**
      * The Function is init constructor
      *
      * @since 0.28.4
      */
-    public init(){
-        // super("EUC-KR", ["cseuckr",  "csksc56011987",  "euc-kr",  "iso-ir-149",  "korean",  "ks_c_5601-1987",  "ks_c_5601-1989",  "ksc5601",  "ksc_5601",  "windows-949"])
-        this.labels = ["cseuckr",  "csksc56011987",  "euc-kr",  "iso-ir-149",  "korean",  "ks_c_5601-1987",  "ks_c_5601-1989",  "ksc5601",  "ksc_5601",  "windows-949"]
-        this.name = "EUC-KR"
+    private init(){
+        super("EUC-KR", ["cseuckr",  "csksc56011987",  "euc-kr",  "iso-ir-149",  "korean",  "ks_c_5601-1987",  "ks_c_5601-1989",  "ksc5601",  "ksc_5601",  "windows-949"])
+        // this.labels = ["cseuckr",  "csksc56011987",  "euc-kr",  "iso-ir-149",  "korean",  "ks_c_5601-1987",  "ks_c_5601-1989",  "ksc5601",  "ksc_5601",  "windows-949"]
+        // this.name = "EUC-KR"
     }
 
     /**
@@ -54,54 +49,6 @@ class EUCKRCharset <: Charset{
     public func newDecoder():Decoder{
         EUCKRDecoder()
     }
-
-    public operator func ==(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() == rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func !=(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() != rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() != rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func ==(rhs: String): Bool {
-        if (this.name == rhs) {
-            return true
-        }
-        return false
-    }
-
-    public operator func !=(rhs: String): Bool {
-        if (this.name != rhs) {
-            return true
-        }
-        return false
-    }
-
-    public func hashCode(): Int64 {
-        var hash: Int64 = 0
-        hash = 31 * hash + this.name.hashCode()
-        return hash
-    }
-
-    public func toString(): String {
-        return this.name
-    }
 }
 
 /*
@@ -110,6 +57,7 @@ class EUCKRCharset <: Charset{
  * @since 0.28.4
  */
 class EUCKREncoder <: Encoder {
+    init(){}
 
     /**
      * Encodes a string into a byte array
@@ -140,12 +88,12 @@ class EUCKREncoder <: Encoder {
                     let trail = pointer % 190 + 0x41
                     ref[position] = UInt8(lead)
                     ref[position+1] = UInt8(trail)
-                    position += 2                    
+                    position += 2
                 }else{
                     throw EncoderException("can't encode character "+ch.toString()+" character maps to <undefined>")
                 }
             }
-        }    
+        }
         return ref[0..position]
     }
 }
@@ -163,8 +111,8 @@ class EUCKREncoder <: Encoder {
  */
 class EUCKRDecoder <: Decoder{
     // Replace character when decoding error
-    let replacement = '\u{FFFD}' 
-    let table = EUC_KRDecodeMapping
+    private let replacement = '\u{FFFD}'
+    private let table = EUC_KRDecodeMapping
 
     /**
      * Decode byte array SRC into character array dest
@@ -180,29 +128,29 @@ class EUCKRDecoder <: Decoder{
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
-        var destStart:Int64 = 0                    
+        var destStart:Int64 = 0
         // Index being processed by SRC
-        var srcIndex = srcOffset   
+        var srcIndex = srcOffset
         // Dest index being processed
         var destIndex = destStart
         while(srcIndex <= srcLimit){
             if(destIndex >= dest.size){
                 return (srcIndex, destIndex)
-            }            
+            }
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
                 var c = Char(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
-                srcIndex += 1     
-                continue           
+                srcIndex += 1
+                continue
             }else if(u0 >= 0x81 && u0 <= 0xFE){
                 if(srcIndex + 1 > srcLimit){
                     // If only half of the double bytes are in SRC, return and wait for the subsequent data to enter SRC for reprocessing
-                    return (srcIndex, destIndex)                    
+                    return (srcIndex, destIndex)
                 }
-                
+
                 var u1 = src[srcIndex+1]
                 var pointer:Int64 = 0
                 var codePoint:Char = '\u{0}'
@@ -210,7 +158,7 @@ class EUCKRDecoder <: Decoder{
                     pointer = Int64(Int64(u0 - 0x81) * 190 + Int64(u1) - 0x41)
                     let c = table[pointer]
                     if(c == 0){
-                        codePoint = replacement    
+                        codePoint = replacement
                     }else{
                         codePoint = Char(c)
                     }
@@ -220,11 +168,11 @@ class EUCKRDecoder <: Decoder{
                 dest[destIndex] = codePoint
                 srcIndex += 2
                 destIndex += 1
-                continue                
+                continue
             } else {
                 throw DecoderException("can't decode the src: " + "${src.toString()}")
             }
         }
         return (srcIndex, destIndex)
-    }    
+    }
 }
