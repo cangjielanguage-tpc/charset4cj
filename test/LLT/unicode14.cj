@@ -12,6 +12,6 @@ main (){
     var _: Int64 = 4
     var _: Array<Char> = Array<Char>(6, {_ => '\u{0}'})
     var _: Int64 = 2
-    
+
     return 0
 }

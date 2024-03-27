@@ -20,15 +20,10 @@ import charset.exception.*
  */
 class SingleByteEncoder <: Encoder {
     // Todo currently uses 0x1a uniformly, and each single byte character set has a different replacement
-    var replacement:UInt8 = 0x1a
-    var encodeMapping:Map<UInt32, UInt32>
-    var decodeMapping:Array<UInt32> = []
+    private let replacement:UInt8 = 0x1a
 
-    init(charset: SingleByteCharset){
-        var name = charset.charsetName()
-        encodeMapping = charset.encodeDic[name]
-        decodeMapping = charset.decodeDic[name]
-    }
+    SingleByteEncoder(private let encodeMapping:Map<UInt32, UInt32>,
+                      private let decodeMapping:Array<UInt32>){}
 
     /**
      * Encodes a string into a byte array
@@ -58,4 +53,3 @@ class SingleByteEncoder <: Encoder {
         return ref
     }
 }
-

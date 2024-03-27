@@ -18,15 +18,10 @@ import charset.encoding.*
  * @since 0.28.4
  */
 class SingleByteDecoder <: Decoder{
-    let replacement = '\u{FFFD}'
-    var decodeMapping:Array<UInt32> = []
+    private let replacement = '\u{FFFD}'
 
+    SingleByteDecoder(private let decodeMapping: Array<UInt32>){}
 
-    init(charset: SingleByteCharset){
-        var name = charset.charsetName()
-        decodeMapping = charset.decodeDic[name]
-    }
-    
     /**
      * Decode byte array SRC into character array dest
      *
@@ -41,15 +36,15 @@ class SingleByteDecoder <: Decoder{
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
-        var destStart:Int64 = 0                      
+        var destStart:Int64 = 0
         // src processing index
-        var srcIndex = srcOffset   
+        var srcIndex = srcOffset
         // dest processing index
         var destIndex = destStart
         while(srcIndex <= srcLimit){
             if(destIndex >= dest.size){
                 return (srcIndex, destIndex)
-            }            
+            }
             var byte = src[srcIndex]
             if(byte <= 0x7F){
                 dest[destIndex] = Char(UInt32(byte))
@@ -62,8 +57,8 @@ class SingleByteDecoder <: Decoder{
                 }
                 destIndex += 1
             }
-            srcIndex += 1  
+            srcIndex += 1
         }
-        return (srcIndex, destIndex)                
+        return (srcIndex, destIndex)
     }
 }

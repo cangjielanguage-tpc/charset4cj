@@ -9,7 +9,7 @@ import charset.exception.*
 
 class ISO2022JPEncoder <: Encoder {
     // ASCII:0 | Roman:1 | katakana:2 | JIS:3
-    var state = 0
+    private var state = 0
     /**
      * Encodes a string into a byte array
      *
@@ -144,9 +144,9 @@ enum State {
  */
 class ISO2022JPDecoder <: Decoder{
     // Replace character when decoding error
-    let replacement = '\u{FFFD}'
+    private let replacement = '\u{FFFD}'
     // ASCII:0 | Roman:1 | katakana:2 | JIS:3
-    var state = 0
+    private var state = 0
 
     /**
      * Decode ISO-2022-JP byte array SRC into character array dest

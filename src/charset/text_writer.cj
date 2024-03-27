@@ -18,9 +18,9 @@ public class TextWriter{
         this.output = output
         this.charset = charset
         this.encoder = charset.newEncoder()
-    }   
+    }
     public func write(s:String){
         let bytes = this.encoder.encode(s)
         this.output.write(bytes)
-    } 
+    }
 }

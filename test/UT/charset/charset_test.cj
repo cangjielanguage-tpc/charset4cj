@@ -43,14 +43,14 @@ public class CharsetsTest {
     public func ibm866():Unit{
         var charset = match(Charsets.forName("IBM866")){
             case Some(cs) => cs
-            case _ => Charsets.ibm866      
+            case _ => Charsets.ibm866
         }
         // var charset = SingleByteCharset("IBM866")
         var decoder = charset.newDecoder()
         var buf1 = Array<UInt8>([0x80, 0x81,0x82,0x83,0x84,0x85])
         var s1 = decoder.decode(buf1)
         @Assert(s1, "АБВГД")
-        print("s1:${s1}\t")    
+        print("s1:${s1}\t")
     }
 
     @TestCase
@@ -58,13 +58,13 @@ public class CharsetsTest {
         // var charset = EUCKRCharset()
         var charset = match(Charsets.forName("EUCKR")){
             case Some(cs) => cs
-            case _ => Charsets.euckr      
-        }        
+            case _ => Charsets.euckr
+        }
         var encoder = charset.newEncoder()
         var decoder = charset.newDecoder()
 
         var buf1 = Array<UInt8>([0xA2, 0xDB, 0xA4, 0xA6])
-        
+
         var s1 = decoder.decode(buf1)
         @Assert(s1, "갂갂")
     }
@@ -73,8 +73,8 @@ public class CharsetsTest {
     public func utf8():Unit{
         var charset = match(Charsets.forName("UTF8")){
             case Some(cs) => cs
-            case _ => Charsets.utf8      
-        }            
+            case _ => Charsets.utf8
+        }
         // abc 是单字节
         // \u{00A1} ¡ 是双字节
         // 𡃁 是4字节
@@ -96,8 +96,8 @@ public class CharsetsTest {
         // var charset = UTF16Charset(true) // 大端
         var charset = match(Charsets.forName("UTF-16BE")){
             case Some(cs) => cs
-            case _ => Charsets.utf16be      
-        }          
+            case _ => Charsets.utf16be
+        }
         var decoder = charset.newDecoder()
 
         var encoder = charset.newEncoder()
@@ -115,8 +115,8 @@ public class CharsetsTest {
         // var charset = UTF16Charset(false) // 小端
         var charset = match(Charsets.forName("UTF-16LE")){
             case Some(cs) => cs
-            case _ => Charsets.utf16    
-        }            
+            case _ => Charsets.utf16
+        }
         var decoder = charset.newDecoder()
         var encoder = charset.newEncoder()
         var arr = encoder.encode("啊𬌗𬌗𬌗𬌗𬌗𬌗𬌗𬌗")
@@ -130,8 +130,8 @@ public class CharsetsTest {
         // var charset = UTF32Charset(true)
         var charset = match(Charsets.forName("UTF-32BE")){
             case Some(cs) => cs
-            case _ => Charsets.utf32be      
-        }             
+            case _ => Charsets.utf32be
+        }
         // abc 是单字节
         // \u{00A1} ¡ 是双字节
         // 𡃁 是4字节
@@ -151,8 +151,8 @@ public class CharsetsTest {
         // var charset = UTF32Charset(true)
         var charset = match(Charsets.forName("UTF-32LE")){
             case Some(cs) => cs
-            case _ => Charsets.utf32      
-        }          
+            case _ => Charsets.utf32
+        }
         var arr:Array<UInt8> = Array<UInt8>([0x00,0x00,0xFE,0xFF,0x00,0x00,0x55,0x4A])
         var decoder = charset.newDecoder()
         var s1 = decoder.decode(arr)

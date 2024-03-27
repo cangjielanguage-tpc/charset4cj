@@ -142,6 +142,5 @@ let macintoshDecodeMapping: Array<UInt32> = [
 		0x02c7
 ]
 
-let macintoshEncodeMapping = HashMap<UInt32, UInt32>([
+let macintoshEncodeMapping: Map<UInt32, UInt32> = HashMap<UInt32, UInt32>([
 ])
-

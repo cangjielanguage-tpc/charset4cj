@@ -9,7 +9,7 @@
 场景：
 1、通过 Charsets 的常量获取，例如： Charsets.UTF8
 2、通过 Charsets 的forName 方法获取， 比如 Charsets.forName("UTF-8")
-约束：NA 
+约束：NA
 性能： NA
 可靠性： NA
 
@@ -63,7 +63,7 @@ public class Charsets
 
    	/**
     * 获取基于字符集名称的字符编码类型
-    * 
+    *
     * @param 传入 String 类型的字符集名称
     *
     * @return 返回一个 Option 类对象，若传入的 name 字符集名称不在支持的字符集范围内，则返回 Option<Charset>.None
@@ -79,7 +79,7 @@ public interface Encoder
 
    	/**
     * 编码器的编码方法
-    * 
+    *
     * @param str - 传入一个 String 字符串
     *
     * @return 返回编码后的 UInt8 数组
@@ -96,7 +96,7 @@ public interface Decoder
 
    	/**
     * 解码器的解码方法
-    * 
+    *
     * @param src - 编码后的字节数组
     *
     * @return 返回解码后的 String 字符串
@@ -202,14 +202,14 @@ top level
 	* @return 返回一个字符集
     */
 	public func newEUCJPCharset():Charset
-	
+
     /**
     * 新建一个 ShiftJIS 日本字符集
     *
     * @return 返回一个字符集
     */
 	public func newShiftJISCharset():Charset
-	
+
     /**
     * 新建一个 ISO2022 日本字符集
     *
@@ -367,7 +367,7 @@ public class Test_FeatureApi01 {
 				break
 			}
 			lineOp.getOrThrow()
-		}   		
+		}
         @Assert(lineOp==None, true)
     }
 }
@@ -383,7 +383,7 @@ public class Test_FeatureApi01 {
 
 前置条件：NA
 场景：NA
-约束：NA 
+约束：NA
 性能： NA
 可靠性： NA
 
@@ -461,10 +461,10 @@ public class Test_FeatureApi02 {
     public func testFeatureApi02(): Unit {
 		var charset = Charsets.GB18030
 		var decoder = charset.newDecoder()
-		charset.newEncoder() 
+		charset.newEncoder()
 		var src: Array<UInt8> = Array<UInt8>([0xCB, 0xAE, 0xB5, 0xE7, 0xB7, 0xD1])
-		var destStr = decoder.decode(src)  
-        @Assert(destStr,"水电费")		
+		var destStr = decoder.decode(src)
+        @Assert(destStr,"水电费")
     }
 }
 ```
@@ -474,4 +474,3 @@ public class Test_FeatureApi02 {
 ```shell
 [ PASSED ] CASE: testFeatureApi02
 ```
-

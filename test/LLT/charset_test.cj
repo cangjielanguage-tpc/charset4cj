@@ -21,6 +21,7 @@ main (){
         return 1
     }
     utf16betest()
+    invalid()
     return 0
 }
 
@@ -130,4 +131,10 @@ func utf16betest(){
         return 1
     }
     return 0
+}
+func invalid(){
+    let invalid = Charsets.forName("invalid").isNone()
+    if(!invalid){
+        throw Exception("invalid()")
+    }
 }

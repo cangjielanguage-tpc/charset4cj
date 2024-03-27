@@ -142,6 +142,5 @@ let windows_1250DecodeMapping: Array<UInt32> = [
 		0x02d9
 ]
 
-let windows_1250EncodeMapping = HashMap<UInt32, UInt32>([
+let windows_1250EncodeMapping: Map<UInt32, UInt32> = HashMap<UInt32, UInt32>([
 ])
-

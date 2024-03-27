@@ -10,25 +10,22 @@ package charset.unicode
 
 import charset.encoding.*
 
-// create UTF8 character set
-public func newUTF8Charset():Charset {
-    UTF8Charset()
-}
 /**
  * UTF8 character set
  * @author freeonsky
  * @since 0.28.4
  */
-class UTF8Charset <: Charset{
-
+public class UTF8Charset <: Charset{
+    public static let instance = UTF8Charset()
     /**
      * The Function is init constructor
      *
      * @since 0.28.4
      */
-    public init(){
-        this.labels = ["unicode-1-1-utf-8", "unicode11utf8", "unicode20utf8", "utf-8", "utf8", "x-unicode20utf8"]
-        this.name = "UTF-8"
+    private init(){
+        super("UTF-8", "unicode-1-1-utf-8", "unicode11utf8", "unicode20utf8", "utf-8", "utf8", "x-unicode20utf8")
+        // this.labels = ["unicode-1-1-utf-8", "unicode11utf8", "unicode20utf8", "utf-8", "utf8", "x-unicode20utf8"]
+        // this.name = "UTF-8"
     }
 
     /**
@@ -50,71 +47,28 @@ class UTF8Charset <: Charset{
     public func newDecoder():Decoder{
         UTF8Decoder()
     }
-
-    public operator func ==(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() == rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func !=(rhs: Charset): Bool {
-        if (this == rhs) {
-            return false
-        }
-        return true
-    }
-
-    public operator func ==(rhs: String): Bool {
-        if (this.name == rhs) {
-            return true
-        }
-        return false
-    }
-
-    public operator func !=(rhs: String): Bool {
-        if (this.name != rhs) {
-            return true
-        }
-        return false
-    }
-
-    public func hashCode(): Int64 {
-        var hash: Int64 = 0
-        hash = 31 * hash + this.name.hashCode()
-        return hash
-    }
-
-    public func toString(): String {
-        return this.name
-    }
 }
 
 /*
- * UTF-8 encoder 
+ * UTF-8 encoder
  * function: 将unicode codepoint encode utf8 byte sequence
  * utf8 code point（codepoint）Mapping relationship with code:
  * 0x00000000 - 0x0000007F:
  *     0xxxxxxx
- * 
+ *
  * 0x00000080 - 0x000007FF:
  *     110xxxxx 10xxxxxx
- * 
+ *
  * 0x00000800 - 0x0000FFFF:
  *     1110xxxx 10xxxxxx 10xxxxxx
- * 
+ *
  * 0x00010000 - 0x001FFFFF:
  *     11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
  * @author freeonsky
  * @since 0.28.4
  */
 class UTF8Encoder <: Encoder {
-
+    init(){}
     /**
      * Encodes a string into a byte array
      *
@@ -146,18 +100,18 @@ class UTF8Encoder <: Encoder {
                 res[position] = UInt8(0xE0 | ((codepoint >> 12) & 0x0F))
                 position += 1
                 res[position] = UInt8(0x80 | ((codepoint >> 6) & 0x3F))
-                position += 1  
+                position += 1
                 res[position] = UInt8(0x80 | (codepoint & 0x3F))
-                position += 1                                
+                position += 1
             }else{
                 res[position] = UInt8(0xF0 | ((codepoint >> 18) & 0x07))
                 position += 1
                 res[position] = UInt8(0x80 | ((codepoint >> 12) & 0x3F))
-                position += 1  
+                position += 1
                 res[position] = UInt8(0x80 | ((codepoint >> 6) & 0x3F))
-                position += 1                     
+                position += 1
                 res[position] = UInt8(0x80 | (codepoint & 0x3F))
-                position += 1                     
+                position += 1
             }
         }
         return res[0..position]
@@ -171,8 +125,8 @@ class UTF8Encoder <: Encoder {
  * @since 0.28.4
  */
 class UTF8Decoder <: Decoder{
-    let replacement = '\u{FFFD}'
-  
+    private let replacement = '\u{FFFD}'
+    init(){}
     /**
      * Decode byte array SRC into character array dest
      *
@@ -188,20 +142,20 @@ class UTF8Decoder <: Decoder{
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
         var destStart:Int64 = 0
-        var srcIndex = srcOffset    
+        var srcIndex = srcOffset
         var destIndex = destStart
         while(srcIndex <= srcLimit){
             if(destIndex >= dest.size){
                 return (srcIndex, destIndex)
-            }            
+            }
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
                 var c = Char(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
-                srcIndex += 1     
-                continue           
+                srcIndex += 1
+                continue
             }else if(u0 > 0x7F && u0 <= 0b11011111){
                 // Double byte
                 if(srcIndex+1 <= srcLimit){
@@ -231,8 +185,8 @@ class UTF8Decoder <: Decoder{
                 // Four bytes
                 if(srcIndex + 3 <= srcLimit){
                     var u1 = src[srcIndex+1]
-                    var u2 = src[srcIndex + 2]                
-                    var u3 = src[srcIndex + 3]     
+                    var u2 = src[srcIndex + 2]
+                    var u3 = src[srcIndex + 3]
                     dest[destIndex] = assignCharForU3(u0, u1, u2, u3)
                     srcIndex += 4
                     destIndex += 1
@@ -248,9 +202,9 @@ class UTF8Decoder <: Decoder{
                 destIndex += 1
                 continue
             }
-        }        
+        }
         (srcIndex, destIndex)
-    }    
+    }
 
     private func assignCharForU1(u0: UInt8, u1: UInt8): Char {
         if(u1 <= 0b10111111) {
@@ -279,7 +233,6 @@ class UTF8Decoder <: Decoder{
         }else{
             // Replace with fffd after error
             return replacement
-        } 
+        }
     }
 }
-

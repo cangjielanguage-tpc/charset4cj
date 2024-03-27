@@ -142,6 +142,5 @@ let ibm866DecodeMapping: Array<UInt32> = [
 		0x00a0
 ]
 
-let ibm866EncodeMapping = HashMap<UInt32, UInt32>([
+let ibm866EncodeMapping: Map<UInt32, UInt32> = HashMap<UInt32, UInt32>([
 ])
-

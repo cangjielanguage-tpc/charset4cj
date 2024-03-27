@@ -6,36 +6,20 @@ package charset.japanese
 
 import charset.encoding.*
 
-// EUC-JP japanese encoding charset
-public func newEUCJPCharset():Charset{
-    EUCJPCharset()
-}
-
-// ShiftJIS japanese encoding charset
-public func newShiftJISCharset():Charset{
-    ShiftJISCharset()
-}
-
-// ISO-2022-JP japanese encoding charset
-public func newISO2022JPCharset():Charset{
-    ISO2022JPCharset()
-}
-
 /**
  * ISO-2022-JP japanese encoding charset
  * @author freeonsky
  * @since 0.28.4
  */
-class ISO2022JPCharset <: Charset{
-
+public class ISO2022JPCharset <: Charset{
+    public static let instance = ISO2022JPCharset()
     /**
      * The Function is init constructor
      *
      * @since 0.28.4
      */
-    public init(){
-        this.labels = ["ISO-2022-JP",  "csiso2022jp"]
-        this.name = "ISO-2022-JP"
+    private init(){
+        super("ISO-2022-JP", "ISO-2022-JP",  "csiso2022jp")
     }
 
     /**
@@ -57,54 +41,6 @@ class ISO2022JPCharset <: Charset{
     public func newDecoder():Decoder{
         ISO2022JPDecoder()
     }
-
-    public operator func ==(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() == rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func !=(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() != rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() != rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func ==(rhs: String): Bool {
-        if (this.name == rhs) {
-            return true
-        }
-        return false
-    }
-
-    public operator func !=(rhs: String): Bool {
-        if (this.name != rhs) {
-            return true
-        }
-        return false
-    }
-
-    public func hashCode(): Int64 {
-        var hash: Int64 = 0
-        hash = 31 * hash + this.name.hashCode()
-        return hash
-    }
-
-    public func toString(): String {
-        return this.name
-    }
 }
 
 /**
@@ -112,16 +48,16 @@ class ISO2022JPCharset <: Charset{
  * @author freeonsky
  * @since 0.28.4
  */
-class EUCJPCharset <: Charset{
+public class EUCJPCharset <: Charset{
+    public static let instance = EUCJPCharset()
 
     /**
      * The Function is init constructor
      *
      * @since 0.28.4
      */
-    public init(){
-        this.labels = ["cseucpkdfmtjapanese",  "euc-jp",  "x-euc-jp"]
-        this.name = "EUC-JP"
+    private init(){
+        super("EUC-JP", "cseucpkdfmtjapanese",  "euc-jp",  "x-euc-jp")
     }
 
     /**
@@ -143,54 +79,6 @@ class EUCJPCharset <: Charset{
     public func newDecoder():Decoder{
         EUCJPDecoder()
     }
-
-    public operator func ==(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() == rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func !=(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() != rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() != rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func ==(rhs: String): Bool {
-        if (this.name == rhs) {
-            return true
-        }
-        return false
-    }
-
-    public operator func !=(rhs: String): Bool {
-        if (this.name != rhs) {
-            return true
-        }
-        return false
-    }
-
-    public func hashCode(): Int64 {
-        var hash: Int64 = 0
-        hash = 31 * hash + this.name.hashCode()
-        return hash
-    }
-
-    public func toString(): String {
-        return this.name
-    }
 }
 
 /**
@@ -198,16 +86,15 @@ class EUCJPCharset <: Charset{
  * @author freeonsky
  * @since 0.28.4
  */
-class ShiftJISCharset <: Charset{
-
+public class ShiftJISCharset <: Charset{
+    public static let instance = ShiftJISCharset()
     /**
      * The Function is init constructor
      *
      * @since 0.28.4
      */
-    public init(){
-        this.labels = ["csshiftjis","ms932","ms_kanji","shift-jis","shift_jis","sjis","windows-31j","x-sjis"]
-        this.name = "Shift_JIS"
+    private init(){
+        super("Shift_JIS", "csshiftjis","ms932","ms_kanji","shift-jis","shift_jis","sjis","windows-31j","x-sjis")
     }
 
     /**
@@ -228,53 +115,5 @@ class ShiftJISCharset <: Charset{
      */
     public func newDecoder():Decoder{
         ShiftJISDecoder()
-    }
-    
-    public operator func ==(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() == rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() == rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func !=(rhs: Charset): Bool {
-        if (this.name.toAsciiLower() != rhs.name.toAsciiLower()) {
-            return true
-        }
-        for(lable in this.labels) {
-            if(lable.toAsciiLower() != rhs.name.toAsciiLower()){
-                return true
-            }
-        }
-        return false
-    }
-
-    public operator func ==(rhs: String): Bool {
-        if (this.name == rhs) {
-            return true
-        }
-        return false
-    }
-
-    public operator func !=(rhs: String): Bool {
-        if (this.name != rhs) {
-            return true
-        }
-        return false
-    }
-
-    public func hashCode(): Int64 {
-        var hash: Int64 = 0
-        hash = 31 * hash + this.name.hashCode()
-        return hash
-    }
-
-    public func toString(): String {
-        return this.name
     }
 }

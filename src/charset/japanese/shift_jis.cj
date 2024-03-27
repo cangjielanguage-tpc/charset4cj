@@ -8,7 +8,7 @@ import charset.encoding.*
 import charset.exception.*
 
 class ShiftJISEncoder <: Encoder {
-
+    init(){}
     /**
      * Encodes a string into a byte array
      *
@@ -43,7 +43,7 @@ class ShiftJISEncoder <: Encoder {
                 if(codePoint == 0x2212){
                     codePoint = 0xFF0D
                 }
-                var index = indexShiftJISPointer(jis0208EncodeMapping, jis0208DecodeMapping, codePoint)
+                var index = indexShiftJISPointer(codePoint)
                 if(index >= 0){
                     var pointer = UInt32(index)
                     let lead = UInt8(pointer / 188)
@@ -60,7 +60,9 @@ class ShiftJISEncoder <: Encoder {
         }
         return ref[0..position]
     }
-    func indexShiftJISPointer(encodeMapping:Map<UInt32, UInt32>, decodeMapping:Array<UInt32>, codePoint:UInt32):Int64{
+    private func indexShiftJISPointer(codePoint:UInt32):Int64{
+        let encodeMapping = jis0208EncodeMapping
+        let decodeMapping = jis0208DecodeMapping
         var res:Int64 = -1
         if(!encodeMapping.isEmpty()){
             if(encodeMapping.contains(codePoint)){
@@ -92,8 +94,9 @@ class ShiftJISEncoder <: Encoder {
  * @since 0.28.4
  */
 class ShiftJISDecoder <: Decoder{
+    init(){}
     // Replace character when decoding error
-    let replacement = '\u{FFFD}'
+    private let replacement = '\u{FFFD}'
 
     /**
      * Decode byte array SRC into character array dest

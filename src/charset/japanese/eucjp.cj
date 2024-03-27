@@ -8,7 +8,7 @@ import charset.encoding.*
 import charset.exception.*
 
 class EUCJPEncoder <: Encoder {
-    
+    init(){}
     /**
      * Encodes a string into a byte array
      *
@@ -32,33 +32,33 @@ class EUCJPEncoder <: Encoder {
                 position += 1
             }else if(codePoint == 0x00A5){
                 ref[position] = 0x5C
-                position += 1                
+                position += 1
             }else if(codePoint == 0x203E){
                 ref[position] = 0x7E
-                position += 1                
+                position += 1
             }else if(codePoint >= 0xFF61 && codePoint <= 0xFF9F){
                 ref[position] = 0x8E
                 ref[position + 1] = UInt8(codePoint - 0xFF61 + 0xA1)
-                position += 2                
+                position += 2
             }else{
                 if(codePoint == 0x2212){
-                    codePoint = 0xFF0D              
-                }          
-                var index = indexPointer(jis0208EncodeMapping, jis0208DecodeMapping, codePoint)      
+                    codePoint = 0xFF0D
+                }
+                var index = indexPointer(jis0208EncodeMapping, jis0208DecodeMapping, codePoint)
                 if(index >= 0){
                     var pointer = UInt32(index)
                     let lead = pointer / 94 + 0xA1
                     let trail = pointer % 94 + 0xA1
                     ref[position] = UInt8(lead)
                     ref[position+1] = UInt8(trail)
-                    position += 2                    
+                    position += 2
                 } else {
                     index = indexPointer(jis0212EncodeMapping, jis0212DecodeMapping, codePoint)
                     if(index >= 0){
                         var pointer = UInt32(index)
                         let lead = pointer / 94 + 0xA1
                         let trail = pointer % 94 + 0xA1
-                        ref[position] = UInt8(0x8F) 
+                        ref[position] = UInt8(0x8F)
                         ref[position+1] = UInt8(lead)
                         ref[position+2] = UInt8(trail)
                         position += 3
@@ -67,7 +67,7 @@ class EUCJPEncoder <: Encoder {
                     }
                 }
             }
-        }    
+        }
         return ref[0..position]
     }
 }
@@ -82,13 +82,14 @@ class EUCJPEncoder <: Encoder {
  * @since 0.28.4
  */
 class EUCJPDecoder <: Decoder{
+    init(){}
     // Replace character when decoding error
     let replacement = '\u{FFFD}'
 
     /**
      * Decode byte array SRC into character array dest
      * euc-jp   single byte part is the same as ASCII
-     *          The double byte part: 
+     *          The double byte part:
      *              Katakana characters: first is 0x8E, second in 0xA1-0xDF
      *              JIS X 0208: first in 0xA1-0xFE, second in 0xA1-0xFE
      *          The three byte part is JIS X 0212:
@@ -104,9 +105,9 @@ class EUCJPDecoder <: Decoder{
     public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
-        var destStart:Int64 = 0                    
+        var destStart:Int64 = 0
         // Index being processed by SRC
-        var srcIndex = srcOffset   
+        var srcIndex = srcOffset
         // Dest index being processed
         var destIndex = destStart
         while(srcIndex <= srcLimit){
@@ -119,14 +120,14 @@ class EUCJPDecoder <: Decoder{
                 var c = Char(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
-                srcIndex += 1     
-                continue           
+                srcIndex += 1
+                continue
             }else{
                 if(srcIndex + 1 > srcLimit){
                     // If only half of the double bytes are in SRC, return and wait for the subsequent data to enter SRC for reprocessing
-                    return (srcIndex, destIndex)                    
+                    return (srcIndex, destIndex)
                 }
-                
+
                 var u1 = src[srcIndex+1]
                 var pointer:Int64 = 0
                 var codePoint:Char = '\u{0}'
@@ -136,7 +137,7 @@ class EUCJPDecoder <: Decoder{
                     dest[destIndex] = codePoint
                     srcIndex += 2
                     destIndex += 1
-                    continue                       
+                    continue
                 }
                 // The three byte part is JIS X 0212: first is 0x8F, second in 0xA1-0xFE, thrid in 0xA1-0xFE
                 if(u0 == 0x8F && u1 >= 0xA1 && u1 <= 0xFE){
@@ -156,7 +157,7 @@ class EUCJPDecoder <: Decoder{
                     dest[destIndex] = codePoint
                     srcIndex += 3
                     destIndex += 1
-                    continue                        
+                    continue
                 }
                 // JIS X 0208: first in 0xA1-0xFE, second in 0xA1-0xFE
                 if(u0 >= 0xA1 && u0 <= 0xFE && u1 >= 0xA1 && u1 <= 0xFE){
@@ -168,15 +169,15 @@ class EUCJPDecoder <: Decoder{
                     dest[destIndex] = codePoint
                     srcIndex += 2
                     destIndex += 1
-                    continue                      
+                    continue
                 }
                 // error
                 dest[destIndex] = replacement
                 srcIndex += 2
                 destIndex += 1
-                continue                      
+                continue
             }
         }
         return (srcIndex, destIndex)
-    }    
+    }
 }
