@@ -1,3 +1,6 @@
+[target.aarch64-linux-ohos]
+  compile-option = "-B\"${DEVECO_CANGJIE_HOME}/compiler/third_party/llvm/bin\" -B\"${DEVECO_CANGJIE_HOME}/musl/usr/lib/aarch64-linux-ohos\" -L\"${DEVECO_CANGJIE_HOME}/musl/usr/lib/aarch64-linux-ohos\" -L\"${DEVECO_CANGJIE_HOME}/build/linux_ohos_aarch64_llvm/openssl\" --sysroot \"${DEVECO_CANGJIE_HOME}/musl\""
+
 [dependencies]
 
 [package]
@@ -11,3 +14,7 @@
   target-dir = ""
   version = "0.0.2"
   package-configuration = {}
+
+[target.aarch64-linux-ohos.bin-dependencies]
+  path-option = ["${DEVECO_CANGJIE_HOME}/build/linux_ohos_aarch64_llvm/ohos", "${DEVECO_CANGJIE_HOME}/build/x86_64-w64-mingw32/macro/ohos"]
+  package-option = {}
