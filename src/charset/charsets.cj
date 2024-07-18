@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
@@ -7,17 +7,7 @@
  * Constant definitions for all the supported Charsets.
  */
 
-package charset
-
-from std import collection.HashMap
-
-import charset.unicode.*
-import charset.singlebyte.*
-import charset.simplechinese.*
-import charset.traditionchinese.*
-import charset.korean.*
-import charset.japanese.*
-import charset.encoding.*
+package charset4cj.charset
 
 /**
  * Constant definitions for all the supported Charsets.

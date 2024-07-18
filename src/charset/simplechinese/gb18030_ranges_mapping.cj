@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
@@ -7,8 +7,7 @@
  * whatwg.org Automatic document generation
  */
 
-package charset.simplechinese
-
+package charset4cj.charset.simplechinese
 
 let gb18030_rangesMapping: Array<Array<UInt32>> = [
 		[0, 0x0080],

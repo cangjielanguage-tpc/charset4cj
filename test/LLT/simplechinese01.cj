@@ -1,7 +1,7 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from charset import charset.*
-from charset import charset.simplechinese.*
+import charset4cj.charset.*
+import charset4cj.charset.simplechinese.*
 
 main (){
     var charset = match(Charsets.forName("gbk")){

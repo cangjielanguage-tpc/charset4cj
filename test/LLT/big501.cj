@@ -1,7 +1,7 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from charset import charset.*
-from charset import charset.traditionchinese.*
+import charset4cj.charset.*
+import charset4cj.charset.traditionchinese.*
 
 main (){
     var big5 = Charsets.BIG5

@@ -1,9 +1,9 @@
-//3rd_party_lib:charset/build/charset
+//3rd_party_lib:charset4cj/build/charset
 
-from fuzz import fuzz.*
-from charset import charset.*
-from charset import charset.singlebyte.*
-from std import collection.*
+import fuzz.fuzz.*
+import charset4cj.charset.*
+import charset4cj.charset.singlebyte.*
+import std.collection.*
 
 public func fuzzFunc_Decoder_decode(dp:DataProvider):Int32 {
     var decoder=Charsets.ISO_8859_6.newDecoder()

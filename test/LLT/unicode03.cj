@@ -1,7 +1,7 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from charset import charset.*
-from charset import charset.unicode.*
+import charset4cj.charset.*
+import charset4cj.charset.unicode.*
 
 main (){
     var charset = Charsets.UTF16BE

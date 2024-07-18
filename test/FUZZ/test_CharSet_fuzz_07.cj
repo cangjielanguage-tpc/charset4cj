@@ -1,10 +1,10 @@
-//3rd_party_lib:charset/build/charset
+//3rd_party_lib:charset4cj/build/charset
 
-from fuzz import fuzz.*
-from charset import charset.*
-from charset import charset.simplechinese.*
-from charset import charset.singlebyte.*
-from std import collection.*
+import fuzz.fuzz.*
+import charset4cj.charset.*
+import charset4cj.charset.simplechinese.*
+import charset4cj.charset.singlebyte.*
+import std.collection.*
 
 public func fuzzFunc_newSingleByteCharset(dp:DataProvider):Int32 {
     try{

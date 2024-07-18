@@ -1,9 +1,9 @@
-//3rd_party_lib:charset/build/charset
+//3rd_party_lib:charset4cj/build/charset
 
-from fuzz import fuzz.*
-from charset import charset.*
-from std import collection.*
-from std import io.*
+import fuzz.fuzz.*
+import charset4cj.charset.*
+import std.collection.*
+import std.io.*
 
 public func fuzzFunc_TextWriter_write(dp:DataProvider):Int32 {
     var temp=ByteArrayStream()

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
@@ -7,10 +7,7 @@
  * This file is about GB18030Decoder
  */
 
-package charset.simplechinese
-
-import charset.encoding.*
-import charset.exception.*
+package charset4cj.charset.simplechinese
 
 /**
  * gb18030  Character set decoder
@@ -23,21 +20,21 @@ import charset.exception.*
 class GB18030Decoder <: Decoder{
     init(){}
     // Replace character when decoding error
-    private let replacement = '\u{FFFD}'
+    private let replacement = r'\u{FFFD}'
     private let table = gb18030DecodeMapping
 
     /**
      * Decode byte array SRC into character array dest
      *
      * @param src input byte array
-     * @param dest output Char array
+     * @param dest output Rune array
      *
      * @return Type of (Int64, Int64):(srcIndex, destIndex)
      *         srcIndex: Next unprocessed SRC subscript
      *         destIndex: Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Rune>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
         var destStart:Int64 = 0
@@ -52,13 +49,13 @@ class GB18030Decoder <: Decoder{
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
-                var c = Char(UInt32(u0))
+                var c = Rune(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
                 srcIndex += 1
                 continue
             }else if(u0 == 0x80){
-                dest[destIndex] = Char(0x20AC)
+                dest[destIndex] = Rune(0x20AC)
                 destIndex += 1
                 srcIndex += 1
                 continue
@@ -78,7 +75,7 @@ class GB18030Decoder <: Decoder{
                                         }
                     var pointer = Int64(Int64(u0 - 0x81) * 190) + Int64(u1 - offset)
                     var codePoint = if(pointer < 23940){
-                                        Char(table[pointer])
+                                        Rune(table[pointer])
                                     }else{
                                         replacement;
                                     }
@@ -100,7 +97,7 @@ class GB18030Decoder <: Decoder{
                                     Int64(u2 - 0x81) * 10 +
                                     Int64(u3) - 0x30
                         if(pointer == 7457){
-                            dest[destIndex] = '\u{E7C7}'
+                            dest[destIndex] = r'\u{E7C7}'
                             srcIndex += 4
                             destIndex += 1
                             continue
@@ -122,7 +119,7 @@ class GB18030Decoder <: Decoder{
                             }
                             var code:Array<UInt32> = gb18030_rangesMapping[start - 1]
                             var codePoint = UInt32(UInt32(pointer) + UInt32(code[1]) - UInt32(code[0]))
-                            dest[destIndex] = Char(codePoint)
+                            dest[destIndex] = Rune(codePoint)
                             destIndex += 1
                             srcIndex += 4
                             continue

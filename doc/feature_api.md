@@ -343,16 +343,19 @@ public class DecoderException <: CharsetException {
 #### 1.3 示例
 
 ```cangjie
-from std import fs.*
-from charset import charset.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import std.fs.*
+import charset4cj.charset.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main() {
     let ccc = Test_FeatureApi01()
-    ccc.execute()
-    ccc.printResult()
-    0
+	let res = ccc.asTestSuite().runTests()
+	let fail = res.failedCount + res.errorCount
+	if (fail == 0) {
+		return 0
+	}
+    return 1
 }
 @Test
 public class Test_FeatureApi01 {
@@ -444,16 +447,19 @@ top level
 #### 2.3 示例
 
 ```cangjie
-from std import fs.*
-from charset import charset.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import std.fs.*
+import charset4cj.charset.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main() {
     let ccc = Test_FeatureApi02()
-    ccc.execute()
-    ccc.printResult()
-    0
+    let res = ccc.asTestSuite().runTests()
+    let fail = res.failedCount + res.errorCount
+    if (fail == 0) {
+      return 0
+    }
+    return 1
 }
 @Test
 public class Test_FeatureApi02 {

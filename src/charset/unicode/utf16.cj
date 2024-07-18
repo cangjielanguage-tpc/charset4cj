@@ -1,14 +1,12 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
  * @file
  * UTF16 character set
  */
-package charset.unicode
-
-import charset.encoding.*
+package charset4cj.charset.unicode
 
 /**
  * UTF16 character set
@@ -158,7 +156,7 @@ class UTF16Encoder <: Encoder {
  * @since 0.28.4
  */
 class UTF16Decoder <: Decoder{
-    private let replacement = '\u{FFFD}'
+    private let replacement = r'\u{FFFD}'
     // Whether it is big end mode, be = true big end mode; Be = false small end mode
     private let be:Bool
 
@@ -170,14 +168,14 @@ class UTF16Decoder <: Decoder{
      * Decode byte array SRC into character array dest
      *
      * @param src input byte array
-     * @param dest output Char array
+     * @param dest output Rune array
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
      *         srcIndex Next unprocessed SRC subscript
      *         destIndex Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Rune>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
         var destStart:Int64 = 0
@@ -216,13 +214,13 @@ class UTF16Decoder <: Decoder{
                     codeUnit2 = (UInt32(u3) << 8) + UInt32(u2)
                 }
                 var codePoint:UInt32 = 0x10000 + (UInt32(codeUnit - 0xD800) << 10) + codeUnit2 - 0xDC00
-                dest[destIndex] = Char(codePoint)
+                dest[destIndex] = Rune(codePoint)
                 srcIndex += 4
                 destIndex += 1
                 continue
             }else{
                 // Double byte
-                dest[destIndex] = Char(codeUnit)
+                dest[destIndex] = Rune(codeUnit)
                 srcIndex += 2
                 destIndex += 1
                 continue

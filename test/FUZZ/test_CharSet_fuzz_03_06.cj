@@ -1,14 +1,14 @@
-//3rd_party_lib:charset/build/charset
+//3rd_party_lib:charset4cj/build/charset
 
-from fuzz import fuzz.*
-from charset import charset.*
-from charset import charset.unicode.*
-from std import collection.*
+import fuzz.fuzz.*
+import charset4cj.charset.*
+import charset4cj.charset.unicode.*
+import std.collection.*
 
 public func fuzzFunc_Decoder_decode(dp:DataProvider):Int32 {
     var decoder=Charsets.UTF32LE.newDecoder()
     try{
-        decoder.decode(dp.consumeUInt8s(1024),Array<Char>(1024,item:'c'))
+        decoder.decode(dp.consumeUInt8s(1024),Array<Rune>(1024,item:'c'))
     }catch(e:Exception){}
     return 0
 }

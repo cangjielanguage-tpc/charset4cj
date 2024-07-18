@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
@@ -7,10 +7,7 @@
  * This file is about charset korean
  */
 
-package charset.korean
-
-import charset.encoding.*
-import charset.exception.*
+package charset4cj.charset.korean
 
 /**
  * EUC-KR korean encoding
@@ -111,21 +108,21 @@ class EUCKREncoder <: Encoder {
  */
 class EUCKRDecoder <: Decoder{
     // Replace character when decoding error
-    private let replacement = '\u{FFFD}'
+    private let replacement = r'\u{FFFD}'
     private let table = EUC_KRDecodeMapping
 
     /**
      * Decode byte array SRC into character array dest
      *
      * @param src input byte array
-     * @param dest output Char array
+     * @param dest output Rune array
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
      *         srcIndex Next unprocessed SRC subscript
      *         destIndex Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Rune>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
         var destStart:Int64 = 0
@@ -140,7 +137,7 @@ class EUCKRDecoder <: Decoder{
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
-                var c = Char(UInt32(u0))
+                var c = Rune(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
                 srcIndex += 1
@@ -153,14 +150,14 @@ class EUCKRDecoder <: Decoder{
 
                 var u1 = src[srcIndex+1]
                 var pointer:Int64 = 0
-                var codePoint:Char = '\u{0}'
+                var codePoint:Rune = r'\u{0}'
                 if(u1 >= 0x41 && u1 <= 0xFE){
                     pointer = Int64(Int64(u0 - 0x81) * 190 + Int64(u1) - 0x41)
                     let c = table[pointer]
                     if(c == 0){
                         codePoint = replacement
                     }else{
-                        codePoint = Char(c)
+                        codePoint = Rune(c)
                     }
                 }else{
                     codePoint = replacement

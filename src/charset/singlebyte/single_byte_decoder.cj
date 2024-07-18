@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
@@ -7,10 +7,7 @@
  * Single byte character set decoder
  */
 
-package charset.singlebyte
-
-from std import collection.*
-import charset.encoding.*
+package charset4cj.charset.singlebyte
 
 /**
  * Single byte character set decoder
@@ -18,7 +15,7 @@ import charset.encoding.*
  * @since 0.28.4
  */
 class SingleByteDecoder <: Decoder{
-    private let replacement = '\u{FFFD}'
+    private let replacement = r'\u{FFFD}'
 
     SingleByteDecoder(private let decodeMapping: Array<UInt32>){}
 
@@ -26,14 +23,14 @@ class SingleByteDecoder <: Decoder{
      * Decode byte array SRC into character array dest
      *
      * @param src input byte array
-     * @param dest output Char array
+     * @param dest output Rune array
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
      *         srcIndex Next unprocessed SRC subscript
      *         destIndex Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Rune>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
         var destStart:Int64 = 0
@@ -47,12 +44,12 @@ class SingleByteDecoder <: Decoder{
             }
             var byte = src[srcIndex]
             if(byte <= 0x7F){
-                dest[destIndex] = Char(UInt32(byte))
+                dest[destIndex] = Rune(UInt32(byte))
                 destIndex += 1
             }else{
                 var pointer = Int64(byte - 0x80)
                 dest[destIndex] = match(decodeMapping.get(pointer)){
-                    case Some(c) => Char(c)
+                    case Some(c) => Rune(c)
                     case None => replacement
                 }
                 destIndex += 1

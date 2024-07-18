@@ -1,7 +1,7 @@
-//3rd_party_lib:charset/build/charset
+//3rd_party_lib:charset4cj/build/charset
 
-from fuzz import fuzz.*
-from charset import charset.*
+import fuzz.fuzz.*
+import charset4cj.charset.*
 
 public func fuzzFunc_Charsets_forName(dp:DataProvider):Int32 {
     try{

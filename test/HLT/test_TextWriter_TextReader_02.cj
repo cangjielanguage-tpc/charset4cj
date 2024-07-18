@@ -1,10 +1,10 @@
-// 3rd_party_lib:charset/build/charset
-// 3rd_party_lib_ohos:charset/build/aarch64-linux-ohos/charset
+// 3rd_party_lib:charset4cj/build/charset
+// 3rd_party_lib_ohos:charset4cj/build/aarch64-linux-ohos/charset
 
-from std import unittest.*
-from std import unittest.testmacro.*
-from charset import charset.*
-from std import io.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import charset4cj.charset.*
+import std.io.*
 
 @Test
 public class TestTextWriter{
@@ -14,7 +14,7 @@ public class TestTextWriter{
         public func readAllLine():ArrayList<String>
         public func readln(): Option<String>
         public func write(s:String)
-        public func read(): Option<Char>
+        public func read(): Option<Rune>
         测试场景：非空流,charset,bufSize均使用非默认值
     */
     var content_singleLine="hello cangjie"

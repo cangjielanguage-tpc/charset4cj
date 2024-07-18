@@ -1,10 +1,10 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from charset import charset.*
-from std import unittest.*
-from std import unittest.testmacro.*
-from std import io.*
+import charset4cj.charset.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.io.*
 
 main(): Int64 {
     let readerWriter = ReaderWriter01()

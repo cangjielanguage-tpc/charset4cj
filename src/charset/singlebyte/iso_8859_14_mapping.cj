@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
@@ -7,9 +7,7 @@
  * whatwg.org Automatic document generation
  */
 
-package charset.singlebyte
-
-from std import collection.*
+package charset4cj.charset.singlebyte
 
 let iso_8859_14DecodeMapping: Array<UInt32> = [
 		0x0080,

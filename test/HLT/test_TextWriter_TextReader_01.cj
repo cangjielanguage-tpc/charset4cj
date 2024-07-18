@@ -1,10 +1,10 @@
-// 3rd_party_lib:charset/build/charset
-// 3rd_party_lib_ohos:charset/build/aarch64-linux-ohos/charset
+// 3rd_party_lib:charset4cj/build/charset
+// 3rd_party_lib_ohos:charset4cj/build/aarch64-linux-ohos/charset
 
-from std import unittest.*
-from std import unittest.testmacro.*
-from charset import charset.*
-from std import io.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import charset4cj.charset.*
+import std.io.*
 
 @Test
 public class TestTextWriter01{
@@ -14,7 +14,7 @@ public class TestTextWriter01{
         public func readAllLine():ArrayList<String>
         public func readln(): Option<String>
         public func write(s:String)
-        public func read(): Option<Char>
+        public func read(): Option<Rune>
         测试场景：空流,charset,bufSize均使用默认值,写入内容为空/单行/多行
     */
     var content_singleLine="hello cangjie"
@@ -72,8 +72,8 @@ hello cangjie
         tw.write(content_singleLine)
         var tr=TextReader(temp)
         var exp_content=content_singleLine.toRuneArray()
-        var re='a'
-        var exp_re='a'
+        var re=r'a'
+        var exp_re=r'a'
         for (index in 0..exp_content.size){
             re=tr.read().getOrThrow()
             exp_re=exp_content[index]
@@ -107,8 +107,8 @@ hello cangjie
         tw.write(content_MultiLine)
         var tr=TextReader(temp)
         var exp_content=content_MultiLine.toRuneArray()
-        var re='a'
-        var exp_re='a'
+        var re=r'a'
+        var exp_re=r'a'
         for (index in 0..exp_content.size){
             re=tr.read().getOrThrow()
             exp_re=exp_content[index]

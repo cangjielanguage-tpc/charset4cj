@@ -1,14 +1,12 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
  * @file
  * UTF8 character set
  */
-package charset.unicode
-
-import charset.encoding.*
+package charset4cj.charset.unicode
 
 /**
  * UTF8 character set
@@ -125,20 +123,20 @@ class UTF8Encoder <: Encoder {
  * @since 0.28.4
  */
 class UTF8Decoder <: Decoder{
-    private let replacement = '\u{FFFD}'
+    private let replacement = r'\u{FFFD}'
     init(){}
     /**
      * Decode byte array SRC into character array dest
      *
      * @param src input byte array
-     * @param dest output Char array
+     * @param dest output Rune array
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
      *         srcIndex Next unprocessed SRC subscript
      *         destIndex Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Rune>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
         var destStart:Int64 = 0
@@ -151,7 +149,7 @@ class UTF8Decoder <: Decoder{
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
-                var c = Char(UInt32(u0))
+                var c = Rune(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
                 srcIndex += 1
@@ -206,30 +204,30 @@ class UTF8Decoder <: Decoder{
         (srcIndex, destIndex)
     }
 
-    private func assignCharForU1(u0: UInt8, u1: UInt8): Char {
+    private func assignCharForU1(u0: UInt8, u1: UInt8): Rune {
         if(u1 <= 0b10111111) {
             var codePoint = UInt32(UInt32(u0 & 0b00011111) << 6) + UInt32(u1 & 0b00111111)
-            return Char(codePoint)
+            return Rune(codePoint)
         }else {
             // Replace with fffd after error
             return replacement
         }
     }
 
-    private func assignCharForU2(u0: UInt8, u1: UInt8, u2: UInt8): Char {
+    private func assignCharForU2(u0: UInt8, u1: UInt8, u2: UInt8): Rune {
         if(u1 <= 0b10111111 && u2 <= 0b10111111){
             var codePoint = UInt32(UInt32(u0 & 0b00001111) << 12) + UInt32(UInt32(u1 & 0b00111111) << 6) + UInt32(u2 & 0b00111111)
-            return Char(codePoint)
+            return Rune(codePoint)
         }else{
         // Replace with fffd after error
         return replacement
         }
     }
 
-    private func assignCharForU3(u0: UInt8, u1: UInt8, u2: UInt8, u3: UInt8): Char {
+    private func assignCharForU3(u0: UInt8, u1: UInt8, u2: UInt8, u3: UInt8): Rune {
         if(u1 <= 0b10111111 && u2 <= 0b10111111 && u3 <= 0b10111111){
             var codePoint = UInt32(UInt32(u0 & 0b00000111) << 18) + UInt32(UInt32(u1 & 0b00111111) << 12) + UInt32(UInt32(u2 & 0b00111111) << 6) + UInt32(u2 & 0b00111111)
-            return Char(codePoint)
+            return Rune(codePoint)
         }else{
             // Replace with fffd after error
             return replacement

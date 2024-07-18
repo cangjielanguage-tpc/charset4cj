@@ -1,11 +1,11 @@
-// 3rd_party_lib:charset/build/charset
-// 3rd_party_lib_ohos:charset/build/aarch64-linux-ohos/charset
+// 3rd_party_lib:charset4cj/build/charset
+// 3rd_party_lib_ohos:charset4cj/build/aarch64-linux-ohos/charset
 
-from std import unittest.*
-from std import unittest.testmacro.*
-from charset import charset.encoding.*
-from charset import charset.*
-from std import collection.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import charset4cj.charset.encoding.*
+import charset4cj.charset.*
+import std.collection.*
 
 @Test
 public class TestCharsets{

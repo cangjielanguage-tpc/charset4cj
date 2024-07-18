@@ -1,11 +1,11 @@
-// 3rd_party_lib:charset/build/charset
-// 3rd_party_lib_ohos:charset/build/aarch64-linux-ohos/charset
+// 3rd_party_lib:charset4cj/build/charset
+// 3rd_party_lib_ohos:charset4cj/build/aarch64-linux-ohos/charset
 
-from std import unittest.*
-from std import unittest.testmacro.*
-from charset import charset.*
-from charset import charset.exception.*
-from std import collection.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import charset4cj.charset.*
+import charset4cj.charset.exception.*
+import std.collection.*
 
 @Test
 public class TestCharsetISO_8859_15{
@@ -58,7 +58,7 @@ public class TestCharsetISO_8859_15{
         encode_String="FAFIDSGJOferegee324525"
         var encoder=Charsets.ISO_8859_15.newEncoder()
         var en_re=encoder.encode(encode_String)
-        var desc=Array<Char>(en_re.size+1,item:'c')
+        var desc=Array<Rune>(en_re.size+1,item:r'c')
         var decoder=Charsets.ISO_8859_15.newDecoder()
         var de_re=decoder.decode(en_re,desc)
         @Assert(de_re[0],en_re.size)
@@ -69,7 +69,7 @@ public class TestCharsetISO_8859_15{
         encode_String="FAFIDSGJOferegee324525"
         var encoder=Charsets.ISO_8859_15.newEncoder()
         var en_re=encoder.encode(encode_String)
-        var desc=Array<Char>(en_re.size,item:'c')
+        var desc=Array<Rune>(en_re.size,item:r'c')
         var decoder=Charsets.ISO_8859_15.newDecoder()
         var de_re=decoder.decode(en_re,desc)
         @Assert(de_re[0],en_re.size)
@@ -80,7 +80,7 @@ public class TestCharsetISO_8859_15{
         encode_String="FAFIDSGJOferegee324525"
         var encoder=Charsets.ISO_8859_15.newEncoder()
         var en_re=encoder.encode(encode_String)
-        var desc=Array<Char>(en_re.size-1,item:'c')
+        var desc=Array<Rune>(en_re.size-1,item:r'c')
         var decoder=Charsets.ISO_8859_15.newDecoder()
         var de_re=decoder.decode(en_re,desc)
         @Assert(de_re[0],encoder.encode(encode_String[..desc.size]).size)

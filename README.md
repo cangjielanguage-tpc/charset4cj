@@ -1,11 +1,11 @@
 <div align="center">
-<h1> charset </h1>
+<h1> charset4cj </h1>
 </div>
 
 <p align="center">
-<img alt="" src="https://img.shields.io/badge/release-v0.0.3-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.51.4-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.53.4-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-90.7%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
@@ -211,16 +211,19 @@ test.cj.out
 注意：字符集简介文件存放于项目的 test/LLT 目录下
 
 ```cangjie
-from std import fs.*
-from charset import charset.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import std.fs.*
+import charset4cj.charset.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main() {
     let ccc = Test_ReadMe01()
-    ccc.execute()
-    ccc.printResult()
-    0
+    let res = ccc.asTestSuite().runTests()
+    let fail = res.failedCount + res.errorCount
+    if (fail == 0) {
+      return 0
+    }
+    return 1
 }
 @Test
 public class Test_ReadMe01 {
@@ -243,22 +246,25 @@ public class Test_ReadMe01 {
 
 执行结果如下：
 ```shell
-[ PASSED ] CASE: testReadMe01
+0
 ```
 
 ### EUCJP 字符集编码解码功能示例
 
 ```cangjie
-from std import fs.*
-from charset import charset.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import std.fs.*
+import charset4cj.charset.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main() {
     let ccc = Test_ReadMe02()
-    ccc.execute()
-    ccc.printResult()
-    0
+    let res = ccc.asTestSuite().runTests()
+    let fail = res.failedCount + res.errorCount
+    if (fail == 0) {
+      return 0
+    }
+    return 1
 }
 @Test
 public class Test_ReadMe02 {
@@ -282,10 +288,21 @@ public class Test_ReadMe02 {
 
 执行结果如下：
 ```shell
-[ PASSED ] CASE: testReadMe02
+0
 ```
 
 注意：用例需放入 `test/LLT` 下
+
+## 约束与限制
+
+在下述版本验证通过：
+```shell
+Cangjie Version: 0.53.4
+```
+
+## 开源协议
+
+本项目基于 [MulanPSL-2.0](https://gitcode.com/Cangjie-TPC/charset4cj/blob/master/LICENSE) ，请自由的享受和参与开源。
 
 ## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
 

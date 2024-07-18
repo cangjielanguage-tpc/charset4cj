@@ -1,11 +1,8 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
-package charset.japanese
-
-import charset.encoding.*
-import charset.exception.*
+package charset4cj.charset.japanese
 
 class EUCJPEncoder <: Encoder {
     init(){}
@@ -84,7 +81,7 @@ class EUCJPEncoder <: Encoder {
 class EUCJPDecoder <: Decoder{
     init(){}
     // Replace character when decoding error
-    let replacement = '\u{FFFD}'
+    let replacement = r'\u{FFFD}'
 
     /**
      * Decode byte array SRC into character array dest
@@ -95,14 +92,14 @@ class EUCJPDecoder <: Decoder{
      *          The three byte part is JIS X 0212:
      *              first is 0x8F, second in 0xA1-0xFE, thrid in 0xA1-0xFE
      * @param src input byte array
-     * @param dest output Char array
+     * @param dest output Rune array
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
      *         srcIndex Next unprocessed SRC subscript
      *         destIndex Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Rune>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
         var destStart:Int64 = 0
@@ -117,7 +114,7 @@ class EUCJPDecoder <: Decoder{
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
-                var c = Char(UInt32(u0))
+                var c = Rune(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
                 srcIndex += 1
@@ -130,10 +127,10 @@ class EUCJPDecoder <: Decoder{
 
                 var u1 = src[srcIndex+1]
                 var pointer:Int64 = 0
-                var codePoint:Char = '\u{0}'
+                var codePoint:Rune = r'\u{0}'
                 // Katakana characters: first is 0x8E, second in 0xA1-0xDF
                 if(u0 == 0x8E && u1 >= 0xA1 && u1 <= 0xDF){
-                    codePoint = Char(0xFF61 - 0xA1 + UInt32(u1))
+                    codePoint = Rune(0xFF61 - 0xA1 + UInt32(u1))
                     dest[destIndex] = codePoint
                     srcIndex += 2
                     destIndex += 1
@@ -148,7 +145,7 @@ class EUCJPDecoder <: Decoder{
                     if(u2 >= 0xA1 && u2 <= 0xFE){
                         pointer = Int64(Int64(u1 - 0xA1) * 94 + Int64(u2) - 0xA1)
                         codePoint = match(jis0212DecodeMapping.get(pointer)){
-                            case Some(c) => Char(c)
+                            case Some(c) => Rune(c)
                             case None => replacement
                         }
                     }else{
@@ -163,7 +160,7 @@ class EUCJPDecoder <: Decoder{
                 if(u0 >= 0xA1 && u0 <= 0xFE && u1 >= 0xA1 && u1 <= 0xFE){
                     pointer = Int64(Int64(u0 - 0xA1) * 94 + Int64(u1) - 0xA1)
                     codePoint = match(jis0208DecodeMapping.get(pointer)){
-                        case Some(c) => Char(c)
+                        case Some(c) => Rune(c)
                         case None => replacement
                     }
                     dest[destIndex] = codePoint
