@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
@@ -7,11 +7,7 @@
  * Single byte character set encoder
  */
 
-package charset.singlebyte
-
-from std import collection.*
-import charset.encoding.*
-import charset.exception.*
+package charset4cj.charset.singlebyte
 
 /**
  * Single byte character set encoder
@@ -34,7 +30,7 @@ class SingleByteEncoder <: Encoder {
      * @since 0.28.4
      */
     public func encode(str:String): Array<UInt8>{
-        var buf:Array<Char> = str.toRuneArray()
+        var buf:Array<Rune> = str.toRuneArray()
         let ref = Array<UInt8>(buf.size, item:0)
         var i = 0
         for(character in buf){

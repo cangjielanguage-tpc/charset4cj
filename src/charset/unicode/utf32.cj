@@ -1,17 +1,15 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
  * @file
- * UTF32 char set
+ * UTF32 Rune set
  */
-package charset.unicode
-
-import charset.encoding.*
+package charset4cj.charset.unicode
 
 /**
- * UTF32 char set
+ * UTF32 Rune set
  * @author freeonsky
  * @since 0.28.4
  */
@@ -137,7 +135,7 @@ class UTF32Encoder <: Encoder {
  * @since 0.28.4
  */
 class UTF32Decoder <: Decoder{
-    private let replacement = '\u{FFFD}'
+    private let replacement = r'\u{FFFD}'
     // Whether it is big end mode, be = true big end mode; Be = false small end mode
     private let be:Bool
     init(be:Bool){
@@ -148,14 +146,14 @@ class UTF32Decoder <: Decoder{
      * Decode byte array SRC into character array dest
      *
      * @param src input byte array
-     * @param dest output Char array
+     * @param dest output Rune array
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
      *         srcIndex Next unprocessed SRC subscript
      *         destIndex Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Rune>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
         var destStart:Int64 = 0
@@ -178,7 +176,7 @@ class UTF32Decoder <: Decoder{
             }else{
                 (UInt32(u3) << 24) + (UInt32(u2) << 16) + (UInt32(u1) << 8) + UInt32(u0)
             }
-            dest[destIndex] = Char(codeUnit)
+            dest[destIndex] = Rune(codeUnit)
             destIndex += 1
             srcIndex += 4
             continue

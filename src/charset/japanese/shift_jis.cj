@@ -1,11 +1,8 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
-package charset.japanese
-
-import charset.encoding.*
-import charset.exception.*
+package charset4cj.charset.japanese
 
 class ShiftJISEncoder <: Encoder {
     init(){}
@@ -96,19 +93,19 @@ class ShiftJISEncoder <: Encoder {
 class ShiftJISDecoder <: Decoder{
     init(){}
     // Replace character when decoding error
-    private let replacement = '\u{FFFD}'
+    private let replacement = r'\u{FFFD}'
 
     /**
      * Decode byte array SRC into character array dest
      * @param src input byte array
-     * @param dest output Char array
+     * @param dest output Rune array
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
      *         srcIndex Next unprocessed SRC subscript
      *         destIndex Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Rune>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
         var destStart:Int64 = 0
@@ -123,7 +120,7 @@ class ShiftJISDecoder <: Decoder{
             var u0 = src[srcIndex];
             // ASCII byte or 0x80, return a code point whose value is byte
             if(u0 <= 0x80){
-                var c = Char(UInt32(u0))
+                var c = Rune(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
                 srcIndex += 1
@@ -131,7 +128,7 @@ class ShiftJISDecoder <: Decoder{
             }
             // If byte is in the range 0xA1 to 0xDF, inclusive, return a code point whose value is 0xFF61 - 0xA1 + byte
             if(u0 >= 0xA1 && u0 <= 0xDF){
-                var c = Char(UInt32(0xFF61 - 0xA1 + UInt32(u0)))
+                var c = Rune(UInt32(0xFF61 - 0xA1 + UInt32(u0)))
                 dest[destIndex] = c
                 destIndex += 1
                 srcIndex += 1
@@ -145,21 +142,21 @@ class ShiftJISDecoder <: Decoder{
                 }
                 var u1 = src[srcIndex+1]
                 var pointer:Int64 = -1
-                var codePoint:Char = '\u{0}'
+                var codePoint:Rune = r'\u{0}'
                 var offset:UInt8 = assignOffset(u1)
                 var leadOffset:UInt8 = assignLeadOffset(u0)
                 if((u1 >= 0x40 && u1 <= 0x7E) || (u1 >= 0x80 && u1 <=0xFC)){
                     pointer = Int64(u0 - leadOffset) * 188 + Int64(u1) - Int64(offset)
                 }
                 if(pointer >= 8836 && pointer <= 10715){
-                    codePoint = Char(0xE000 - 8836 + pointer)
+                    codePoint = Rune(0xE000 - 8836 + pointer)
                     dest[destIndex] = codePoint
                     srcIndex += 2
                     destIndex += 1
                     continue
                 }
                 codePoint = match(jis0208DecodeMapping.get(pointer)){
-                    case Some(c) => Char(c)
+                    case Some(c) => Rune(c)
                     case None => replacement
                 }
                 dest[destIndex] = codePoint

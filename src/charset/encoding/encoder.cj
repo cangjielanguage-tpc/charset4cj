@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
@@ -7,9 +7,7 @@
  * This file is about encodes a string into a byte array
  */
 
-package charset.encoding
-
-from std import collection.*
+package charset4cj.charset.encoding
 
 /**
  * Encoder for encode string into a byte array
@@ -42,7 +40,7 @@ public func indexPointer(encodeMapping:Map<UInt32, UInt32>, decodeMapping:Array<
         for(i in 0..decodeMapping.size){
             let item = match(decodeMapping.get(i)){
                 case Some(c) => UInt32(c)
-                case None => UInt32('\u{FFFF}')
+                case None => UInt32(r'\u{FFFF}')
             }
             if(item == codePoint){
                 res = i

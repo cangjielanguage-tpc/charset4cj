@@ -1,11 +1,11 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from charset import charset.*
-from charset import charset.encoding.*
-from std import unittest.*
-from std import unittest.testmacro.*
-from std import collection.*
+import charset4cj.charset.*
+import charset4cj.charset.encoding.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.collection.*
 
 main(): Int64 {
     let testAddImpl = TestAddImpl()
@@ -38,7 +38,7 @@ main(): Int64 {
 public class TestAddImpl {
 
     var map: HashMap<UInt32, UInt32> = HashMap<UInt32, UInt32>()
-    var des: Array<Char> = Array<Char>(100, {_ => '\u{0}'})
+    var des: Array<Rune> = Array<Rune>(100, {_ => r'\u{0}'})
 
     @TestCase
     public func testIndexPointer(): Unit {

@@ -1,14 +1,12 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
  * @file
  * This file is about GB18030Charset
  */
-package charset.simplechinese
-
-import charset.encoding.*
+package charset4cj.charset.simplechinese
 
 /**
  * The class is GBKCharset inherited from Charset

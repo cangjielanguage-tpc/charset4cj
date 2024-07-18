@@ -1,9 +1,9 @@
-//3rd_party_lib:charset/build/charset
+//3rd_party_lib:charset4cj/build/charset
 
-from fuzz import fuzz.*
-from charset import charset.*
-from charset import charset.japanese.*
-from std import collection.*
+import fuzz.fuzz.*
+import charset4cj.charset.*
+import charset4cj.charset.japanese.*
+import std.collection.*
 
 public func fuzzFunc_Encoder_encode(dp:DataProvider):Int32 {
     var encoder=Charsets.ISO_2022_JP.newEncoder()

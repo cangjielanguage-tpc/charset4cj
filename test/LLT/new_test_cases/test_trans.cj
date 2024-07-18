@@ -3,11 +3,11 @@
 // DEPENDENCE: utf8.txt
 // DEPENDENCE: gbk.txt
 
-from charset import charset.*
-from std import fs.*
-from std import io.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import charset4cj.charset.*
+import std.fs.*
+import std.io.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main(): Int64 {
     let t = Trans()

@@ -1,10 +1,8 @@
-package charset
+/*
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
+ */
 
-from std import io.*
-from std import collection.*
-
-
-import charset.encoding.*
+package charset4cj.charset
 
 /**
 * process text writer

@@ -1,10 +1,8 @@
-package charset
+/*
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
+ */
 
-from std import io.*
-from std import collection.*
-
-
-import charset.encoding.*
+package charset4cj.charset
 
 /**
 * process text reader
@@ -36,12 +34,12 @@ public class TextReader{
         }
         return list
     }
-    public func read(): Option<Char>{
+    public func read(): Option<Rune>{
         if (checkEOF()) {
             return None
         }
         var decoder = charset.newDecoder()
-        var dest = Array<Char>(1, item:'\0')
+        var dest = Array<Rune>(1, item:r'\0')
         let src = buf.slice(0, this.bufLimit)
         var (srcIndex, destIndex) = decoder.decode(src, dest)
         if(destIndex == 1){
@@ -58,13 +56,13 @@ public class TextReader{
             return None
         }
         // 如果有换行符
-        var linefeed = UInt8(UInt32('\n'))
-        var enter = UInt8(UInt32('\r'))
+        var linefeed = UInt8(UInt32(r'\n'))
+        var enter = UInt8(UInt32(r'\r'))
         var decoder = charset.newDecoder()
         let src = buf.slice(0, this.bufLimit)
-        var indexOp = indexOf(src, linefeed)
+        var indexOp = indexOfs(src, linefeed)
         if(indexOp == None){
-            var dest = Array<Char>(src.size, item:'\0')
+            var dest = Array<Rune>(src.size, item:r'\0')
             var (srcIndex, destIndex) = decoder.decode(src, dest)
             rotateLeft(srcIndex)
             return Some(String(dest.slice(0, destIndex)))
@@ -82,6 +80,7 @@ public class TextReader{
             return Some(line)
         }
     }
+
     // 将 buf 从 index 位置移动到0，依次左移
     private func rotateLeft(index:Int64){
         for(i in index..buf.size){
@@ -106,4 +105,13 @@ public class TextReader{
         return eof && this.bufLimit == 0
     }
 
+}
+
+func indexOfs(src: Array<UInt8>, byte: Byte): Option<Int64> {
+    for (i in 0..src.size) {
+        if (src[i] == byte) {
+            return i
+        }
+    }
+    return None 
 }

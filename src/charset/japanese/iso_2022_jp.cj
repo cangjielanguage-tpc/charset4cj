@@ -1,11 +1,8 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
-package charset.japanese
-
-import charset.encoding.*
-import charset.exception.*
+package charset4cj.charset.japanese
 
 class ISO2022JPEncoder <: Encoder {
     // ASCII:0 | Roman:1 | katakana:2 | JIS:3
@@ -144,7 +141,7 @@ enum State {
  */
 class ISO2022JPDecoder <: Decoder{
     // Replace character when decoding error
-    private let replacement = '\u{FFFD}'
+    private let replacement = r'\u{FFFD}'
     // ASCII:0 | Roman:1 | katakana:2 | JIS:3
     private var state = 0
 
@@ -157,14 +154,14 @@ class ISO2022JPDecoder <: Decoder{
      *   ESC $ B to JIS X 0208-1983  start byte:0X1B,0x24,0x42
      *
      * @param src input byte array
-     * @param dest output Char array
+     * @param dest output Rune array
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
      *         srcIndex Next unprocessed SRC subscript
      *         destIndex Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Rune>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
         var destStart:Int64 = 0
@@ -179,7 +176,7 @@ class ISO2022JPDecoder <: Decoder{
             let u0 = src[srcIndex];
             if(u0 == 0x1B){
                 if(srcIndex + 3 > srcLimit){
-                    // when escape char sequese < 3 ， return
+                    // when escape Rune sequese < 3 ， return
                     return (srcIndex, destIndex)
                 }
                 let u1 = src[srcIndex + 1]
@@ -211,7 +208,7 @@ class ISO2022JPDecoder <: Decoder{
                 // ASCII:0 | Roman:1 | katakana:2 | JIS:3
                 if(state == 0){
                     if(u0 >=0x00 && u0 <= 0x7F && u0 != 0x0E && u0 != 0x0F){
-                        dest[destIndex] = Char(u0)
+                        dest[destIndex] = Rune(u0)
                     }else{
                         dest[destIndex] = replacement
                     }
@@ -219,11 +216,11 @@ class ISO2022JPDecoder <: Decoder{
                     srcIndex += 1
                 }else if(state == 1){// Roman:1
                     if(u0 == 0x5C){
-                        dest[destIndex] = Char(0xA5)
+                        dest[destIndex] = Rune(0xA5)
                     }else if(u0 == 0x7E){
-                        dest[destIndex] = Char(0x203E)
+                        dest[destIndex] = Rune(0x203E)
                     }else if(u0 >=0x00 && u0 <= 0x7F && u0 != 0x0E && u0 != 0x0F){
-                        dest[destIndex] = Char(u0)
+                        dest[destIndex] = Rune(u0)
                     }else{
                         dest[destIndex] = replacement
                     }
@@ -231,7 +228,7 @@ class ISO2022JPDecoder <: Decoder{
                     srcIndex += 1
                 }else if(state == 2){ // katakana:2
                     if(u0 >= 0x21 && u0 <= 0x5F){
-                        dest[destIndex] = Char(UInt32(0xFF61) - UInt32(0x21) + UInt32(u0))
+                        dest[destIndex] = Rune(UInt32(0xFF61) - UInt32(0x21) + UInt32(u0))
                     }else{
                         dest[destIndex] = replacement
                     }
@@ -239,14 +236,14 @@ class ISO2022JPDecoder <: Decoder{
                     srcIndex += 1
                 }else if(state == 3){ // JIS:3
                     if(srcIndex + 2 > srcLimit){
-                        // when escape char sequese < 3 ， return
+                        // when escape Rune sequese < 3 ， return
                         return (srcIndex, destIndex)
                     }
                     let u1 = src[srcIndex + 1]
                     if(u0 >= 0x21 && u0 <= 0x7E && u1 >= 0x21 && u1 <= 0x7E){
                         let pointer:Int64 = Int64(u0 - 0x21) * 94 + Int64(u1) - 0x21
                         dest[destIndex] = match(jis0208DecodeMapping.get(pointer)){
-                            case Some(c) => Char(c)
+                            case Some(c) => Rune(c)
                             case None => replacement
                         }
                         srcIndex += 2

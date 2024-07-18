@@ -1,15 +1,15 @@
-// 3rd_party_lib:charset/build/charset
-// 3rd_party_lib_ohos:charset/build/aarch64-linux-ohos/charset
+// 3rd_party_lib:charset4cj/build/charset
+// 3rd_party_lib_ohos:charset4cj/build/aarch64-linux-ohos/charset
 // data_file: iso-2022-jp-katakana.txt
 // data_file: jis0208.txt
 
-from std import unittest.*
-from std import unittest.testmacro.*
-from charset import charset.encoding.*
-from charset import charset.*
-from charset import charset.exception.*
-from std import fs.*
-from std import collection.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import charset4cj.charset.encoding.*
+import charset4cj.charset.*
+import charset4cj.charset.exception.*
+import std.fs.*
+import std.collection.*
 
 @Test
 public class TestCharsetISO_2022_JP{
@@ -60,7 +60,7 @@ public class TestCharsetISO_2022_JP{
         encode_String="FAFIDSGJOferegee324525"
         var encoder=Charsets.ISO_2022_JP.newEncoder()
         var en_re=encoder.encode(encode_String)
-        var desc=Array<Char>(en_re.size+1,item:'c')
+        var desc=Array<Rune>(en_re.size+1,item:r'c')
         var decoder=Charsets.ISO_2022_JP.newDecoder()
         var de_re=decoder.decode(en_re,desc)
         @Assert(de_re[0],en_re.size)
@@ -71,7 +71,7 @@ public class TestCharsetISO_2022_JP{
         encode_String="FAFIDSGJOferegee324525"
         var encoder=Charsets.ISO_2022_JP.newEncoder()
         var en_re=encoder.encode(encode_String)
-        var desc=Array<Char>(en_re.size,item:'c')
+        var desc=Array<Rune>(en_re.size,item:r'c')
         var decoder=Charsets.ISO_2022_JP.newDecoder()
         var de_re=decoder.decode(en_re,desc)
         @Assert(de_re[0],en_re.size)
@@ -82,7 +82,7 @@ public class TestCharsetISO_2022_JP{
         encode_String="FAFIDSGJOferegee324525"
         var encoder=Charsets.ISO_2022_JP.newEncoder()
         var en_re=encoder.encode(encode_String)
-        var desc=Array<Char>(en_re.size-1,item:'c')
+        var desc=Array<Rune>(en_re.size-1,item:r'c')
         var decoder=Charsets.ISO_2022_JP.newDecoder()
         var de_re=decoder.decode(en_re,desc)
         @Assert(de_re[0],encoder.encode(encode_String[..desc.size]).size)

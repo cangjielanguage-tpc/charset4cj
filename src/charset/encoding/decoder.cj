@@ -1,12 +1,12 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
  * @file
  * This file is about byte array decoding
  */
-package charset.encoding
+package charset4cj.charset.encoding
 
 /**
  * The interface is interface Decoder
@@ -24,7 +24,7 @@ public interface Decoder{
      * @since 0.28.4
      */
     func decode(src:Array<UInt8>):String{
-        var dest:Array<Char> = Array<Char>(src.size, item: '\0')
+        var dest:Array<Rune> = Array<Rune>(src.size, item: r'\0')
         var res = decode(src, dest)
         var s = String(dest[0..res[1]])
         return s    
@@ -34,12 +34,12 @@ public interface Decoder{
      * Decode byte array src into character array dest
      *
      * @param src input byte array
-     * @param dest output Char array
+     * @param dest output Rune array
      *
      * @return (Int64, Int64), return (srcIndex, destIndex)
      *          srcIndex: Next unprocessed src subscript
      *          destIndex: Next unhandled dest subscript
      * @since 0.28.4
      */
-    func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64)
+    func decode(src:Array<UInt8>, dest:Array<Rune>): (Int64, Int64)
 }

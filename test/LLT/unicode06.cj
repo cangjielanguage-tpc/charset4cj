@@ -1,7 +1,7 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from charset import charset.*
-from charset import charset.unicode.*
+import charset4cj.charset.*
+import charset4cj.charset.unicode.*
 
 main (){
     var charset = Charsets.UTF8
@@ -12,7 +12,7 @@ main (){
     var _: Array<UInt8> = Array<UInt8>([0x00,0x02,0xc3,0x17])
     var _: Int64 = 2
     var _: Int64 = 3
-    var _: Array<Char> = Array<Char>(6, {_ => '\u{0}'})
+    var _: Array<Rune> = Array<Rune>(6, {_ => r'\u{0}'})
     var _: Int64 = 4
     println(s1.size)
     if (s1.size != 29) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
@@ -7,9 +7,7 @@
  * This file is about chart set
  */
 
-package charset.encoding
-
-from std import collection.HashSet
+package charset4cj.charset.encoding
 
 /**
  * The class is Charset

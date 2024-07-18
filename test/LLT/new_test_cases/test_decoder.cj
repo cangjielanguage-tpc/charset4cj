@@ -1,12 +1,12 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from charset import charset.*
-from charset import charset.japanese.*
-from charset import charset.exception.*
-from std import unittest.*
-from std import unittest.testmacro.*
-from std import collection.*
+import charset4cj.charset.*
+import charset4cj.charset.japanese.*
+import charset4cj.charset.exception.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.collection.*
 
 main(): Int64 {
     let decodeTest01 = DecodeTest01()
@@ -51,7 +51,7 @@ public class DecodeTest01 {
     let str_te: String = "¥‾｡（ﾟ）−"
     let str_te2: String = "¥‾゛゜ \\~`!@#$%^&*()_+-=[]{}|"
     let str_te3: String = "婥€ḿ"
-    var des: Array<Char> = Array<Char>(6, {_ => '\u{0}'})
+    var des: Array<Rune> = Array<Rune>(6, {_ => r'\u{0}'})
 
     @TestCase
     public func testEUCJPDecode01(): Unit {
@@ -306,7 +306,7 @@ public class DecodeTest01 {
     public func testUTF8Decode02(): Unit {
         let s: String = "ìíîïðñòóôõöùúûüýþÿþÿíîïð"
         var u8 = Charsets.UTF8
-        var ds: Array<Char> = Array<Char>(255, {_ => '\u{0}'})
+        var ds: Array<Rune> = Array<Rune>(255, {_ => r'\u{0}'})
         var u8en = u8.newEncoder()
         var u8de = u8.newDecoder()
         let src: Array<UInt8> = u8en.encode(s)

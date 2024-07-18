@@ -2,16 +2,19 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from std import fs.*
-from charset import charset.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import std.fs.*
+import charset4cj.charset.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main() {
     let ccc = Test_FeatureApi01()
-    ccc.execute()
-    ccc.printResult()
-    0
+	let res = ccc.asTestSuite().runTests()
+	let fail = res.failedCount + res.errorCount
+	if (fail == 0) {
+		return 0
+	}
+    return 1
 }
 @Test
 public class Test_FeatureApi01 {

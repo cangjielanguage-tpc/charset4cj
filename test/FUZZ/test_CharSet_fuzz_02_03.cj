@@ -1,8 +1,8 @@
-//3rd_party_lib:charset/build/charset
+//3rd_party_lib:charset4cj/build/charset
 
-from fuzz import fuzz.*
-from charset import charset.*
-from charset import charset.unicode.*
+import fuzz.fuzz.*
+import charset4cj.charset.*
+import charset4cj.charset.unicode.*
 
 public func fuzzFunc_Decoder_decode(dp:DataProvider):Int32 {
     var decoder=Charsets.UTF16BE.newDecoder()

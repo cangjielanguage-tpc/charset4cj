@@ -1,6 +1,6 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
-from charset import charset.*
+import charset4cj.charset.*
 
 main (){
     var charset = Charsets.IBM866

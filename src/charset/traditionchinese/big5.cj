@@ -1,15 +1,12 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
  * @file
  * This file is about Big5 encoding
  */
-package charset.traditionchinese
-
-import charset.encoding.*
-import charset.exception.*
+package charset4cj.charset.traditionchinese
 
 /**
  * big5-hkscs encoding
@@ -189,21 +186,21 @@ class BIG5Encoder <: Encoder {
 class BIG5Decoder <: Decoder{
     init(){}
     // Replace character when decoding error
-    private let replacement = '\u{FFFD}'
+    private let replacement = r'\u{FFFD}'
     private let table = Big5DecodeMapping
 
     /**
      * Decode byte array SRC into character array dest
      *
      * @param src input byte array
-     * @param dest output Char array
+     * @param dest output Rune array
      *
      * @return Type of (Int64, Int64): (srcIndex, destIndex)
      *         srcIndex Next unprocessed SRC subscript
      *         destIndex Next unhandled dest subscript
      * @since 0.28.4
      */
-    public func decode(src:Array<UInt8>, dest:Array<Char>): (Int64, Int64) {
+    public func decode(src:Array<UInt8>, dest:Array<Rune>): (Int64, Int64) {
         var srcOffset:Int64 = 0
         var srcLimit:Int64 = src.size - 1
         var destStart:Int64 = 0
@@ -218,7 +215,7 @@ class BIG5Decoder <: Decoder{
             var u0 = src[srcIndex];
             // Single byte
             if(u0 <= 0x7F){
-                var c = Char(UInt32(u0))
+                var c = Rune(UInt32(u0))
                 dest[destIndex] = c
                 destIndex += 1
                 srcIndex += 1
@@ -234,36 +231,36 @@ class BIG5Decoder <: Decoder{
                 var pointer:Int64 = 0
                 pointer = assignPointer(u0, u1, pointer, offset)
                 if(pointer == 1133){
-                    dest[destIndex] = '\u{00CA}'
-                    dest[destIndex + 1] = '\u{0304}'
+                    dest[destIndex] = r'\u{00CA}'
+                    dest[destIndex + 1] = r'\u{0304}'
                     destIndex += 2
                     srcIndex += 2
                     continue
                 }
                 if(pointer == 1135){
-                    dest[destIndex] = '\u{00CA}'
-                    dest[destIndex + 1] = '\u{030C}'
+                    dest[destIndex] = r'\u{00CA}'
+                    dest[destIndex + 1] = r'\u{030C}'
                     destIndex += 2
                     srcIndex += 2
                     continue
                 }
                 if(pointer == 1164){
-                    dest[destIndex] = '\u{00EA}'
-                    dest[destIndex + 1] = '\u{0304}'
+                    dest[destIndex] = r'\u{00EA}'
+                    dest[destIndex + 1] = r'\u{0304}'
                     destIndex += 2
                     srcIndex += 2
                     continue
                 }
                 if(pointer == 1166){
-                    dest[destIndex] = '\u{00EA}'
-                    dest[destIndex + 1] = '\u{030C}'
+                    dest[destIndex] = r'\u{00EA}'
+                    dest[destIndex + 1] = r'\u{030C}'
                     destIndex += 2
                     srcIndex += 2
                     continue
                 }
                 let codePointOp = table.get(pointer)
                 if(codePointOp != None){
-                    dest[destIndex] = Char(codePointOp.getOrThrow())
+                    dest[destIndex] = Rune(codePointOp.getOrThrow())
                     destIndex += 1
                     srcIndex += 2
                     continue

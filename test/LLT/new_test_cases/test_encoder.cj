@@ -1,12 +1,12 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from charset import charset.*
-from charset import charset.japanese.*
-from charset import charset.exception.*
-from std import unittest.*
-from std import unittest.testmacro.*
-from std import collection.*
+import charset4cj.charset.*
+import charset4cj.charset.japanese.*
+import charset4cj.charset.exception.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.collection.*
 
 main(): Int64 {
     let encodeTest01 = EncodeTest01()

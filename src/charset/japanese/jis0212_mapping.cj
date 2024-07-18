@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Cangjie Library Team 2022-2022. All rights resvered.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
 /**
@@ -7,9 +7,7 @@
  * whatwg.org Automatic document generation
  */
 
-package charset.japanese
-
-from std import collection.*
+package charset4cj.charset.japanese
 
 let jis0212DecodeMapping: Array<UInt32> = [
 		0,
