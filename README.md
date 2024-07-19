@@ -12,7 +12,7 @@
 
 ## <img alt="" src="./doc/assets/readme-icon-introduction.png" style="display: inline-block;" width=3%/> 介绍
 
-仓颉语言编解码库。基于 [WHATWG 字符编码标准](http://encoding.spec.whatwg.org/)
+仓颉语言编解码库
 
 ### 特性
 
