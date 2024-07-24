@@ -1,8 +1,12 @@
-from net import http.*
-from net import tls.*
-from std import io.*
-from std import collection.*
-from std import convert.*
+/*
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
+ */
+
+import net.http.*
+import net.tls.*
+import std.io.*
+import std.collection.*
+import std.convert.*
 
 let encodeMapFlag = false
 func downloadFile(encodeName: String){
