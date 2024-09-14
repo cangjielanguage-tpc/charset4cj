@@ -110,7 +110,7 @@ class BIG5Encoder <: Encoder {
         if(str.size == 0){
             return Array<UInt8>()
         }
-        let ref = Array<UInt8>(str.size * 2, item:0)
+        let ref = Array<UInt8>(str.size * 2, repeat:0)
         var position = 0
         var arr = str.toRuneArray()
         for(ch in arr){

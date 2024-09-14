@@ -18,7 +18,7 @@ class EUCJPEncoder <: Encoder {
         if(str.size == 0){
             return Array<UInt8>()
         }
-        let ref = Array<UInt8>(str.size * 3, item:0)
+        let ref = Array<UInt8>(str.size * 3, repeat:0)
         var position = 0
         var arr = str.toRuneArray()
         for(ch in arr){
@@ -143,7 +143,7 @@ class EUCJPDecoder <: Decoder{
                     }
                     let u2 = src[srcIndex + 2]
                     if(u2 >= 0xA1 && u2 <= 0xFE){
-                        pointer = Int64(Int64(u1 - 0xA1) * 94 + Int64(u2) - 0xA1)
+                        pointer = (Int64(u1) - 0xA1) * 94 + Int64(u2) - 0xA1
                         codePoint = match(jis0212DecodeMapping.get(pointer)){
                             case Some(c) => Rune(c)
                             case None => replacement
