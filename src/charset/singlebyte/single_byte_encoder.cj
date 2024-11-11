@@ -31,7 +31,7 @@ class SingleByteEncoder <: Encoder {
      */
     public func encode(str:String): Array<UInt8>{
         var buf:Array<Rune> = str.toRuneArray()
-        let ref = Array<UInt8>(buf.size, repeat:0)
+        let ref = Array<UInt8>(buf.size, item:0)
         var i = 0
         for(character in buf){
             if(UInt32(character) <= 0x7F){

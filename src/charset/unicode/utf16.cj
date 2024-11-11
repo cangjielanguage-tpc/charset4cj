@@ -93,7 +93,7 @@ class UTF16Encoder <: Encoder {
             return Array<UInt8>()
         }
         // Create an array of return values. The maximum length of the array is 4 times that of str.size
-        var res = Array<UInt8>(str.size * 4, repeat:0)
+        var res = Array<UInt8>(str.size * 4, item:0)
         // First unprocessed subscript of array
         var position = 0
         var arr = str.toRuneArray()

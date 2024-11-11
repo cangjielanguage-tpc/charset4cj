@@ -18,7 +18,7 @@ class EUCJPEncoder <: Encoder {
         if(str.size == 0){
             return Array<UInt8>()
         }
-        let ref = Array<UInt8>(str.size * 3, repeat:0)
+        let ref = Array<UInt8>(str.size * 3, item:0)
         var position = 0
         var arr = str.toRuneArray()
         for(ch in arr){

@@ -36,7 +36,7 @@ class GB18030Encoder <: Encoder {
         if(str.size == 0){
             return Array<UInt8>()
         }
-        let ref = Array<UInt8>(str.size * 4, repeat:0)
+        let ref = Array<UInt8>(str.size * 4, item:0)
         var position = 0
         var arr = str.toRuneArray()
         let replacement:UInt8 = 0x3F

@@ -19,7 +19,7 @@ public class TextReader{
         this.input = input
         this.charset = charset
         this.bufSize = bufSize
-        buf = Array<UInt8>(bufSize, repeat:0)
+        buf = Array<UInt8>(bufSize, item:0)
         bufLimit = 0
     }
     public func readAllLine():ArrayList<String>{
@@ -39,7 +39,7 @@ public class TextReader{
             return None
         }
         var decoder = charset.newDecoder()
-        var dest = Array<Rune>(1, repeat:r'\0')
+        var dest = Array<Rune>(1, item:r'\0')
         let src = buf.slice(0, this.bufLimit)
         var (srcIndex, destIndex) = decoder.decode(src, dest)
         if(destIndex == 1){
@@ -62,7 +62,7 @@ public class TextReader{
         let src = buf.slice(0, this.bufLimit)
         var indexOp = indexOfs(src, linefeed)
         if(indexOp == None){
-            var dest = Array<Rune>(src.size, repeat:r'\0')
+            var dest = Array<Rune>(src.size, item:r'\0')
             var (srcIndex, destIndex) = decoder.decode(src, dest)
             rotateLeft(srcIndex)
             return Some(String(dest.slice(0, destIndex)))
