@@ -5,7 +5,7 @@
 <p align="center">
 <img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.56.4-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.53.13-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-90.7%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
@@ -277,7 +277,7 @@ public class Test_ReadMe02 {
         var jpde = jp.newDecoder()
         let src: Array<UInt8> = jpen.encode(str)
         let src2: Array<UInt8> = jpen.encode(str_en)
-        let des=Array<Char>(30,repeat:'0')
+        let des=Array<Char>(30,item:'0')
         let res = jpde.decode(src, des)
         jpde.decode(src2, des)
         @Assert(res[0], 11)
@@ -297,7 +297,7 @@ public class Test_ReadMe02 {
 
 在下述版本验证通过：
 ```shell
-Cangjie Version: 0.56.4
+Cangjie Version: 0.53.13
 ```
 
 ## 开源协议
