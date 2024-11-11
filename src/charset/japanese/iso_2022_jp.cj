@@ -19,7 +19,7 @@ class ISO2022JPEncoder <: Encoder {
         if(str.size == 0){
             return Array<UInt8>()
         }
-        let ref = Array<UInt8>(str.size * 4 + 10, repeat:0)
+        let ref = Array<UInt8>(str.size * 4 + 10, item:0)
         var position = 0
         var srcIndex = 0
         var arr = str.toRuneArray()

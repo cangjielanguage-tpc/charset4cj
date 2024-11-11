@@ -24,7 +24,7 @@ public interface Decoder{
      * @since 0.28.4
      */
     func decode(src:Array<UInt8>):String{
-        var dest:Array<Rune> = Array<Rune>(src.size, repeat: r'\0')
+        var dest:Array<Rune> = Array<Rune>(src.size, item: r'\0')
         var res = decode(src, dest)
         var s = String(dest[0..res[1]])
         return s    
