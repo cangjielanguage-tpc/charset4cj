@@ -51,3 +51,4 @@ target/*
 ./.idea
 ./.idea/
 ./.idea/*
+cjpm.lock
