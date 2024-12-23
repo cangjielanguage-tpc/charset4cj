@@ -144,6 +144,8 @@ public class Charsets {
         for(cs in charsets){
             for(label in cs.labels()){
                 cache[label] = cs
+                cache[label.toAsciiLower()] = cs
+                cache[label.toAsciiUpper()] = cs
             }
         }
     }
