@@ -22,6 +22,22 @@ public class TextReader{
         buf = Array<UInt8>(bufSize, repeat:0)
         bufLimit = 0
     }
+
+    @When[cjc_version >= "0.58.3"]
+    public func readAllLine():ArrayList<String>{
+        let list = ArrayList<String>()
+        while(true){
+            var lineOp:Option<String> = readln()
+            if(lineOp != None){
+                list.add(lineOp.getOrThrow())
+            }else{
+                break
+            }
+        }
+        return list
+    }
+
+    @When[cjc_version < "0.58.3"]
     public func readAllLine():ArrayList<String>{
         let list = ArrayList<String>()
         while(true){
@@ -34,6 +50,7 @@ public class TextReader{
         }
         return list
     }
+
     public func read(): Option<Rune>{
         if (checkEOF()) {
             return None
