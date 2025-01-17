@@ -19,7 +19,7 @@ func downloadFile(encodeName: String) {
     let url = ""
     var cfg = TlsClientConfig()
     let client = ClientBuilder().tlsConfig(cfg).build()
-    try (fs = File(path, OpenOption.Open(true, true))) {
+    try (fs = File(path, ReadWrite)) {
         let res = client.get(url)
         let byteStream: ByteArrayStream = (res.body as ByteArrayStream).getOrThrow()
         byteStream.copyTo(fs)
@@ -33,7 +33,7 @@ func readFileToMap(encodeName: String): Map<UInt32, UInt32> {
     if (!File.exists(path)) {
         downloadFile(encodeName)
     }
-    let fs = File(path, OpenOption.Open(true, true))
+    let fs = File(path, ReadWrite)
     let sr = StringReader(fs)
     var lineOp = sr.readln()
     while (lineOp != None) {
@@ -51,7 +51,7 @@ func readFileToMap(encodeName: String): Map<UInt32, UInt32> {
         }
         let pointer = UInt32.parse(items[0].trimAscii())
         let codePoint = UInt32.parse(items[1].trimAscii())
-        map.put(pointer, codePoint)
+        map.add(pointer, codePoint)
     }
 
     return map
@@ -104,7 +104,7 @@ package charset4cj.charset.${pkg}
 
     let fileName = encodeName.toAsciiLower().replace("-", "_") + "_mapping.cj"
     let path = "../../../src/charset/" + pkg + "/" + fileName
-    try (fs = File(path, OpenOption.Open(true, true))) {
+    try (fs = File(path, ReadWrite)) {
         fs.write(s.toArray())
     } catch (e: Exception) {
     }
@@ -170,7 +170,7 @@ import std.collection.*
     let fileName = encodeName.toAsciiLower().replace("-", "_") + "_mapping.cj"
     let path = "../../../src/charset/" + pkg + "/" + fileName
     File.delete(path)
-    try (fs = File(path, OpenOption.Open(true, true))) {
+    try (fs = File(path, ReadWrite)) {
         fs.write(s.toArray())
     } catch (e: Exception) {
     }
