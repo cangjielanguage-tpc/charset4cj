@@ -82,7 +82,15 @@ package charset4cj.charset.${pkg}
     var decodeMappingStr = "let " + encodeName.replace("-", "_") + "Mapping: Array<Array<UInt32>> = [\n"
     let list = ArrayList<UInt32>()
     for ((k, _) in map) {
-        list.append(k)
+        @When[cjc_version < "0.58.3" && cjc_version < "1.0.0"]
+        func listAdd(){
+            list.append(k)
+        }
+        @When[cjc_version >= "0.58.3" || cjc_version >= "1.0.0"]
+        func listAdd(){
+            list.add(k)
+        }
+        listAdd()
     }
     list.sortBy(stable: false, comparator: compareTo)
     for (v in 0..list.size) {

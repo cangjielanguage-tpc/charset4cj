@@ -1,4 +1,6 @@
 .vscode
+.arts
+.devbrain
 *.cjo
 *.so
 *.bc

@@ -23,21 +23,23 @@ public class TextReader{
         bufLimit = 0
     }
 
-    @When[cjc_version >= "0.58.3"]
+    @When[cjc_version >= "0.58.3" || cjc_version >= "1.0.0"]
     public func readAllLine():ArrayList<String>{
         let list = ArrayList<String>()
-        while(true){
-            var lineOp:Option<String> = readln()
-            if(lineOp != None){
-                list.add(lineOp.getOrThrow())
-            }else{
-                break
-            }
+        while(let Some(line) <- readln()){
+            list.add(line)
         }
         return list
     }
-
-    @When[cjc_version < "0.58.3"]
+    @When[cjc_version >= "0.53.13" && cjc_version < "0.58.3" && cjc_version < "1.0.0"]
+    public func readAllLine():ArrayList<String>{
+        let list = ArrayList<String>()
+        while(let Some(line) <- readln()){
+            list.append(line)
+        }
+        return list
+    }
+    @When[cjc_version < "0.53.13" && cjc_version < "1.0.0"]
     public func readAllLine():ArrayList<String>{
         let list = ArrayList<String>()
         while(true){
