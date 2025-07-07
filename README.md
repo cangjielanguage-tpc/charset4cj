@@ -3,14 +3,14 @@
 </div>
 
 <p align="center">
-<img alt="" src="https://img.shields.io/badge/release-v1.0.3-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/release-v1.0.4-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.60.5-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v1.0.0-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-90.7%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
-## <img alt="" src="./doc/assets/readme-icon-introduction.png" style="display: inline-block;" width=3%/> 介绍
+## <img alt="" src="https://raw.gitcode.com/Cangjie-TPC/charset4cj/blobs/15213299d979e856624253d41858a9369a44ad5c/readme-icon-introduction.png" style="display: inline-block;" width=3%/> 介绍
 
 仓颉语言编解码库
 
@@ -26,12 +26,12 @@
 + 💪 待开发特性
   + 增加bom支持
 
-##    <img alt="" src="./doc/assets/readme-icon-framework.png" style="display: inline-block;" width=3%/> 架构
+##    <img alt="" src="https://raw.gitcode.com/Cangjie-TPC/charset4cj/blobs/cde6bdb14ced62261c2f5cb6bd976b9a9aa10fa9/readme-icon-framework.png" style="display: inline-block;" width=3%/> 架构
 
 ### 架构图：
 
 <p align="center">
-<img src="./doc/assets/framework.png" width="60%" >
+<img src="https://raw.gitcode.com/Cangjie-TPC/charset4cj/blobs/3b02677c9328c7605ecf1414551ed8de4785a624/framework.png" width="60%" >
 </p>
 
 - 将字节数组转成String对象
@@ -133,9 +133,9 @@ func encode(str:String): Array<UInt8>
 
 ### 接口说明
 
-主要是核心类和成员函数说明,详情见 [API](./doc/feature_api.md)
+主要是核心类和成员函数说明,详情见 [API](https://gitcode.com/Cangjie-TPC/charset4cj/blob/develop/doc/feature_api.md)
 
-## <img alt="" src="./doc/assets/readme-icon-compile.png" style="display: inline-block;" width=3%/> 使用说明
+## <img alt="" src="https://raw.gitcode.com/Cangjie-TPC/charset4cj/blobs/da64231ac2d2bf0a586c6a35353585af005e2faf/readme-icon-compile.png" style="display: inline-block;" width=3%/> 使用说明
 
 ### 编译构建
 
@@ -162,7 +162,7 @@ cjpm build
 ```shell
 cd test/
 mkdir tmp
-cjc -O2 --import-path xxxxx/build/release -L xxxxx/build/release/charset -l charset_charset.unicode -l charset_charset.korean -l charset_charset.exception -l charset_charset.simplechinese -l charset_charset.encoding -l charset_charset.japanese -l charset_charset.singlebyte -l charset_charset.traditionchinese -l charset_charset test/HLT/test_CharSets_forName_01.cj -o test/tmp/test.cj.out --test
+cjc -O2 --import-path xxxxx/target/release -L xxxxx/target/release/charset -l charset_charset.unicode -l charset_charset.korean -l charset_charset.exception -l charset_charset.simplechinese -l charset_charset.encoding -l charset_charset.japanese -l charset_charset.singlebyte -l charset_charset.traditionchinese -l charset_charset test/HLT/test_CharSets_forName_01.cj -o test/tmp/test.cj.out --test
 ```
 
 ##### 1.1 具体说明
@@ -177,7 +177,7 @@ cjc -O2
 - 导入多个库,每个库都需要--import-path和 -L
 
 ```shell
---import-path xxxxx/build/release -L xxxxx/build/release/charset -l charset_charset.unicode -l charset_charset.korean -l charset_charset.exception -l charset_charset.simplechinese -l charset_charset.encoding -l charset_charset.japanese -l charset_charset.singlebyte -l charset_charset.traditionchinese -l charset_charset
+--import-path xxxxx/target/release -L xxxxx/target/release/charset -l charset_charset.unicode -l charset_charset.korean -l charset_charset.exception -l charset_charset.simplechinese -l charset_charset.encoding -l charset_charset.japanese -l charset_charset.singlebyte -l charset_charset.traditionchinese -l charset_charset
 ```
 - -l 要导入的具体的包, 用"库名_包名",一般库文件生成时是"lib库名_包名.后缀"的格式
 - 导入一个库中有多个包时,用多个 -l
@@ -190,7 +190,7 @@ test/HLT/test_CharSets_forName_01.cj -o test/tmp/test.cj.out --test
 ```
 
 #### 2. 把编译好的文件复制到 .out 文件下(test/tmp/)
-- 把build/release/charset 目录中的文件都复制到 .out 文件位置(test/tmp/ 中)
+- 把target/release/charset 目录中的文件都复制到 .out 文件位置(test/tmp/ 中)
 
 #### 3. 进入到.out文件位置，执行用例
 - 进入到.out文件位置执行用例
@@ -297,13 +297,13 @@ public class Test_ReadMe02 {
 
 在下述版本验证通过：
 ```shell
-Cangjie Version: 0.60.5
+Cangjie Version: 1.0.0
 ```
 
 ## 开源协议
 
-本项目基于 [MulanPSL-2.0](https://gitcode.com/Cangjie-TPC/charset4cj/blob/master/LICENSE) ，请自由的享受和参与开源。
+本项目基于 [MulanPSL-2.0](https://gitcode.com/Cangjie-TPC/charset4cj/blob/develop/LICENSE) ，请自由的享受和参与开源。
 
-## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
+## <img alt="" src="https://raw.gitcode.com/Cangjie-TPC/charset4cj/blobs/db89f3665c31896952fbb4c657fd09d30adf952b/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
 
 欢迎给我们提交 PR，欢迎给我们提交 issue，欢迎参与任何形式的贡献。
