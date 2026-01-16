@@ -6,7 +6,7 @@
  * @file
  * UTF32 Rune set
  */
-package charset4cj.charset.unicode
+package cangjie_tpc::charset4cj.charset.unicode
 
 /**
  * UTF32 Rune set
@@ -14,8 +14,8 @@ package charset4cj.charset.unicode
  * @since 0.28.4
  */
 public class UTF32Charset <: Charset{
-    public static let beInstance = UTF32Charset(true, "UTF-32BE", "utf-32be")
-    public static let leInstance = UTF32Charset(false, "UTF-32LE", "utf-32le")
+    public static let beInstance: UTF32Charset = UTF32Charset(true, "UTF-32BE", "utf-32be")
+    public static let leInstance: UTF32Charset = UTF32Charset(false, "UTF-32LE", "utf-32le")
     // Whether it is big end mode, be = true big end mode; Be = false small end mode
     private let be:Bool
 

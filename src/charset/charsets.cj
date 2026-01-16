@@ -7,7 +7,7 @@
  * Constant definitions for all the supported Charsets.
  */
 
-package charset4cj.charset
+package cangjie_tpc::charset4cj.charset
 
 /**
  * Constant definitions for all the supported Charsets.

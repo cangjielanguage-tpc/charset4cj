@@ -2,7 +2,7 @@
  * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2026. All rights reserved.
  */
 
-package charset4cj.charset
+package cangjie_tpc::charset4cj.charset
 
 /**
 * process text reader

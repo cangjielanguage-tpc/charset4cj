@@ -6,7 +6,7 @@
  * @file
  * This file is about Big5 encoding
  */
-package charset4cj.charset.traditionchinese
+package cangjie_tpc::charset4cj.charset.traditionchinese
 
 /**
  * big5-hkscs encoding
@@ -14,7 +14,7 @@ package charset4cj.charset.traditionchinese
  * @since 0.28.4
  */
 public class BIG5HKSCSCharset <: Charset{
-    public static let instance = BIG5HKSCSCharset()
+    public static let instance: BIG5HKSCSCharset = BIG5HKSCSCharset()
     /**
      * The Function is init constructor
      *
@@ -54,7 +54,7 @@ public class BIG5HKSCSCharset <: Charset{
  * @since 0.28.4
  */
 public class BIG5Charset <: Charset{
-    public static let instance = BIG5Charset()
+    public static let instance: BIG5Charset = BIG5Charset()
     /**
      * The Function is init constructor
      *

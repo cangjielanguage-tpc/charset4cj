@@ -7,7 +7,7 @@
  * This file is about chart set
  */
 
-package charset4cj.charset.encoding
+package cangjie_tpc::charset4cj.charset.encoding
 
 /**
  * The class is Charset
@@ -46,7 +46,7 @@ public abstract class Charset <: Hashable & Equatable<Charset> & Equatable<Strin
     public operator func !=(name: String){
         !(this == name)
     }
-    public func toString(){
+    public func toString(): String {
         name
     }
     public func labels(): Iterator<String>{

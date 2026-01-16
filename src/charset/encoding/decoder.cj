@@ -6,7 +6,7 @@
  * @file
  * This file is about byte array decoding
  */
-package charset4cj.charset.encoding
+package cangjie_tpc::charset4cj.charset.encoding
 
 /**
  * The interface is interface Decoder

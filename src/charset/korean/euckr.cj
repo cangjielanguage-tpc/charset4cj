@@ -7,7 +7,7 @@
  * This file is about charset korean
  */
 
-package charset4cj.charset.korean
+package cangjie_tpc::charset4cj.charset.korean
 
 /**
  * EUC-KR korean encoding
@@ -15,7 +15,7 @@ package charset4cj.charset.korean
  * @since 0.28.4
  */
 public class EUCKRCharset <: Charset{
-    public static let instance = EUCKRCharset()
+    public static let instance: EUCKRCharset = EUCKRCharset()
     /**
      * The Function is init constructor
      *

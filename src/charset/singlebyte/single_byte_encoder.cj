@@ -7,7 +7,7 @@
  * Single byte character set encoder
  */
 
-package charset4cj.charset.singlebyte
+package cangjie_tpc::charset4cj.charset.singlebyte
 
 /**
  * Single byte character set encoder

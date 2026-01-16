@@ -2,7 +2,7 @@
  * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
-package charset4cj.charset.japanese
+package cangjie_tpc::charset4cj.charset.japanese
 
 /**
  * ISO-2022-JP japanese encoding charset
@@ -10,7 +10,7 @@ package charset4cj.charset.japanese
  * @since 0.28.4
  */
 public class ISO2022JPCharset <: Charset{
-    public static let instance = ISO2022JPCharset()
+    public static let instance: ISO2022JPCharset = ISO2022JPCharset()
     /**
      * The Function is init constructor
      *
@@ -47,7 +47,7 @@ public class ISO2022JPCharset <: Charset{
  * @since 0.28.4
  */
 public class EUCJPCharset <: Charset{
-    public static let instance = EUCJPCharset()
+    public static let instance: EUCJPCharset = EUCJPCharset()
 
     /**
      * The Function is init constructor
@@ -85,7 +85,7 @@ public class EUCJPCharset <: Charset{
  * @since 0.28.4
  */
 public class ShiftJISCharset <: Charset{
-    public static let instance = ShiftJISCharset()
+    public static let instance: ShiftJISCharset = ShiftJISCharset()
     /**
      * The Function is init constructor
      *

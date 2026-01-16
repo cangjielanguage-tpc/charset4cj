@@ -7,7 +7,7 @@
  * whatwg.org Automatic document generation
  */
 
-package charset4cj.charset.traditionchinese
+package cangjie_tpc::charset4cj.charset.traditionchinese
 
 let Big5DecodeMapping: Array<UInt32> = [
 		0,

@@ -6,7 +6,7 @@
  * @file
  * UTF8 character set
  */
-package charset4cj.charset.unicode
+package cangjie_tpc::charset4cj.charset.unicode
 
 /**
  * UTF8 character set
@@ -14,7 +14,7 @@ package charset4cj.charset.unicode
  * @since 0.28.4
  */
 public class UTF8Charset <: Charset{
-    public static let instance = UTF8Charset()
+    public static let instance: UTF8Charset = UTF8Charset()
     /**
      * The Function is init constructor
      *

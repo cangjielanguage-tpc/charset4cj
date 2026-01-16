@@ -7,7 +7,7 @@
  * whatwg.org Automatic document generation
  */
 
-package charset4cj.charset.japanese
+package cangjie_tpc::charset4cj.charset.japanese
 
 let iso_2022_jp_katakanaDecodeMapping: Array<UInt32> = [
 		0x3002,

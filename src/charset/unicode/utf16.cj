@@ -6,7 +6,7 @@
  * @file
  * UTF16 character set
  */
-package charset4cj.charset.unicode
+package cangjie_tpc::charset4cj.charset.unicode
 
 /**
  * UTF16 character set
@@ -14,8 +14,8 @@ package charset4cj.charset.unicode
  * @since 0.28.4
  */
 public class UTF16Charset <: Charset{
-    public static let beInstance = UTF16Charset(true, "UTF-16BE", "unicodefffe", "utf-16be")
-    public static let leInstance = UTF16Charset(false, "UTF-16LE", "csunicode", "iso-10646-ucs-2", "ucs-2", "unicode", "unicodefeff", "utf-16", "utf-16le","utf16")
+    public static let beInstance: UTF16Charset = UTF16Charset(true, "UTF-16BE", "unicodefffe", "utf-16be")
+    public static let leInstance: UTF16Charset = UTF16Charset(false, "UTF-16LE", "csunicode", "iso-10646-ucs-2", "ucs-2", "unicode", "unicodefeff", "utf-16", "utf-16le","utf16")
     // Whether it is big end mode, be = true big end mode; Be = false small end mode
     private let be:Bool
 

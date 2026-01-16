@@ -7,7 +7,7 @@
  * whatwg.org Automatic document generation
  */
 
-package charset4cj.charset.simplechinese
+package cangjie_tpc::charset4cj.charset.simplechinese
 
 let gb18030_rangesMapping: Array<Array<UInt32>> = [
 		[0, 0x0080],

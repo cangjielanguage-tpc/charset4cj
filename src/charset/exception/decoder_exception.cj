@@ -7,7 +7,7 @@
  * This file is about encoder exception
  */
 
-package charset4cj.charset.exception
+package cangjie_tpc::charset4cj.charset.exception
 
 public class DecoderException <: CharsetException {
 

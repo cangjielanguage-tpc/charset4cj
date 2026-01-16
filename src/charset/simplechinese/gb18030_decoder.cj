@@ -7,7 +7,7 @@
  * This file is about GB18030Decoder
  */
 
-package charset4cj.charset.simplechinese
+package cangjie_tpc::charset4cj.charset.simplechinese
 
 /**
  * gb18030  Character set decoder

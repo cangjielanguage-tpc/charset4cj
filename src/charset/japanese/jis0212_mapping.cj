@@ -7,7 +7,7 @@
  * whatwg.org Automatic document generation
  */
 
-package charset4cj.charset.japanese
+package cangjie_tpc::charset4cj.charset.japanese
 
 let jis0212DecodeMapping: Array<UInt32> = [
 		0,

@@ -344,7 +344,7 @@ public class DecoderException <: CharsetException {
 
 ```cangjie
 import std.fs.*
-import charset4cj.charset.*
+import cangjie_tpc::charset4cj.charset.*
 import std.unittest.*
 import std.unittest.testmacro.*
 
@@ -448,7 +448,7 @@ top level
 
 ```cangjie
 import std.fs.*
-import charset4cj.charset.*
+import cangjie_tpc::charset4cj.charset.*
 import std.unittest.*
 import std.unittest.testmacro.*
 

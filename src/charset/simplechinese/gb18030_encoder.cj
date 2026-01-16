@@ -7,7 +7,7 @@
  * This file is about GB18030Encoder
  */
 
-package charset4cj.charset.simplechinese
+package cangjie_tpc::charset4cj.charset.simplechinese
 
 /**
  * The class is GB18030Encoder inherited from Encoder

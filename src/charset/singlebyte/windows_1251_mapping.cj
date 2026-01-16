@@ -7,7 +7,7 @@
  * whatwg.org Automatic document generation
  */
 
-package charset4cj.charset.singlebyte
+package cangjie_tpc::charset4cj.charset.singlebyte
 
 let windows_1251DecodeMapping: Array<UInt32> = [
 		0x0402,

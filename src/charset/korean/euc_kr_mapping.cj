@@ -7,7 +7,7 @@
  * whatwg.org Automatic document generation
  */
 
-package charset4cj.charset.korean
+package cangjie_tpc::charset4cj.charset.korean
 
 let EUC_KRDecodeMapping: Array<UInt32> = [
 		0xac02,

@@ -6,7 +6,7 @@
  * @file
  * This file is about GB18030Charset
  */
-package charset4cj.charset.simplechinese
+package cangjie_tpc::charset4cj.charset.simplechinese
 
 /**
  * The class is GBKCharset inherited from Charset
@@ -14,7 +14,7 @@ package charset4cj.charset.simplechinese
  * @since 0.28.4
  */
 public class GBKCharset <: Charset{
-    public static let instance = GBKCharset()
+    public static let instance: GBKCharset = GBKCharset()
     /**
      * The Function is init constructor
      *
@@ -54,7 +54,7 @@ public class GBKCharset <: Charset{
  * @since 0.28.4
  */
 public class GB18030Charset <: Charset{
-    public static let instance = GB18030Charset()
+    public static let instance: GB18030Charset = GB18030Charset()
     /**
      * The Function is init constructor
      *

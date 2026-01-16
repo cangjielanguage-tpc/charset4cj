@@ -7,7 +7,7 @@
 index-koi8-r.txt Automatic document generation
  */
 
-package charset4cj.charset.singlebyte
+package cangjie_tpc::charset4cj.charset.singlebyte
 
 let koi8_rDecodeMapping: Array<UInt32> = [
 		0x2500,

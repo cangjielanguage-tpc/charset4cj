@@ -7,7 +7,7 @@
  * This file is about encodes a string into a byte array
  */
 
-package charset4cj.charset.encoding
+package cangjie_tpc::charset4cj.charset.encoding
 
 /**
  * Encoder for encode string into a byte array

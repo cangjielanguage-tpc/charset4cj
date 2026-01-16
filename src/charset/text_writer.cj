@@ -2,7 +2,7 @@
  * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
  */
 
-package charset4cj.charset
+package cangjie_tpc::charset4cj.charset
 
 /**
 * process text writer
@@ -17,7 +17,7 @@ public class TextWriter{
         this.charset = charset
         this.encoder = charset.newEncoder()
     }
-    public func write(s:String){
+    public func write(s:String): Unit {
         let bytes = this.encoder.encode(s)
         this.output.write(bytes)
     }

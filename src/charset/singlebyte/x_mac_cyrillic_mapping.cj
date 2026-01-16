@@ -7,7 +7,7 @@
  * whatwg.org Automatic document generation
  */
 
-package charset4cj.charset.singlebyte
+package cangjie_tpc::charset4cj.charset.singlebyte
 
 let x_mac_cyrillicDecodeMapping: Array<UInt32> = [
 		0x0410,
