@@ -1,5 +1,5 @@
 /*
- * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2026. All rights reserved.
  */
 
 package charset4cj.charset
@@ -23,32 +23,10 @@ public class TextReader{
         bufLimit = 0
     }
 
-    @When[cjc_version >= "0.58.3" || cjc_version >= "1.0.0"]
     public func readAllLine():ArrayList<String>{
         let list = ArrayList<String>()
         while(let Some(line) <- readln()){
             list.add(line)
-        }
-        return list
-    }
-    @When[cjc_version >= "0.53.13" && cjc_version < "0.58.3" && cjc_version < "1.0.0"]
-    public func readAllLine():ArrayList<String>{
-        let list = ArrayList<String>()
-        while(let Some(line) <- readln()){
-            list.append(line)
-        }
-        return list
-    }
-    @When[cjc_version < "0.53.13" && cjc_version < "1.0.0"]
-    public func readAllLine():ArrayList<String>{
-        let list = ArrayList<String>()
-        while(true){
-            var lineOp:Option<String> = readln()
-            if(lineOp != None){
-                list.append(lineOp.getOrThrow())
-            }else{
-                break
-            }
         }
         return list
     }
