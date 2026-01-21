@@ -1,5 +1,5 @@
 /*
- * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2026. All rights reserved.
  */
 
 /**
@@ -25,18 +25,10 @@ public abstract class Charset <: Hashable & Equatable<Charset> & Equatable<Strin
         }
     }
 
-    @When[cjc_version >= "0.58.3" || cjc_version >= "1.0.0"]
-    static func putLabel(label: String, labels: Set<String>){
+    private static func putLabel(label: String, labels: Set<String>){
         labels.add(label)
         labels.add(label.toAsciiLower())
         labels.add(label.toAsciiUpper())
-    }
-
-    @When[cjc_version < "0.58.3" && cjc_version < "1.0.0"]
-    static func putLabel(label: String, labels: Set<String>){
-        labels.put(label)
-        labels.put(label.toAsciiLower())
-        labels.put(label.toAsciiUpper())
     }
 
     public func hashCode(): Int64 {

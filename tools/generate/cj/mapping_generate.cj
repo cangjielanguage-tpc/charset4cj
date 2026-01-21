@@ -1,5 +1,5 @@
 /*
- * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2022-2026. All rights reserved.
  */
 import net.http.*
 import net.tls.*
@@ -82,11 +82,6 @@ package charset4cj.charset.${pkg}
     var decodeMappingStr = "let " + encodeName.replace("-", "_") + "Mapping: Array<Array<UInt32>> = [\n"
     let list = ArrayList<UInt32>()
     for ((k, _) in map) {
-        @When[cjc_version < "0.58.3" && cjc_version < "1.0.0"]
-        func listAdd(){
-            list.append(k)
-        }
-        @When[cjc_version >= "0.58.3" || cjc_version >= "1.0.0"]
         func listAdd(){
             list.add(k)
         }
